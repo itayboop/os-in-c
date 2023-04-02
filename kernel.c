@@ -38,7 +38,7 @@ static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg)
 
 static inline uint16_t vga_entry(unsigned char uc, uint8_t color)
 {
-    return (uint16_t)uc | (uint16_t)color << 8
+    return (uint16_t)uc | (uint16_t)color << 8;
 }
 
 void write_string(int color, const char *string)
@@ -48,6 +48,12 @@ void write_string(int color, const char *string)
     while (*string != 0)
     {
         *video++ = *string++;
-        *video++ = *color;
+        *video++ = color;
     }
+}
+
+void kernel_main(void) {
+    write_string(0xb, "Hello World!");
+
+    while(1) {}
 }

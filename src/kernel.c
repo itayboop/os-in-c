@@ -31,29 +31,26 @@ enum vga_color
     VGA_COLOR_WHITE = 15,
 };
 
-static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg)
-{
+static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg) {
     return fg | bg << 4;
 }
 
-static inline uint16_t vga_entry(unsigned char uc, uint8_t color)
-{
+static inline uint16_t vga_entry(unsigned char uc, uint8_t color) {
     return (uint16_t)uc | (uint16_t)color << 8;
 }
 
-void write_string(int color, const char *string)
-{
-    volatile char *video = (volatile char *)0xB8000;
+size_t strlen(const char* str) {
+    size_t string_length = 0;
 
-    while (*string != 0)
-    {
-        *video++ = *string++;
-        *video++ = color;
+    while(str[string_length]) {
+        string_length++;
     }
+
+    return string_length;
 }
 
 void kernel_main(void) {
-    write_string(0xb, "Hello World!");
+
 
     while(1) {}
 }

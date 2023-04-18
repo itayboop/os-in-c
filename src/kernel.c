@@ -49,8 +49,31 @@ size_t strlen(const char* str) {
     return string_length;
 }
 
-void kernel_main(void) {
+static const size_t VGA_WIDTH = 80;
+static const size_t VGA_HEIGHT = 25;
 
+size_t terminal_row;
+size_t terminal_column;
+uint8_t terminal_color;
+uint16_t* terminal_buffer;
+
+void terminal_initialize(void)
+{
+	terminal_row = 0;
+	terminal_column = 0;
+	terminal_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
+	terminal_buffer = (uint16_t*) 0xB8000;
+
+	for (size_t i = 0; i < VGA_HEIGHT; i++) {
+		for (size_t j = 0; j < VGA_WIDTH; j++) {
+			const size_t index = i * VGA_WIDTH + j;
+			terminal_buffer[index] = vga_entry(' ', terminal_color);
+		}
+	}
+}
+
+void kernel_main(void) {
+    terminal_initialize();
 
     while(1) {}
 }

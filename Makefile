@@ -9,7 +9,6 @@ OUTPUT_DIR=output
 ISO_DIR=isodir
 OS_BIN=$(TARGET_NAME).bin
 
-
 SRCS=$(shell find $(SRC_DIR) \( -name "*.cpp" -o -name "*.c++" -o -name "*.c" -o -name "*.s" \))
 OBJS=$(filter %.o, $(patsubst $(SRC_DIR)/%.cpp, $(BIN_DIR)/%.o, $(SRCS)) \ $(patsubst $(SRC_DIR)/%.c, $(BIN_DIR)/%.o, $(SRCS)) \ $(patsubst $(SRC_DIR)/%.s,$(BIN_DIR)/%.o, $(SRCS)))
 

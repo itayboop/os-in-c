@@ -1,6 +1,6 @@
 CXX=i686-elf-g++
 
-TARGET_NAME=c_os
+TARGET_NAME=x86_64_c_os
 
 SRC_DIR=src
 INC_DIR=inc

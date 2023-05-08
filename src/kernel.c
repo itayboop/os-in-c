@@ -12,13 +12,12 @@
 #error "This works only with an ix86-elf compiler"
 #endif
 
-extern "C" {
-    void kernel_main(void) {
-        terminal_initialize();
+void kernel_main(void) {
+    terminal_initialize();
 
-        terminal_write_string("Hello, kernel World!\n");
-        terminal_write_string("newline!\n");
+    terminal_write_string("Hello, kernel World!\n");
+    terminal_write_string("newline!\n");
 
-        while(1) {}
-    }
+    while(1) {}
 }
+

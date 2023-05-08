@@ -956,6 +956,7 @@ _deps
 *.lo
 *.o
 *.obj
+*.iso
 
 # Precompiled Headers
 *.gch

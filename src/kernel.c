@@ -15,8 +15,8 @@
 void kernel_main(void) {
     terminal_initialize();
 
-    terminal_write_string("Hello, kernel World!\n");
-    terminal_write_string("newline!\n");
+    terminal_write("Hello, kernel World!\n");
+    terminal_write("newline!\n");
 
     while(1) {}
 }

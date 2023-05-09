@@ -85,8 +85,7 @@ void terminal_putchar(char c) {
     } else {
         terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
         if (++terminal_column == VGA_WIDTH) {
-		    terminal_column = 0;
-            terminal_row++;
+            handle_new_line();
 	    }
     }
 
@@ -95,7 +94,7 @@ void terminal_putchar(char c) {
     }
 }
 
-void terminal_write_string(const char* data) {
+void terminal_write(const char* data) {
    	for (size_t i = 0; i < strlen(data); i++) {
 		terminal_putchar(data[i]);
     }

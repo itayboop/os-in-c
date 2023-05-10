@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include "vga_buffer.h"
+#include "utils.h"
 
 size_t strlen(const char* str) {
     size_t string_length = 0;

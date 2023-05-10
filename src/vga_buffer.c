@@ -2,8 +2,6 @@
 #include "vga_buffer.h"
 #include "utils.h"
 
-#define MAX_DIGITS 63
-
 typedef enum vga_color
 {
     VGA_COLOR_BLACK = 0,
@@ -95,25 +93,8 @@ void terminal_print_string(const char* data) {
 
 void terminal_print_int(int number) {
     char buffer[64];
-    int i = 0;
-    int is_negative = 0;
 
-    /* TODO: convert to itoa */
-    if (0 > number) {
-        is_negative = 1;
-        number = 0 - number;
-    }
+    itoa(number, buffer);
 
-    do {
-        buffer[i++] = number % 10 + '0';
-        number /= 10;
-    } while (number && MAX_DIGITS > i); // 63 since we add '-' at the end if negative.
-
-    if (is_negative) {
-        buffer[i++] = '-';
-    }
-
-    while(i > 0) {
-        terminal_putchar(buffer[--i]);
-    }
+    terminal_print_string(buffer);
 }

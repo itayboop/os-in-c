@@ -2,15 +2,7 @@
 #include "vga_buffer.h"
 #include "utils.h"
 
-size_t strlen(const char* str) {
-    size_t string_length = 0;
-
-    while(str[string_length]) {
-        string_length++;
-    }
-
-    return string_length;
-}
+#define MAX_DIGITS 63
 
 typedef enum vga_color
 {
@@ -95,8 +87,32 @@ void terminal_putchar(char c) {
     }
 }
 
-void terminal_write(const char* data) {
+void terminal_write_string(const char* data) {
    	for (size_t i = 0; i < strlen(data); i++) {
 		terminal_putchar(data[i]);
+    }
+}
+
+void terminal_write_int(int number) {
+    char buffer[64];
+    int i = 0;
+    int is_negative = 0;
+
+    if (0 > number) {
+        is_negative = 1;
+        number = 0 - number;
+    }
+
+    do {
+        buffer[i++] = number % 10 + '0';
+        number /= 10;
+    } while (number && MAX_DIGITS > i); // 63 since we add '-' at the end if negative.
+
+    if (is_negative) {
+        buffer[i++] = '-';
+    }
+
+    while(i > 0) {
+        terminal_putchar(buffer[--i]);
     }
 }

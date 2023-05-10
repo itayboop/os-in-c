@@ -3,21 +3,20 @@
 #include <stdint.h>
 #include "vga_buffer.h"
 
-// check if targeting wrong operating system.
+/* Check if the compiler thinks you are targeting the wrong operating system. */
 #if defined(__linux__)
-#error "You are not using a cross compiler, you'll run into troble"
+#error "You are not using a cross-compiler, you will most certainly run into trouble"
 #endif
 
 #if !defined(__i386__)
-#error "This works only with an ix86-elf compiler"
+#error "This tutorial needs to be compiled with a ix86-elf compiler"
 #endif
 
 void kernel_main(void) {
     terminal_initialize();
 
-    terminal_write("Hello, kernel World!\n");
-    terminal_write("newline!\n");
+    // terminal_write_int(12345);
+    terminal_write_int(-12345);
 
     while(1) {}
 }
-

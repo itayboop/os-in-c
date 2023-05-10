@@ -1,7 +1,8 @@
 {
-    "C_Cpp.errorSquiggles": "disabled",
+    "C_Cpp.errorSquiggles": "enabled",
     "files.associations": {
         "vga_buffer.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "stddef.h": "c"
     }
 }

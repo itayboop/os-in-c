@@ -87,17 +87,18 @@ void terminal_putchar(char c) {
     }
 }
 
-void terminal_write_string(const char* data) {
+void terminal_print_string(const char* data) {
    	for (size_t i = 0; i < strlen(data); i++) {
 		terminal_putchar(data[i]);
     }
 }
 
-void terminal_write_int(int number) {
+void terminal_print_int(int number) {
     char buffer[64];
     int i = 0;
     int is_negative = 0;
 
+    /* TODO: convert to itoa */
     if (0 > number) {
         is_negative = 1;
         number = 0 - number;

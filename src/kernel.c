@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "vga_buffer.h"
+#include "utils.h"
 
 /* Check if the compiler thinks you are targeting the wrong operating system. */
 #if defined(__linux__)
@@ -15,8 +16,7 @@
 void kernel_main(void) {
     terminal_initialize();
 
-    // terminal_write_int(12345);
-    terminal_write_int(-12345);
+    printf("%d hello, another string is: %s, and then another char is: %c", 5123, "string string", 'c');
 
     while(1) {}
 }

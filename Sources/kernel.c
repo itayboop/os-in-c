@@ -13,10 +13,12 @@
 #error "This tutorial needs to be compiled with a ix86-elf compiler"
 #endif
 
+extern "C" {
 void kernel_main(void) {
     terminal_initialize();
 
     printf("%d hello, another string is: %s, and then another char is: %c and this is try: %a here is another try: %s", 5123, "string string", 'c', "a try");
 
     while(1) {}
+}
 }

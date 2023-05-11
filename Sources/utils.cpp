@@ -1,8 +1,8 @@
 #define MAX_DIGITS 62
 
 #include <stdarg.h>
-#include "vga_buffer.h"
-#include "utils.h"
+#include "vga_buffer.hpp"
+#include "utils.hpp"
 
 void printf(const char * formatted_str, ...) {
     va_list arg;

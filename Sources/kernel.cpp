@@ -1,8 +1,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include "vga_buffer.h"
-#include "utils.h"
+#include "vga_buffer.hpp"
+#include "utils.hpp"
 
 /* Check if the compiler thinks you are targeting the wrong operating system. */
 #if defined(__linux__)

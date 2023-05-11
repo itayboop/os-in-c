@@ -1,18 +1,18 @@
 cmake_minimum_required(VERSION 3.13)
-project(C_OS C ASM)
+project(x86_64_c_os C ASM)
 
 set(CMAKE_C_COMPILER i686-elf-g++)
 set(CMAKE_ASM_COMPILER i686-elf-g++)
-
-set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -ffreestanding -O2")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti -v")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ${CMAKE_SOURCE_DIR}/linker.ld -ffreestanding -O2 -nostdlib -lgcc")
 
 set(ISO_DIR "isodir")
 set(SOURCE_DIR "Sources")
 set(INCLUDE_DIR "Headers")
 set(OUTPUT_DIR "output")
 set(OS_BIN "${PROJECT_NAME}.bin")
+
+set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -ffreestanding -O2")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti -v")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ${CMAKE_SOURCE_DIR}/linker.ld -ffreestanding -O2 -nostdlib -lgcc -o ${OS_BIN}")
 
 file(GLOB_RECURSE SOURCES "${INCLUDE_DIR}/*.h" "${INCLUDE_DIR}/*.hpp" "${SOURCE_DIR}/*.c" "${SOURCE_DIR}/*.cpp" "${SOURCE_DIR}/*.s" "${SOURCE_DIR}/*.asm")
 

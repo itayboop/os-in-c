@@ -30,4 +30,5 @@ add_custom_command(
 
 add_custom_target(run
     COMMAND qemu-system-i386 -cdrom ${OUTPUT_DIR}/${PROJECT_NAME}.iso
+    DEPENDS ${PROJECT_NAME}
 )

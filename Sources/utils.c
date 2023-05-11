@@ -18,19 +18,22 @@ void printf(const char * formatted_str, ...) {
 
             switch (c) {
                 case 'd':
+                {
                     int number_to_print = va_arg(arg, int);
                     terminal_print_int(number_to_print);
-
+                }
                     break;
                 case 's':
+                {
                     char * string_to_print = va_arg(arg, char *);
                     terminal_print_string(string_to_print);
-
+                }
                     break;
                 case 'c':
+                {
                     char char_to_print = va_arg(arg, int); // 'char' is promoted to 'int' when passed through '...'
                     terminal_putchar(char_to_print);
-
+                }
                     break;
                 default:
                     break;

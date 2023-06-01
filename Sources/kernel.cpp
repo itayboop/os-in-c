@@ -9,6 +9,7 @@
 #error "You are not using a cross-compiler, you will most certainly run into trouble"
 #endif
 
+/* Check if compiled with the right compiler*/
 #ifndef __x86_64__
 #error "This tutorial needs to be compiled with a x86_64-elf compiler"
 #endif

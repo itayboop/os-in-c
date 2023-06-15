@@ -5,20 +5,21 @@
 #include "utils.hpp"
 
 /* Check if the compiler thinks you are targeting the wrong operating system. */
-#if defined(__linux__)
+#ifdef __linux__
 #error "You are not using a cross-compiler, you will most certainly run into trouble"
 #endif
 
-#if !defined(__i386__)
-#error "This tutorial needs to be compiled with a ix86-elf compiler"
+/* Check if compiled with the right compiler*/
+#ifndef __x86_64__
+#error "This tutorial needs to be compiled with a x86_64-elf compiler"
 #endif
 
 extern "C" {
-void kernel_main(void) {
-    terminal_initialize();
+    void kernel_main(void) {
+        terminal_initialize();
 
-    printf("%d hello, another string is: %s, and then another char is: %c and this is try: %a here is another try: %s", 5123, "string string", 'c', "a try");
+        printf("%d hello, another string is: %s, and then another char is: %c and this is try: %a here is another try: %s", 5123, "string string", 'c', "a try");
 
-    while(1) {}
-}
+        while(1) {}
+    }
 }

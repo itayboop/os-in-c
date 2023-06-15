@@ -1,28 +1,24 @@
-ENTRY(_start)
- 
-SECTIONS
-{
-	. = 1M;
- 
-	.text BLOCK(4K) : ALIGN(4K)
-	{
-		*(.multiboot)
-		*(.text)
-	}
- 
-	.rodata BLOCK(4K) : ALIGN(4K)
-	{
-		*(.rodata)
-	}
- 
-	.data BLOCK(4K) : ALIGN(4K)
-	{
-		*(.data)
-	}
- 
-	.bss BLOCK(4K) : ALIGN(4K)
-	{
-		*(COMMON)
-		*(.bss)
-	}
+ENTRY(start)
+
+SECTIONS {
+    . = 1M;
+
+    .multiboot2_header :
+    {
+        /* ensure that the multiboot header is at the beginning */
+        KEEP(*(.multiboot2_header))
+    }
+
+    .text :
+    {
+        *(.text .text.*)
+    }
+
+    .rodata : {
+        *(.rodata .rodata.*)
+    }
+
+    .data.rel.ro : {
+        *(.data.rel.ro.local*) *(.data.rel.ro .data.rel.ro.*)
+    }
 }

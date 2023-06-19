@@ -10,7 +10,7 @@ typedef struct {
     uint16_t offset_2;       // offset bits 16..31
     uint32_t offset_3;       // offset bits 32..63
     uint32_t zero;           // reserved
-} interrupt_descriptor_64;
+} __attribute__((packed)) interrupt_descriptor_64;
 
 #define IDT_64BIT_INTERRUPT_GATE 0xE
 #define IDT_STORAGE_SEGMENT 0x20

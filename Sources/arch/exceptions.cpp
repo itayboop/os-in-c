@@ -1,6 +1,5 @@
-#include "Headers/idt.hpp"
+#include "../Headers/idt.hpp"
 #include "../Headers/utils.hpp"
-#include "../include/signal.h"
 #include <stdint.h>
 
 void exc_divide_by_zero()

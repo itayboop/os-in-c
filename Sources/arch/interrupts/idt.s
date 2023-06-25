@@ -74,8 +74,9 @@ isr_common_stub:
     mov rax, [rsp+(4*8)]
     cmp rax, 0x8
     je .skip
-    swapgs
+    swapgs                  ; for privilege level switching in kernel.
 .skip:
+    ; save segment register value on stack.
     xor rax, rax
     mov ax, fs
     push rax
@@ -88,47 +89,49 @@ isr_common_stub:
     mov ax, ds
     push rax
 
+    ; 0x10 represents a data segment selector.
     mov rax, 0x10
     mov fs, ax
     mov ds, ax
     mov ss, ax
     mov es, ax
 
-    push rdi ; 5
+    push rdi
     push rsi
     push rdx
     push rbx
     push rcx
-    push rbp ;10
+    push rbp
     push r8
     push r9
     push r10
     push r11
-    push r12 ;15
+    push r12
     push r13
     push r14
-    push r15 ; 18
-    mov rdi, rsp                ; move "pointer" from rsp to rdi (first parameter)
+    push r15
+    mov rdi, rsp                ; move "pointer" from rsp to rdi (first parameter).
     mov rbx, rsp
-    and rsp, 0xFFFFFFFFFFFFFFF0 ; align stack
+    and rsp, 0xFFFFFFFFFFFFFFF0 ; clearing LS4B for alignment.
     call isr_handler
     mov rsp, rbx
     pop r15
     pop r14
     pop r13
     pop r12
-    pop r11 ;5
+    pop r11
     pop r10
     pop r9
     pop r8
     pop rbp
-    pop rcx ;10
+    pop rcx
     pop rbx
     pop rdx
     pop rsi
     pop rdi
 
-    pop rax ;15
+    ; restore segments register values.
+    pop rax
     mov ds, ax
 
     pop rax
@@ -142,15 +145,13 @@ isr_common_stub:
     je .skip2
     swapgs
 .skip2:
-    pop rax ;19
+    pop rax
     add rsp, 16
     iretq
 
-[GLOBAL idt_flush]
-; flushes idt table change
-;
-; extern void idt_flush(void* idt_ptr)
-idt_flush:
+[GLOBAL idt_load]
+; extern void idt_load(void* idt_ptr)
+idt_load:
    mov rax, rdi                 ; Get the pointer to the IDT, passed as a parameter.
    lidt [rax]                   ; Load the IDT pointer.
    ret

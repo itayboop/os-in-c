@@ -1,6 +1,7 @@
 #define MAX_DIGITS 62
 
 #include <stdarg.h>
+
 #include "vga_buffer.hpp"
 #include "utils.hpp"
 
@@ -80,4 +81,15 @@ size_t strlen(const char* str) {
     }
 
     return string_length;
+}
+
+void *memset(void * ptr, char c, size_t size) {
+    unsigned char * byte_ptr = (unsigned char *)ptr;
+    unsigned char byte_value = (unsigned char)c;
+
+    for(int i = 0; i < size; i++) {
+        byte_ptr[i] = byte_value;
+    }
+
+    return ptr;
 }

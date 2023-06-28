@@ -10,6 +10,8 @@ isr interrupt_handlers[256] __attribute__((aligned(16)));
 idt_64_pointer idt_ptr __attribute__((aligned(16)));
 idt_entry_64 idt[256] __attribute__((aligned(16)));
 
+extern "C" void load_idt(idt_64_pointer *ptr);
+
 void register_interrupt_handler(uint8_t interrupt_id, isr handler_func) {
     interrupt_handlers[interrupt_id] = handler_func;
 }
@@ -99,5 +101,5 @@ void initialize_interrupts() {
     idt_set_gate(46, (uintptr_t)isr46);
     idt_set_gate(47, (uintptr_t)isr47);
 
-    idt_load(&idt_ptr);
+    load_idt(&idt_ptr);
 }

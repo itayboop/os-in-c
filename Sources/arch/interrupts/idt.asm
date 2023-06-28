@@ -148,9 +148,9 @@ isr_common_stub:
     add rsp, 16
     iretq
 
-[GLOBAL idt_load]
-; extern void idt_load(void* idt_ptr)
-idt_load:
+[GLOBAL load_idt]
+; extern void load_idt(void* idt_ptr)
+load_idt:
    mov rax, rdi                 ; Get the pointer to the IDT, passed as a parameter.
    lidt [rax]                   ; Load the IDT pointer.
    ret

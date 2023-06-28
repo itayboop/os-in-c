@@ -18,22 +18,24 @@ void printf(const char * formatted_str, ...) {
             c = *formatted_str++;
 
             switch (c) {
-                case 'd':
-                {
+                case 'd': {
                     int number_to_print = va_arg(arg, int);
                     terminal_print_int(number_to_print);
                 }
                     break;
-                case 's':
-                {
+                case 's': {
                     char * string_to_print = va_arg(arg, char *);
                     terminal_print_string(string_to_print);
                 }
                     break;
-                case 'c':
-                {
+                case 'c': {
                     char char_to_print = va_arg(arg, int); // 'char' is promoted to 'int' when passed through '...'
                     terminal_putchar(char_to_print);
+                }
+                    break;
+                case 'x': {
+                    int hex_to_print = va_arg(arg, int);
+                    terminal_print_hex(hex_to_print);
                 }
                     break;
                 default:
@@ -83,11 +85,11 @@ size_t strlen(const char* str) {
     return string_length;
 }
 
-void *memset(void * ptr, char c, size_t size) {
+void * memset(void * ptr, char c, size_t size) {
     unsigned char * byte_ptr = (unsigned char *)ptr;
     unsigned char byte_value = (unsigned char)c;
 
-    for(int i = 0; i < size; i++) {
+    for(unsigned int i = 0; i < size; i++) {
         byte_ptr[i] = byte_value;
     }
 

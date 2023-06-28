@@ -39,7 +39,7 @@ static size_t terminal_column;
 static uint8_t terminal_color;
 static uint16_t* terminal_buffer;
 
-static void handle_new_line(void) {
+static void handle_new_line() {
     terminal_row++;
     terminal_column = 0;
 }
@@ -48,7 +48,7 @@ void terminal_setcolor(uint8_t color) {
 	terminal_color = color;
 }
 
-void terminal_initialize(void) {
+void terminal_initialize() {
 	terminal_row = 0;
 	terminal_column = 0;
 	terminal_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
@@ -71,7 +71,7 @@ static void handle_filled_vga_height(void) {
 	terminal_row = 0;
 }
 
-void terminal_putchar(char c) {
+void terminal_putchar(const char c) {
     if(c == '\n') {
         handle_new_line();
     } else {
@@ -86,16 +86,34 @@ void terminal_putchar(char c) {
     }
 }
 
-void terminal_print_string(const char* data) {
+void terminal_print_string(const char * data) {
    	for (size_t i = 0; i < strlen(data); i++) {
 		terminal_putchar(data[i]);
     }
 }
 
-void terminal_print_int(int number) {
+void terminal_print_int(const int number) {
     char buffer[64];
 
     itoa(number, buffer);
 
     terminal_print_string(buffer);
+}
+
+void terminal_print_hex(const int value) {
+    unsigned int mask = 0xF0000000; // Mask for the most significant hex digit
+
+    terminal_print_string("0x");
+
+    for (int i = 0; i < 8; i++) {
+        unsigned int hex_digit = (value & mask) >> (28 - (i * 4));
+        if (hex_digit < 10) {
+            terminal_print_int(hex_digit);
+        }
+        else {
+            terminal_putchar('A' + (hex_digit - 10));
+        }
+
+        mask >>= 4;
+    }
 }

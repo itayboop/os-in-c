@@ -1,6 +1,6 @@
 [BITS 64]
 
-%macro ISR_NOERRCODE 1  ; define a macro, taking one parameter
+%macro ISR_NOERRCODE 1    ; define a macro, taking one parameter
     [GLOBAL isr%1]        ; %1 accesses the first parameter.
     isr%1:
         push 0
@@ -63,7 +63,6 @@ ISR_NOERRCODE 44
 ISR_NOERRCODE 45
 ISR_NOERRCODE 46
 ISR_NOERRCODE 47
-ISR_NOERRCODE 255
 
 [EXTERN isr_handler]
 

@@ -66,23 +66,19 @@ void exc_reserved() {
 }
 
 void register_all_interrupt_handlers() {
-    printf("Installing exceptions handlers...\n");
-
-    register_interrupt_handler(EXC_DIV_BY_ZERO, (isr)exc_divide_by_zero);
-    register_interrupt_handler(EXC_DEBUG, (isr)exc_debug);
-    register_interrupt_handler(EXC_NMI, (isr)exc_nmi);
-    register_interrupt_handler(EXC_BP, (isr)exc_bp);
-    register_interrupt_handler(EXC_OVERFLOW, (isr)exc_overflow);
-    register_interrupt_handler(EXC_BR, (isr)exc_bound_range);
-    register_interrupt_handler(EXC_INV_OPCODE, (isr)exc_invopcode);
-    register_interrupt_handler(EXC_DU, (isr)exc_device_not_avail);
-    register_interrupt_handler(EXC_DB_FAULT, (isr)exc_double_fault);
-    register_interrupt_handler(EXC_INV_TSS, (isr)exc_invtss);
-    register_interrupt_handler(EXC_NOT_PRESENT, (isr)exc_segment_not_present);
-    register_interrupt_handler(EXC_SSF, (isr)exc_ssf);
-    register_interrupt_handler(EXC_GP, (isr)exc_gpf);
-    register_interrupt_handler(EXC_PF, (isr)exc_pf);
-    register_interrupt_handler(EXC_PRESERVED, (isr)exc_reserved);
-
-    printf("Done.\n");
+    register_interrupt_handler(EXC_DIV_BY_ZERO, exc_divide_by_zero);
+    register_interrupt_handler(EXC_DEBUG, exc_debug);
+    register_interrupt_handler(EXC_NMI, exc_nmi);
+    register_interrupt_handler(EXC_BP, exc_bp);
+    register_interrupt_handler(EXC_OVERFLOW, exc_overflow);
+    register_interrupt_handler(EXC_BR, exc_bound_range);
+    register_interrupt_handler(EXC_INV_OPCODE, exc_invopcode);
+    register_interrupt_handler(EXC_DU, exc_device_not_avail);
+    register_interrupt_handler(EXC_DB_FAULT, exc_double_fault);
+    register_interrupt_handler(EXC_INV_TSS, exc_invtss);
+    register_interrupt_handler(EXC_NOT_PRESENT, exc_segment_not_present);
+    register_interrupt_handler(EXC_SSF, exc_ssf);
+    register_interrupt_handler(EXC_GP, exc_gpf);
+    register_interrupt_handler(EXC_PF, exc_pf);
+    register_interrupt_handler(EXC_PRESERVED, exc_reserved);
 }

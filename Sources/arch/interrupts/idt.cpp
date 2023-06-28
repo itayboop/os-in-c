@@ -4,24 +4,24 @@
 #include "../Headers/interrupts.hpp"
 #include "../Headers/utils.hpp"
 
+extern "C" void idt_load(idt_64_pointer * ptr);
+
 isr interrupt_handlers[256] __attribute__((aligned(16)));
 idt_64_pointer idt_ptr __attribute__((aligned(16)));
 idt_entry_64 idt[256] __attribute__((aligned(16)));
-
-extern void idt_load(idt_64_pointer * ptr);
 
 void register_interrupt_handler(uint8_t interrupt_id, isr handler_func) {
     interrupt_handlers[interrupt_id] = handler_func;
 }
 
-void isr_handler(registers_t * r) {
+extern "C" void isr_handler(registers_t * r) {
     if (interrupt_handlers[r->type] == 0) {
         // error(ERROR_NO_IV_FOR_INTERRUPT, r->type, r->ecode, &r);
         printf("no iv for interrupt");
-        while(true);
+        while(1) {};
     }
     else {
-        interrupt_handlers[r->type](r->ecode, r);
+        interrupt_handlers[r->type]();
     }
 }
 

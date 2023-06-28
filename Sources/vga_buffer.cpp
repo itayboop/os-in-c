@@ -1,4 +1,5 @@
 #include <stddef.h>
+
 #include "vga_buffer.hpp"
 #include "utils.hpp"
 

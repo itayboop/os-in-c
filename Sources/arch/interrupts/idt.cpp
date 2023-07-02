@@ -4,8 +4,6 @@
 #include "../Headers/interrupts.hpp"
 #include "../Headers/utils.hpp"
 
-extern "C" void idt_load(idt_64_pointer * ptr);
-
 isr interrupt_handlers[256] __attribute__((aligned(16)));
 idt_64_pointer idt_ptr __attribute__((aligned(16)));
 idt_entry_64 idt[256] __attribute__((aligned(16)));
@@ -17,25 +15,32 @@ void register_interrupt_handler(uint8_t interrupt_id, isr handler_func) {
 }
 
 extern "C" void isr_handler(registers_t * r) {
-    if (interrupt_handlers[r->type] == 0) {
-        // error(ERROR_NO_IV_FOR_INTERRUPT, r->type, r->ecode, &r);
+    if (interrupt_handlers[r->interrupt_number] == 0) {
         printf("no iv for interrupt");
         while(1) {};
     }
     else {
-        interrupt_handlers[r->type]();
+        interrupt_handlers[r->interrupt_number]();
     }
 }
 
+extern "C" void print_testing()
+{
+    printf("try\n");
+    while (1)
+    {
+    };
+}
+
 void idt_set_gate(uint8_t entry_number, uintptr_t funcall) {
-    idt_entry_64 * entry = &idt[entry_number];
+    idt_entry_64 *entry = &idt[entry_number];
     entry->offset_low = funcall & 0xFFFF;
     entry->offset_mid = (funcall >> 16) & 0xFFFF;
     entry->offset_high = (funcall >> 32) & 0xFFFFFFFF;
-    entry->selector = 8; // CODE descriptor, see GDT64.Code
+    entry->selector = 8; // CODE descriptor, see gdt64.code
     entry->flags.p = 1;
     entry->flags.ist = 0;
-    entry->flags.type = 0x0E; //  trap gate
+    entry->flags.type = 0x0E; // trap gate
     entry->flags.dpl = 0;
 
     if (EXC_PF == entry_number) // page fault
@@ -44,7 +49,7 @@ void idt_set_gate(uint8_t entry_number, uintptr_t funcall) {
         entry->flags.ist = 2;
 }
 
-void initialize_interrupts() {
+void initialize_idt() {
     memset(idt, 0, sizeof(idt));
     memset(interrupt_handlers, 0, sizeof(interrupt_handlers));
 
@@ -52,6 +57,7 @@ void initialize_interrupts() {
     idt_ptr.base = (uintptr_t)&idt;
 
     // GENERAL CPU INTERRUPTS
+    printf("[*] initializing...");
     idt_set_gate(0, (uintptr_t)isr0);
     idt_set_gate(1, (uintptr_t)isr1);
     idt_set_gate(2, (uintptr_t)isr2);

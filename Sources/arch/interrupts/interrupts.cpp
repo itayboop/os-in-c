@@ -5,6 +5,7 @@
 
 void exc_divide_by_zero() {
     printf("Divide by zero!\n");
+    while(1) {};
 }
 
 void exc_debug() {
@@ -29,6 +30,7 @@ void exc_bound_range() {
 
 void exc_invopcode() {
     printf("Invalid opcode.\n");
+    while(1) {};
 }
 
 void exc_device_not_avail() {

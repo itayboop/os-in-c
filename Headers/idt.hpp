@@ -29,18 +29,21 @@ typedef struct idt_64_pointer idt_64_pointer;
 
 typedef struct registers_t
 {
-    uint64_t r15, r14, r13, r12, r11, r10, r9, r8, rbp, rcx, rbx;
-    uint64_t rdx, rsi, rdi;
-    uint64_t es, ds, fs, rax;
-    uint64_t type, ecode;
-    uint64_t rip, cs, rflags, uesp, ss;
+    uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
+    uint64_t rbp, rdi, rsi, rdx, rcx, rbx, rax;
+
+    uint64_t interrupt_number, error_code;
+
+    uint64_t rip, cs, rflags, rsp, ss;
 } registers_t;
 
 
 // create a new type isr
 typedef void (*isr)();
 
-void initialize_interrupts();
+extern idt_entry_64 idt[256];
+
+void initialize_idt();
 void register_interrupt_handler(uint8_t interrupt_id, isr handler_func);
 
 extern "C" void isr0();

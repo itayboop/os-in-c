@@ -65,36 +65,9 @@ ISR_NOERRCODE 46
 ISR_NOERRCODE 47
 
 [EXTERN isr_handler]
+[EXTERN print_testing]
 
 isr_common_stub:
-    push rax
-
-    xor rax, rax
-    mov rax, [rsp+(4*8)]
-    cmp rax, 0x8
-    je .skip
-    swapgs                  ; for privilege level switching in kernel.
-.skip:
-    ; save segment register value on stack.
-    xor rax, rax
-    mov ax, fs
-    push rax
-
-    xor rax, rax
-    mov ax, es
-    push rax
-
-    xor rax, rax
-    mov ax, ds
-    push rax
-
-    ; 0x10 represents a data segment selector.
-    mov rax, 0x10
-    mov fs, ax
-    mov ds, ax
-    mov ss, ax
-    mov es, ax
-
     push rdi
     push rsi
     push rdx
@@ -110,10 +83,7 @@ isr_common_stub:
     push r14
     push r15
     mov rdi, rsp                ; move "pointer" from rsp to rdi (first parameter).
-    mov rbx, rsp
-    and rsp, 0xFFFFFFFFFFFFFFF0 ; clearing LS4B for alignment.
     call isr_handler
-    mov rsp, rbx
     pop r15
     pop r14
     pop r13
@@ -128,29 +98,12 @@ isr_common_stub:
     pop rdx
     pop rsi
     pop rdi
-
-    ; restore segments register values.
     pop rax
-    mov ds, ax
-
-    pop rax
-    mov es, ax
-
-    pop rax
-    mov fs, ax
-
-    mov ax, [rsp+(4*8)]
-    cmp rax, 0x8
-    je .skip2
-    swapgs
-.skip2:
-    pop rax
-    add rsp, 16
+    add rsp, 16 ; pop error code and interrupt number.
     iretq
 
 [GLOBAL load_idt]
 ; extern void load_idt(void* idt_ptr)
 load_idt:
-   mov rax, rdi                 ; Get the pointer to the IDT, passed as a parameter.
-   lidt [rax]                   ; Load the IDT pointer.
+   lidt [rdi]                   ; Load the IDT pointer.
    ret

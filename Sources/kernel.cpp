@@ -21,11 +21,13 @@ extern "C" {
     void kernel_main(void) {
         terminal_initialize();
 
-        initialize_interrupts();
+        initialize_idt();
         printf("[*] Interrupt table initialized.\n");
 
         register_all_interrupt_handlers();
         printf("[*] Preliminary interrupt handlers set up.\n");
+
+        printf("%d\n", 1 / 0);
 
         // printf("%d hello, another string is: %s, and then another char is: %c and this is try: %a here is another try: %s", 5123, "string string", 'c', "a try");
         // printf("%d", 1 / 0);

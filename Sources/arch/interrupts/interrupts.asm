@@ -65,7 +65,6 @@ ISR_NOERRCODE 46
 ISR_NOERRCODE 47
 
 [EXTERN isr_handler]
-[EXTERN print_testing]
 
 isr_common_stub:
     push rdi
@@ -103,7 +102,7 @@ isr_common_stub:
     iretq
 
 [GLOBAL load_idt]
-; extern void load_idt(void* idt_ptr)
+; extern void load_idt(void * idt_ptr)
 load_idt:
-   lidt [rdi]                   ; Load the IDT pointer.
+   lidt [rdi] ; load the IDT pointer.
    ret

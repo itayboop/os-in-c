@@ -24,14 +24,6 @@ extern "C" void isr_handler(registers_t * r) {
     }
 }
 
-extern "C" void print_testing()
-{
-    printf("try\n");
-    while (1)
-    {
-    };
-}
-
 void idt_set_gate(uint8_t entry_number, uintptr_t funcall) {
     idt_entry_64 *entry = &idt[entry_number];
     entry->offset_low = funcall & 0xFFFF;

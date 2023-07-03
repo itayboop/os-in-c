@@ -2,7 +2,8 @@
 
 #include <stdint.h>
 
-struct idt_entry_64 {
+struct idt_entry_64
+{
     uint16_t offset_low;       // offset bits 0..15
     uint16_t selector;       // a code segment selector in GDT
     uint8_t ist_index;
@@ -13,7 +14,8 @@ struct idt_entry_64 {
 } __attribute__((packed));
 typedef struct idt_entry_64 idt_entry_64;
 
-struct idt_64_pointer {
+struct idt_64_pointer
+{
     uint16_t limit;
     uintptr_t base;
 } __attribute__((packed));

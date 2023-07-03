@@ -10,21 +10,26 @@ idt_entry_64 idt[256] __attribute__((aligned(16)));
 
 extern "C" void load_idt(idt_64_pointer *ptr);
 
-void register_interrupt_handler(uint8_t interrupt_id, isr handler_func) {
+void register_interrupt_handler(uint8_t interrupt_id, isr handler_func)
+{
     interrupt_handlers[interrupt_id] = handler_func;
 }
 
-extern "C" void isr_handler(registers_t * r) {
-    if (interrupt_handlers[r->interrupt_number] == 0) {
+extern "C" void isr_handler(registers_t * r)
+{
+    if (interrupt_handlers[r->interrupt_number] == 0)
+    {
         printf("no iv for interrupt");
         while(1) {};
     }
-    else {
+    else
+    {
         interrupt_handlers[r->interrupt_number]();
     }
 }
 
-void idt_set_gate(uint8_t entry_number, uintptr_t funcall) {
+void idt_set_gate(uint8_t entry_number, uintptr_t funcall)
+{
     idt_entry_64 * entry = &idt[entry_number];
 
     entry->offset_high = (funcall >> 32) & 0xFFFFFFFF;
@@ -35,7 +40,8 @@ void idt_set_gate(uint8_t entry_number, uintptr_t funcall) {
     entry->selector = 8; // CODE descriptor, see gdt64.code
 }
 
-void initialize_idt() {
+void initialize_idt()
+{
     memset(idt, 0, sizeof(idt));
     memset(interrupt_handlers, 0, sizeof(interrupt_handlers));
 
@@ -43,7 +49,6 @@ void initialize_idt() {
     idt_ptr.base = (uintptr_t)&idt;
 
     // GENERAL CPU INTERRUPTS
-    printf("[*] initializing...");
     idt_set_gate(0, (uintptr_t)isr0);
     idt_set_gate(1, (uintptr_t)isr1);
     idt_set_gate(2, (uintptr_t)isr2);

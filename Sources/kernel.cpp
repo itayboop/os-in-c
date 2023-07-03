@@ -17,8 +17,10 @@
 #include "utils.hpp"
 #include "idt.hpp"
 
-extern "C" {
-    void kernel_main(void) {
+extern "C"
+{
+    void kernel_main(void)
+    {
         terminal_initialize();
 
         initialize_idt();

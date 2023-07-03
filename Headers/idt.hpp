@@ -33,7 +33,7 @@ typedef struct registers_t
 
 
 // create a new type isr
-typedef void (*isr)();
+typedef void (*isr)(registers_t * registers);
 
 extern idt_entry_64 idt[256];
 

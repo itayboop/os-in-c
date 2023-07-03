@@ -15,16 +15,16 @@ void register_interrupt_handler(uint8_t interrupt_id, isr handler_func)
     interrupt_handlers[interrupt_id] = handler_func;
 }
 
-extern "C" void isr_handler(registers_t * r)
+extern "C" void isr_handler(registers_t * registers)
 {
-    if (interrupt_handlers[r->interrupt_number] == 0)
+    if (interrupt_handlers[registers->interrupt_number] == 0)
     {
         printf("no iv for interrupt");
         while(1) {};
     }
     else
     {
-        interrupt_handlers[r->interrupt_number]();
+        interrupt_handlers[registers->interrupt_number](registers);
     }
 }
 

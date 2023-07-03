@@ -15,7 +15,7 @@ void register_interrupt_handler(uint8_t interrupt_id, isr handler_func)
     interrupt_handlers[interrupt_id] = handler_func;
 }
 
-extern "C" void isr_handler(registers_t * registers)
+extern "C" void isr_handler(registers_t* registers)
 {
     if (interrupt_handlers[registers->interrupt_number] == 0)
     {
@@ -30,7 +30,7 @@ extern "C" void isr_handler(registers_t * registers)
 
 void idt_set_gate(uint8_t entry_number, uintptr_t funcall)
 {
-    idt_entry_64 * entry = &idt[entry_number];
+    idt_entry_64* entry = &idt[entry_number];
 
     entry->offset_high = (funcall >> 32) & 0xFFFFFFFF;
     entry->offset_mid = (funcall >> 16) & 0xFFFF;

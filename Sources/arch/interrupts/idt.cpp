@@ -25,20 +25,14 @@ extern "C" void isr_handler(registers_t * r) {
 }
 
 void idt_set_gate(uint8_t entry_number, uintptr_t funcall) {
-    idt_entry_64 *entry = &idt[entry_number];
-    entry->offset_low = funcall & 0xFFFF;
-    entry->offset_mid = (funcall >> 16) & 0xFFFF;
-    entry->offset_high = (funcall >> 32) & 0xFFFFFFFF;
-    entry->selector = 8; // CODE descriptor, see gdt64.code
-    entry->flags.p = 1;
-    entry->flags.ist = 0;
-    entry->flags.type = 0x0E; // trap gate
-    entry->flags.dpl = 0;
+    idt_entry_64 * entry = &idt[entry_number];
 
-    if (EXC_PF == entry_number) // page fault
-        entry->flags.ist = 1;
-    if (EXC_DB_FAULT == entry_number) // double fault
-        entry->flags.ist = 2;
+    entry->offset_high = (funcall >> 32) & 0xFFFFFFFF;
+    entry->offset_mid = (funcall >> 16) & 0xFFFF;
+    entry->offset_low = funcall & 0xFFFF;
+    entry->type_attributes = 0xEF;
+    entry->ist_index = 0;
+    entry->selector = 8; // CODE descriptor, see gdt64.code
 }
 
 void initialize_idt() {

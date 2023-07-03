@@ -5,16 +5,8 @@
 struct idt_entry_64 {
     uint16_t offset_low;       // offset bits 0..15
     uint16_t selector;       // a code segment selector in GDT
-    struct {
-        uint16_t ist : 3; // interrupt stack table
-        uint16_t r0 : 1;
-        uint16_t r1 : 1;
-        uint16_t r2 : 3;
-        uint16_t type : 4; // trap or interrupt
-        uint16_t r3 : 1;
-        uint16_t dpl : 2; // descriptor priviledge level
-        uint16_t p : 1;   // segment present flag
-    } __attribute__((packed)) flags;
+    uint8_t ist_index;
+    uint8_t type_attributes;
     uint16_t offset_mid;       // offset bits 16..31
     uint32_t offset_high;       // offset bits 32..63
     uint32_t reserved;           // reserved

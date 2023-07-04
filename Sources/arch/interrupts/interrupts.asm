@@ -67,11 +67,12 @@ ISR_NOERRCODE 47
 [EXTERN isr_handler]
 
 isr_common_stub:
-    push rdi
-    push rsi
-    push rdx
+    push rax
     push rbx
     push rcx
+    push rdx
+    push rsi
+    push rdi
     push rbp
     push r8
     push r9
@@ -83,6 +84,7 @@ isr_common_stub:
     push r15
     mov rdi, rsp                ; move "pointer" from rsp to rdi (first parameter).
     call isr_handler
+    mov rsp, rax
     pop r15
     pop r14
     pop r13
@@ -92,17 +94,17 @@ isr_common_stub:
     pop r9
     pop r8
     pop rbp
+    pop rdi
+    pop rsi
+    pop rdx
     pop rcx
     pop rbx
-    pop rdx
-    pop rsi
-    pop rdi
     pop rax
     add rsp, 16 ; pop error code and interrupt number.
     iretq
 
 [GLOBAL load_idt]
-; extern void load_idt(void * idt_ptr)
+; extern void load_idt(void* idt_ptr)
 load_idt:
    lidt [rdi] ; load the IDT pointer.
    ret

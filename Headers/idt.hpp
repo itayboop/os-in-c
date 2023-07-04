@@ -21,7 +21,7 @@ struct idt_64_pointer
 } __attribute__((packed));
 typedef struct idt_64_pointer idt_64_pointer;
 
-typedef struct registers_t
+struct registers_t
 {
     uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
     uint64_t rbp, rdi, rsi, rdx, rcx, rbx, rax;
@@ -29,16 +29,14 @@ typedef struct registers_t
     uint64_t interrupt_number, error_code;
 
     uint64_t rip, cs, rflags, rsp, ss;
-} registers_t;
+} __attribute__((packed)) ;
+typedef struct registers_t registers_t;
 
-
-// create a new type isr
+// create a new function type isr
 typedef void (*isr)(registers_t* registers);
 
-extern idt_entry_64 idt[256];
-
 void initialize_idt();
-void register_interrupt_handler(uint8_t interrupt_id, isr handler_func);
+void register_interrupt_handler(uint8_t interrupt_number, isr handler_func);
 
 extern "C" void isr0();
 extern "C" void isr1();

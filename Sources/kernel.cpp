@@ -29,11 +29,9 @@ extern "C"
         register_all_interrupt_handlers();
         printf("[*] Preliminary interrupt handlers set up.\n");
 
-        printf("%d\n", 1 / 0);
+        int a = 1 / 0;
+        printf("%d", a);
 
-        // printf("%d hello, another string is: %s, and then another char is: %c and this is try: %a here is another try: %s", 5123, "string string", 'c', "a try");
-        // printf("%d", 1 / 0);
-
-        while (1) {}
+        while(1);
     }
 }

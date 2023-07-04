@@ -5,7 +5,7 @@
 
 void exc_divide_by_zero(registers_t* registers)
 {
-    printf("Divide by zero!\n");
+    printf("Divide by zero at %x\n", registers->rip);
     while(1);
 }
 
@@ -41,7 +41,7 @@ void exc_bound_range(registers_t* registers)
 
 void exc_invopcode(registers_t* registers)
 {
-    printf("Invalid opcode.\n");
+    printf("Invalid opcode at %x\n", registers->rip);
     while(1);
 }
 

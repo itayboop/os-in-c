@@ -29,9 +29,6 @@ extern "C"
         register_all_interrupt_handlers();
         printf("[*] Preliminary interrupt handlers set up.\n");
 
-        int a = 1 / 0;
-        printf("%d", a);
-
         while(1);
     }
 }

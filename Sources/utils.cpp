@@ -101,7 +101,7 @@ size_t strlen(const char* str)
     return string_length;
 }
 
-void * memset(void * ptr, char c, size_t size)
+void* memset(void * ptr, char c, size_t size)
 {
     unsigned char* byte_ptr = (unsigned char *)ptr;
     unsigned char byte_value = (unsigned char)c;

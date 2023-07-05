@@ -1,5 +1,4 @@
 #pragma once
-
 #include <stdint.h>
 
 void terminal_print_string(const char *str);

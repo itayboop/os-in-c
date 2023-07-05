@@ -1,5 +1,4 @@
 #pragma once
-
 #include <stdint.h>
 
 struct idt_entry_64

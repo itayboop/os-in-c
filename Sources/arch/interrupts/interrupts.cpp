@@ -1,7 +1,7 @@
 #include <stdint.h>
 
-#include "../Headers/interrupts.hpp"
-#include "../Headers/utils.hpp"
+#include "interrupts.hpp"
+#include "utils.hpp"
 
 void exc_divide_by_zero(registers_t* registers)
 {

@@ -5,7 +5,7 @@
 
 /* Check if compiled with the right compiler*/
 #ifndef __x86_64__
-#error "This tutorial needs to be compiled with a x86_64-elf compiler"
+#error "This OS needs to be compiled with a x86_64-elf compiler"
 #endif
 
 #include <stdbool.h>

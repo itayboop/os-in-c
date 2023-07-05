@@ -23,8 +23,8 @@ void exc_nmi(registers_t* registers)
 
 void exc_bp(registers_t* registers)
 {
-	printf("Breakpoint!\n");
-	while (1);
+	printf("Breakpoint at %x\n", registers->rip);
+	// TODO: add input check for enter in order to continue.
 }
 
 void exc_overflow(registers_t* registers)
@@ -77,7 +77,7 @@ void exc_ssf(registers_t* registers)
 
 void exc_gpf(registers_t* registers)
 {
-	printf("General protection fault.\n");
+	printf("General protection fault at %x.\n", registers->rip);
 	while (1);
 }
 

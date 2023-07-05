@@ -16,7 +16,7 @@ void register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func)
 }
 
 extern "C" {
-	void isr_handler(registers_t* registers)
+	registers_t* isr_handler(registers_t* registers)
 	{
 		if (interrupt_handlers[registers->interrupt_number] == 0)
 		{
@@ -27,6 +27,8 @@ extern "C" {
 		{
 			interrupt_handlers[registers->interrupt_number](registers);
 		}
+
+	return registers;
 	}
 }
 

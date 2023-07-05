@@ -1,7 +1,47 @@
 [BITS 64]
 
-%macro ISR_NOERRCODE 1    ; define a macro, taking one parameter
-    [GLOBAL isr%1]        ; %1 accesses the first parameter.
+%macro pusha64 0
+
+    push rax
+    push rbx
+    push rcx
+    push rdx
+    push rsi
+    push rdi
+    push rbp
+    push r8
+    push r9
+    push r10
+    push r11
+    push r12
+    push r13
+    push r14
+    push r15
+
+%endmacro
+
+%macro popa64 0
+
+    pop r15
+    pop r14
+    pop r13
+    pop r12
+    pop r11
+    pop r10
+    pop r9
+    pop r8
+    pop rbp
+    pop rdi
+    pop rsi
+    pop rdx
+    pop rcx
+    pop rbx
+    pop rax
+
+%endmacro
+
+%macro ISR_NOERRCODE 1
+    [GLOBAL isr%1]
     isr%1:
         push 0
         push %1
@@ -67,39 +107,11 @@ ISR_NOERRCODE 47
 [EXTERN isr_handler]
 
 isr_common_stub:
-    push rax
-    push rbx
-    push rcx
-    push rdx
-    push rsi
-    push rdi
-    push rbp
-    push r8
-    push r9
-    push r10
-    push r11
-    push r12
-    push r13
-    push r14
-    push r15
+    pusha64
     mov rdi, rsp                ; move "pointer" from rsp to rdi (first parameter).
     call isr_handler
     mov rsp, rax
-    pop r15
-    pop r14
-    pop r13
-    pop r12
-    pop r11
-    pop r10
-    pop r9
-    pop r8
-    pop rbp
-    pop rdi
-    pop rsi
-    pop rdx
-    pop rcx
-    pop rbx
-    pop rax
+    popa64
     add rsp, 16 ; pop error code and interrupt number.
     iretq
 

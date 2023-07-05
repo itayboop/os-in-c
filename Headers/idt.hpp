@@ -29,7 +29,7 @@ typedef struct __attribute__((packed)) idt_64_pointer
 } __attribute__((packed)) ;
 typedef struct registers_t registers_t;
 
-// create a new function type isr
+// create a new function type isr_t
 typedef void (*isr_t)(registers_t* registers);
 
 void initialize_idt();

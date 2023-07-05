@@ -18,7 +18,7 @@ typedef struct __attribute__((packed)) idt_64_pointer
     uintptr_t base;
 } idt_64_pointer_t;
 
-    struct registers_t
+typedef struct __attribute__((packed)) registers
 {
     uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
     uint64_t rbp, rdi, rsi, rdx, rcx, rbx, rax;
@@ -26,8 +26,7 @@ typedef struct __attribute__((packed)) idt_64_pointer
     uint64_t interrupt_number, error_code;
 
     uint64_t rip, cs, rflags, rsp, ss;
-} __attribute__((packed)) ;
-typedef struct registers_t registers_t;
+} registers_t;
 
 // create a new function type isr_t
 typedef void (*isr_t)(registers_t* registers);

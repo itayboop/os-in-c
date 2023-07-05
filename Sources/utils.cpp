@@ -5,23 +5,23 @@
 #include "vga_buffer.hpp"
 #include "utils.hpp"
 
-void printf(const char * formatted_str, ...)
+void printf(const char* formatted_str, ...)
 {
     va_list arg;
-    char c;
+    char formatted_str_char = 0;
 
     va_start(arg, formatted_str);
 
-    while ((c = *formatted_str++))
+    while ((formatted_str_char = *formatted_str++))
     {
-        if(c != '%')
+        if(formatted_str_char != '%')
         {
-            terminal_putchar(c);
+            terminal_putchar(formatted_str_char);
         } else
         {
-            c = *formatted_str++;
+            formatted_str_char = *formatted_str++;
 
-            switch (c)
+            switch (formatted_str_char)
             {
                 case 'd':
                 {
@@ -101,7 +101,7 @@ size_t strlen(const char* str)
     return string_length;
 }
 
-void* memset(void * ptr, char c, size_t size)
+void* memset(void* ptr, char c, size_t size)
 {
     unsigned char* byte_ptr = (unsigned char *)ptr;
     unsigned char byte_value = (unsigned char)c;

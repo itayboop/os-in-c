@@ -19,16 +19,16 @@
 
 extern "C"
 {
-    void kernel_main(void)
-    {
-        terminal_initialize();
+	void kernel_main(void)
+	{
+		terminal_initialize();
 
-        initialize_idt();
-        printf("[*] Interrupt table initialized.\n");
+		initialize_idt();
+		printf("[*] Interrupt table initialized.\n");
 
-        register_all_interrupt_handlers();
-        printf("[*] Preliminary interrupt handlers set up.\n");
+		register_all_interrupt_handlers();
+		printf("[*] Preliminary interrupt handlers set up.\n");
 
-        while(1);
-    }
+		while(1);
+	}
 }

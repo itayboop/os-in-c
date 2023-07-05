@@ -2,57 +2,57 @@
 
 %macro pusha64 0
 
-    push rax
-    push rbx
-    push rcx
-    push rdx
-    push rsi
-    push rdi
-    push rbp
-    push r8
-    push r9
-    push r10
-    push r11
-    push r12
-    push r13
-    push r14
-    push r15
+	push rax
+	push rbx
+	push rcx
+	push rdx
+	push rsi
+	push rdi
+	push rbp
+	push r8
+	push r9
+	push r10
+	push r11
+	push r12
+	push r13
+	push r14
+	push r15
 
 %endmacro
 
 %macro popa64 0
 
-    pop r15
-    pop r14
-    pop r13
-    pop r12
-    pop r11
-    pop r10
-    pop r9
-    pop r8
-    pop rbp
-    pop rdi
-    pop rsi
-    pop rdx
-    pop rcx
-    pop rbx
-    pop rax
+	pop r15
+	pop r14
+	pop r13
+	pop r12
+	pop r11
+	pop r10
+	pop r9
+	pop r8
+	pop rbp
+	pop rdi
+	pop rsi
+	pop rdx
+	pop rcx
+	pop rbx
+	pop rax
 
 %endmacro
 
 %macro ISR_NOERRCODE 1
-    [GLOBAL isr%1]
-    isr%1:
-        push 0
-        push %1
-        jmp isr_common_stub
+	[GLOBAL isr%1]
+	isr%1:
+		push 0
+		push %1
+		jmp isr_common_stub
 %endmacro
 
 %macro ISR_ERRCODE 1
-    [GLOBAL isr%1]
-    isr%1:
-        push %1
-        jmp isr_common_stub
+	[GLOBAL isr%1]
+	isr%1:
+		push %1
+		jmp isr_common_stub
 %endmacro
 
 ISR_NOERRCODE 0
@@ -107,13 +107,13 @@ ISR_NOERRCODE 47
 [EXTERN isr_handler]
 
 isr_common_stub:
-    pusha64
-    mov rdi, rsp                ; move "pointer" from rsp to rdi (first parameter).
-    call isr_handler
-    mov rsp, rax
-    popa64
-    add rsp, 16 ; pop error code and interrupt number.
-    iretq
+	pusha64
+	mov rdi, rsp                ; move "pointer" from rsp to rdi (first parameter).
+	call isr_handler
+	mov rsp, rax
+	popa64
+	add rsp, 16 ; pop error code and interrupt number.
+	iretq
 
 [GLOBAL load_idt]
 ; extern void load_idt(void* idt_ptr)

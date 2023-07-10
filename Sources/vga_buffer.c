@@ -3,7 +3,7 @@
 #include "vga_buffer.h"
 #include "utils.h"
 
-typedef enum vga_color
+typedef enum vga_color_t
 {
 	VGA_COLOR_BLACK = 0,
 	VGA_COLOR_BLUE = 1,
@@ -21,9 +21,9 @@ typedef enum vga_color
 	VGA_COLOR_LIGHT_MAGENTA = 13,
 	VGA_COLOR_LIGHT_BROWN = 14,
 	VGA_COLOR_WHITE = 15,
-} vga_color;
+} vga_color_t;
 
-static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg)
+static inline uint8_t vga_entry_color(enum vga_color_t fg, enum vga_color_t bg)
 {
 	return fg | bg << 4;
 }
@@ -119,7 +119,7 @@ void terminal_print_int(const int number)
 
 void terminal_print_hex(const int value)
 {
-	unsigned int mask = 0xF0000000; // Mask for the most significant hex digit
+	unsigned int mask = 0xF0000000; // mask for the most significant hex digit
 
 	terminal_print_string("0x");
 

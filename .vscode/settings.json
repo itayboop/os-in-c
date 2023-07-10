@@ -8,6 +8,7 @@
         "*.tcc": "c",
         "cstdint": "c",
         "random": "c",
-        "idt.h": "c"
+        "idt.h": "c",
+        "types.h": "c"
     }
 }

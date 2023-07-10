@@ -7,6 +7,7 @@ void exc_divide_by_zero(registers_t* registers)
 {
 	printf("Divide by zero at %x\n", registers->rip);
 	while(1);
+	// TODO: remove hanging and write a better resolve.
 }
 
 void exc_debug(registers_t* registers)

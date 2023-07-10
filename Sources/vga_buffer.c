@@ -1,7 +1,7 @@
 #include <stddef.h>
 
-#include "vga_buffer.hpp"
-#include "utils.hpp"
+#include "vga_buffer.h"
+#include "utils.h"
 
 typedef enum vga_color
 {

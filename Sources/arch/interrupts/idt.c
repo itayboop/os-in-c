@@ -1,36 +1,36 @@
-#include "idt.hpp"
+#include "idt.h"
 #include <stdint.h>
 
-#include "utils.hpp"
-#include "interrupts.hpp"
+#include "utils.h"
+#include "interrupts.h"
 
 isr_t interrupt_handlers[256] __attribute__((aligned(16)));
 idt_64_pointer_t idt_ptr __attribute__((aligned(16)));
 idt_entry_64_t idt[256] __attribute__((aligned(16)));
 
-extern "C" void load_idt(idt_64_pointer_t* ptr);
+void load_idt(idt_64_pointer_t* ptr);
 
 void register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func)
 {
 	interrupt_handlers[interrupt_number] = handler_func;
 }
 
-extern "C" {
-	registers_t* isr_handler(registers_t* registers)
-	{
-		if (interrupt_handlers[registers->interrupt_number] == 0)
-		{
-			printf("no iv for interrupt");
-			while (1);
-		}
-		else
-		{
-			interrupt_handlers[registers->interrupt_number](registers);
-		}
 
-	return registers;
+registers_t* isr_handler(registers_t* registers)
+{
+	if (interrupt_handlers[registers->interrupt_number] == 0)
+	{
+		printf("no iv for interrupt");
+		while (1);
 	}
+	else
+	{
+		interrupt_handlers[registers->interrupt_number](registers);
+	}
+
+return registers;
 }
+
 
 void idt_set_gate(uint8_t entry_number, uintptr_t funcall)
 {

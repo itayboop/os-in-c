@@ -12,25 +12,23 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "interrupts.hpp"
-#include "vga_buffer.hpp"
-#include "utils.hpp"
-#include "idt.hpp"
+#include "interrupts.h"
+#include "vga_buffer.h"
+#include "utils.h"
+#include "idt.h"
 
-extern "C"
+void kernel_main(void)
 {
-	void kernel_main(void)
-	{
-		terminal_initialize();
+	terminal_initialize();
 
-		initialize_idt();
-		printf("[*] Interrupt table initialized.\n");
+	initialize_idt();
+	printf("[*] Interrupt table initialized.\n");
 
-		register_all_interrupt_handlers();
-		printf("[*] Preliminary interrupt handlers set up.\n");
+	register_all_interrupt_handlers();
+	printf("[*] Preliminary interrupt handlers set up.\n");
 
-		asm("int3");
+	asm("int3");
 
-		printf("did not crush");
-	}
+	printf("did not crush");
 }
+

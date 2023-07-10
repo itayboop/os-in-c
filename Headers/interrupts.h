@@ -1,5 +1,5 @@
 #pragma once
-#include "idt.hpp"
+#include "idt.h"
 
 #define EXC_DIV_BY_ZERO 0
 #define EXC_DEBUG 1

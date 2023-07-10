@@ -2,8 +2,8 @@
 
 #include <stdarg.h>
 
-#include "vga_buffer.hpp"
-#include "utils.hpp"
+#include "vga_buffer.h"
+#include "utils.h"
 
 void printf(const char* formatted_str, ...)
 {

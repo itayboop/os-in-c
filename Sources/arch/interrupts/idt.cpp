@@ -1,8 +1,8 @@
+#include "idt.hpp"
 #include <stdint.h>
 
-#include "interrupts.hpp"
 #include "utils.hpp"
-#include "idt.hpp"
+#include "interrupts.hpp"
 
 isr_t interrupt_handlers[256] __attribute__((aligned(16)));
 idt_64_pointer_t idt_ptr __attribute__((aligned(16)));

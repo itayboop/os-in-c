@@ -100,7 +100,7 @@ void terminal_putchar(const char c)
 	}
 }
 
-void terminal_print_string(const char * data)
+void terminal_print_string(const char* data)
 {
    	for (size_t i = 0; i < strlen(data); i++)
 	{

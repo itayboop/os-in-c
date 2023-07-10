@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
-project(x86_64_c_os CXX ASM_NASM)
+project(x86_64_c_os C ASM_NASM)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(ISO_DIR "isodir")
 set(SOURCE_DIR "Sources")
@@ -9,13 +10,13 @@ set(OUTPUT_DIR "output")
 set(CMAKE_ASM_NASM_COMPILER nasm)
 set(CMAKE_ASM_NASM_FLAGS "${CMAKE_ASM_NASM_FLAGS} -f elf64")
 
-set(CMAKE_CXX_COMPILER x86_64-elf-g++)
+set(CMAKE_C_COMPILER x86_64-elf-gcc)
 # TODO: add optimization flag in cpp flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffreestanding -Wall -Wextra -fno-exceptions -fno-rtti")
+set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} -ffreestanding -std=gnu99 -Wall -Wextra")
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ${CMAKE_SOURCE_DIR}/linker.ld -ffreestanding -O2 -n -nostdlib -lgcc -o ${PROJECT_NAME}.bin")
 
-file(GLOB_RECURSE SOURCES "${INCLUDE_DIR}/*.h" "${INCLUDE_DIR}/*.hpp" "${SOURCE_DIR}/*.c" "${SOURCE_DIR}/*.cpp" "${SOURCE_DIR}/*.s" "${SOURCE_DIR}/*.asm" "${SOURCE_DIR}/*.nasm")
+file(GLOB_RECURSE SOURCES "${INCLUDE_DIR}/*.h" "${SOURCE_DIR}/*.c" "${SOURCE_DIR}/*.s" "${SOURCE_DIR}/*.asm" "${SOURCE_DIR}/*.nasm")
 
 include_directories(${INCLUDE_DIR})
 add_executable(${PROJECT_NAME} ${SOURCES})

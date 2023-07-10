@@ -11,8 +11,8 @@ set(CMAKE_ASM_NASM_COMPILER nasm)
 set(CMAKE_ASM_NASM_FLAGS "${CMAKE_ASM_NASM_FLAGS} -f elf64")
 
 set(CMAKE_C_COMPILER x86_64-elf-gcc)
-# TODO: add optimization flag in cpp flags
-set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} -ffreestanding -std=gnu99 -Wall -Wextra")
+# TODO: add optimization flag in c flags
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ffreestanding -std=gnu99 -Wall -Wextra")
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ${CMAKE_SOURCE_DIR}/linker.ld -ffreestanding -O2 -n -nostdlib -lgcc -o ${PROJECT_NAME}.bin")
 

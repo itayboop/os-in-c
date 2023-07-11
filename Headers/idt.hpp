@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 
-typedef struct __attribute__((packed)) idt_entry_64
+struct __attribute__((packed)) idt_entry_64
 {
 	uint16_t offset_low;       // offset bits 0..15
 	uint16_t selector;       // a code segment selector in GDT
@@ -10,15 +10,15 @@ typedef struct __attribute__((packed)) idt_entry_64
 	uint16_t offset_mid;       // offset bits 16..31
 	uint32_t offset_high;       // offset bits 32..63
 	uint32_t reserved;           // reserved
-} idt_entry_64_t;
+};
 
-typedef struct __attribute__((packed)) idt_64_pointer
+struct __attribute__((packed)) idt_64_pointer
 {
 	uint16_t limit;
 	uintptr_t base;
-} idt_64_pointer_t;
+};
 
-typedef struct __attribute__((packed)) registers
+struct __attribute__((packed)) registers
 {
 	uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
 	uint64_t rbp, rdi, rsi, rdx, rcx, rbx, rax;
@@ -26,13 +26,13 @@ typedef struct __attribute__((packed)) registers
 	uint64_t interrupt_number, error_code;
 
 	uint64_t rip, cs, rflags, rsp, ss;
-} registers_t;
+};
 
-// create a new function type isr_t
-typedef void (*isr_t)(registers_t* registers);
+// create a new function type Isr
+using Isr = void(registers* registers);
 
 void initialize_idt();
-void register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func);
+void register_interrupt_handler(uint8_t interrupt_number, Isr handler_func);
 
 extern "C" void isr0();
 extern "C" void isr1();

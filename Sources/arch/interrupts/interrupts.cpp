@@ -3,115 +3,115 @@
 #include "interrupts.hpp"
 #include "utils.hpp"
 
-void exc_divide_by_zero(registers_t* registers)
+void exc_divide_by_zero(registers* registers)
 {
 	printf("Divide by zero at %x\n", registers->rip);
 	while(1);
 }
 
-void exc_debug(registers_t* registers)
+void exc_debug(registers* registers)
 {
 	printf("Debug!\n");
 	while (1);
 }
 
-void exc_nmi(registers_t* registers)
+void exc_nmi(registers* registers)
 {
 	printf("Non maskable interrupt!\n");
 	while (1);
 }
 
-void exc_bp(registers_t* registers)
+void exc_bp(registers* registers)
 {
 	printf("Breakpoint at %x\n", registers->rip);
 	// TODO: add input check for enter in order to continue.
 }
 
-void exc_overflow(registers_t* registers)
+void exc_overflow(registers* registers)
 {
 	printf("Overflow!\n");
 	while (1);
 }
 
-void exc_bound_range(registers_t* registers)
+void exc_bound_range(registers* registers)
 {
 	printf("Bound range exceeded.\n");
 	while (1);
 }
 
-void exc_invopcode(registers_t* registers)
+void exc_invopcode(registers* registers)
 {
 	printf("Invalid opcode at %x\n", registers->rip);
 	while(1);
 }
 
-void exc_device_not_avail(registers_t* registers)
+void exc_device_not_avail(registers* registers)
 {
 	printf("Device not available.\n");
 	while (1);
 }
 
-void exc_double_fault(registers_t* registers)
+void exc_double_fault(registers* registers)
 {
 	printf("Double fault, halting.\n");
 	while(1);
 }
 
-void exc_invtss(registers_t* registers)
+void exc_invtss(registers* registers)
 {
 	printf("TSS invalid.\n");
 	while (1);
 }
 
-void exc_segment_not_present(registers_t* registers)
+void exc_segment_not_present(registers* registers)
 {
 	printf("Segment not present.\n");
 	while (1);
 }
 
-void exc_ssf(registers_t* registers)
+void exc_ssf(registers* registers)
 {
 	printf("Stacksegment faulted.\n");
 	while (1);
 }
 
-void exc_gpf(registers_t* registers)
+void exc_gpf(registers* registers)
 {
 	printf("General protection fault at %x.\n", registers->rip);
 	while (1);
 }
 
-void exc_pf(registers_t* registers)
+void exc_pf(registers* registers)
 {
 	printf("Page fault.\n");
 	while (1);
 }
 
-void exc_kernel_fpu(registers_t* registers)
+void exc_kernel_fpu(registers* registers)
 {
 	printf("Kernel FPU error.\n");
 	while (1);
 }
 
-void exc_align_check(registers_t* registers)
+void exc_align_check(registers* registers)
 {
 	printf("Align check error.\n");
 	while (1);
 }
 
-void exc_machine_check(registers_t* registers)
+void exc_machine_check(registers* registers)
 {
 	printf("Machine check exception.\n");
 	while (1);
 }
 
-void exc_xm(registers_t* registers)
+void exc_xm(registers* registers)
 {
 	printf("SIMD FP.\n");
 	while (1);
 }
 
-void exc_virtualization(registers_t* registers)
+void exc_virtualization(registers* registers)
 {
 	printf("Kernel virtualization exception.\n");
 	while(1);

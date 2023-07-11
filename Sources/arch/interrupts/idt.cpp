@@ -5,10 +5,10 @@
 #include "interrupts.hpp"
 
 isr_t interrupt_handlers[256] __attribute__((aligned(16)));
-idt_64_pointer_t idt_ptr __attribute__((aligned(16)));
-idt_entry_64_t idt[256] __attribute__((aligned(16)));
+idt_64_pointer idt_ptr __attribute__((aligned(16)));
+idt_entry_64 idt[256] __attribute__((aligned(16)));
 
-extern "C" void load_idt(idt_64_pointer_t* ptr);
+extern "C" void load_idt(idt_64_pointer* ptr);
 
 void register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func)
 {
@@ -34,7 +34,7 @@ extern "C" {
 
 void idt_set_gate(uint8_t entry_number, uintptr_t funcall)
 {
-	idt_entry_64_t* entry = &idt[entry_number];
+	idt_entry_64* entry = &idt[entry_number];
 
 	entry->offset_high = (funcall >> 32) & 0xFFFFFFFF;
 	entry->offset_mid = (funcall >> 16) & 0xFFFF;

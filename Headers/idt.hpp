@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 
-struct __attribute__((packed)) idt_entry_64
+struct __attribute__((packed)) IdtEntry
 {
 	uint16_t offset_low;       // offset bits 0..15
 	uint16_t selector;       // a code segment selector in GDT
@@ -12,13 +12,13 @@ struct __attribute__((packed)) idt_entry_64
 	uint32_t reserved;           // reserved
 };
 
-struct __attribute__((packed)) idt_64_pointer
+struct __attribute__((packed)) IdtPointer
 {
 	uint16_t limit;
 	uintptr_t base;
 };
 
-struct __attribute__((packed)) registers
+struct __attribute__((packed)) Registers
 {
 	uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
 	uint64_t rbp, rdi, rsi, rdx, rcx, rbx, rax;
@@ -29,7 +29,7 @@ struct __attribute__((packed)) registers
 };
 
 // create a new function type Isr
-using Isr = void(registers* registers);
+using Isr = void(*) (Registers* registers);
 
 void initialize_idt();
 void register_interrupt_handler(uint8_t interrupt_number, Isr handler_func);

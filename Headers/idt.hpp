@@ -14,7 +14,7 @@ struct __attribute__((packed)) IdtEntry
 
 struct __attribute__((packed)) IdtPointer
 {
-	uint16_t limit;
+	uint16_t size;
 	uintptr_t base;
 };
 

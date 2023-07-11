@@ -8,15 +8,13 @@ Isr interrupt_handlers[256] __attribute__((aligned(16)));
 IdtPointer idt_ptr __attribute__((aligned(16)));
 IdtEntry idt[256] __attribute__((aligned(16)));
 
-extern "C" void load_idt(IdtPointer* ptr);
-
 void register_interrupt_handler(uint8_t interrupt_number, Isr handler_func)
 {
 	interrupt_handlers[interrupt_number] = handler_func;
 }
 
 extern "C" {
-	Registers *isr_handler(Registers *registers)
+	Registers* isr_handler(Registers *registers)
 	{
 		if (interrupt_handlers[registers->interrupt_number] == 0)
 		{

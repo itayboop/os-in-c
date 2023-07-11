@@ -32,6 +32,7 @@ struct __attribute__((packed)) Registers
 using Isr = void(*) (Registers* registers);
 
 void initialize_idt();
+extern "C" void load_idt(IdtPointer *ptr);
 void register_interrupt_handler(uint8_t interrupt_number, Isr handler_func);
 
 extern "C" void isr0();

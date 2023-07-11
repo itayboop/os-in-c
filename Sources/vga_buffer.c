@@ -3,7 +3,7 @@
 #include "vga_buffer.h"
 #include "utils.h"
 
-typedef enum vga_color_t
+typedef enum vga_color_e
 {
 	VGA_COLOR_BLACK = 0,
 	VGA_COLOR_BLUE = 1,
@@ -23,7 +23,7 @@ typedef enum vga_color_t
 	VGA_COLOR_WHITE = 15,
 } vga_color_t;
 
-static inline uint8_t vga_entry_color(enum vga_color_t fg, enum vga_color_t bg)
+static inline uint8_t vga_entry_color(vga_color_t fg, vga_color_t bg)
 {
 	return fg | bg << 4;
 }

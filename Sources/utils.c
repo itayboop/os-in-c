@@ -31,7 +31,7 @@ void printf(const char* formatted_str, ...)
 					break;
 				case 's':
 				{
-					char * string_to_print = va_arg(arg, char *);
+					char * string_to_print = va_arg(arg, char*);
 					terminal_print_string(string_to_print);
 				}
 					break;

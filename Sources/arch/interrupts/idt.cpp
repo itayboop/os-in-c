@@ -4,29 +4,29 @@
 #include "utils.hpp"
 #include "interrupts.hpp"
 
-Isr interrupt_handlers[256] __attribute__((aligned(16)));
+IsrHandler interrupt_handlers[256] __attribute__((aligned(16)));
 IdtPointer idt_ptr __attribute__((aligned(16)));
 IdtEntry idt[256] __attribute__((aligned(16)));
 
-void register_interrupt_handler(uint8_t interrupt_number, Isr handler_func)
+void register_interrupt_handler(uint8_t interrupt_number, IsrHandler handler_func)
 {
 	interrupt_handlers[interrupt_number] = handler_func;
 }
 
 extern "C" {
-	Registers* isr_handler(Registers* registers)
+	Registers* isr_handler(Registers& registers)
 	{
-		if (interrupt_handlers[registers->interrupt_number] == 0)
+		if (interrupt_handlers[registers.interrupt_number] == 0)
 		{
 			printf("no iv for interrupt");
 			while (1);
 		}
 		else
 		{
-			interrupt_handlers[registers->interrupt_number](registers);
+			interrupt_handlers[registers.interrupt_number](registers);
 		}
 
-	return registers;
+	return &registers;
 	}
 }
 

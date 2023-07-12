@@ -29,7 +29,7 @@ extern "C"
 		register_all_interrupt_handlers();
 		printf("[*] Preliminary interrupt handlers set up.\n");
 
-		asm("int3");
+		printf("%d\n", 1 /0);
 
 		printf("did not crush");
 	}

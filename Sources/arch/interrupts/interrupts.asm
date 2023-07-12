@@ -108,7 +108,7 @@ ISR_NOERRCODE 47
 
 isr_common_stub:
 	pusha64
-	mov rdi, rsp                ; move "pointer" from rsp to rdi (first parameter).
+	lea rdi, [rsp]                ; move "pointer" from rsp to rdi (first parameter).
 	call isr_handler
 	mov rsp, rax
 	popa64

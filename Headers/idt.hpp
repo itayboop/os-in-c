@@ -28,11 +28,11 @@ struct __attribute__((packed)) Registers
 	uint64_t rip, cs, rflags, rsp, ss;
 };
 
-using isr_function = void(*) (Registers& registers);
+using IsrHandlerFunction = void(*) (Registers& registers);
 
 void initialize_idt();
 extern "C" void load_idt(IdtDescriptor* ptr);
-void register_interrupt_handler(uint8_t interrupt_number, isr_function handler_func);
+void register_interrupt_handler(uint8_t interrupt_number, IsrHandlerFunction handler_func);
 
 extern "C" void isr0();
 extern "C" void isr1();

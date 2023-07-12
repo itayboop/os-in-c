@@ -12,7 +12,7 @@ struct __attribute__((packed)) IdtEntry
 	uint32_t reserved;
 };
 
-struct __attribute__((packed)) IdtPointer
+struct __attribute__((packed)) IdtDescriptor
 {
 	uint16_t size;
 	uintptr_t base;
@@ -31,7 +31,7 @@ struct __attribute__((packed)) Registers
 using isr_function = void(*) (Registers& registers);
 
 void initialize_idt();
-extern "C" void load_idt(IdtPointer* ptr);
+extern "C" void load_idt(IdtDescriptor* ptr);
 void register_interrupt_handler(uint8_t interrupt_number, isr_function handler_func);
 
 extern "C" void isr0();

@@ -14,7 +14,7 @@ void register_interrupt_handler(uint8_t interrupt_number, isr_function handler_f
 }
 
 extern "C" {
-	Registers* isr_handler(Registers& registers)
+	Registers* isr_function_handler(Registers& registers)
 	{
 		if (interrupt_handlers[registers.interrupt_number] == 0)
 		{

@@ -104,7 +104,7 @@ ISR_NOERRCODE 45
 ISR_NOERRCODE 46
 ISR_NOERRCODE 47
 
-[EXTERN isr_handler]
+[EXTERN isr_function_handler]
 
 isr_common_stub:
 	pusha64

@@ -109,7 +109,7 @@ ISR_NOERRCODE 47
 isr_common_stub:
 	pusha64
 	lea rdi, [rsp]                ; move "pointer" from rsp to rdi (first parameter).
-	call isr_handler
+	call isr_function_handler
 	mov rsp, rax
 	popa64
 	add rsp, 16 ; pop error code and interrupt number.

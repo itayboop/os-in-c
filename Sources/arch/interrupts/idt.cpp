@@ -4,11 +4,11 @@
 #include "utils.hpp"
 #include "interrupts.hpp"
 
-IsrHandler interrupt_handlers[256] __attribute__((aligned(16)));
+isr_function_handler interrupt_handlers[256] __attribute__((aligned(16)));
 IdtPointer idt_ptr __attribute__((aligned(16)));
 IdtEntry idt[256] __attribute__((aligned(16)));
 
-void register_interrupt_handler(uint8_t interrupt_number, IsrHandler handler_func)
+void register_interrupt_handler(uint8_t interrupt_number, isr_function_handler handler_func)
 {
 	interrupt_handlers[interrupt_number] = handler_func;
 }

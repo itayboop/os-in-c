@@ -3,13 +3,13 @@
 
 struct __attribute__((packed)) IdtEntry
 {
-	uint16_t offset_low;       // offset bits 0..15
-	uint16_t selector;       // a code segment selector in GDT
+	uint16_t offset_low;	// offset bits 0..15
+	uint16_t selector;	// a code segment selector in GDT
 	uint8_t ist_index;
 	uint8_t type_attributes;
-	uint16_t offset_mid;       // offset bits 16..31
-	uint32_t offset_high;       // offset bits 32..63
-	uint32_t reserved;           // reserved
+	uint16_t offset_mid;	// offset bits 16..31
+	uint32_t offset_high;	// offset bits 32..63
+	uint32_t reserved;	// reserved
 };
 
 struct __attribute__((packed)) IdtPointer
@@ -28,11 +28,11 @@ struct __attribute__((packed)) Registers
 	uint64_t rip, cs, rflags, rsp, ss;
 };
 
-using IsrHandler = void(*) (Registers& registers);
+using isr_function_handler = void(*) (Registers& registers);
 
 void initialize_idt();
 extern "C" void load_idt(IdtPointer* ptr);
-void register_interrupt_handler(uint8_t interrupt_number, IsrHandler handler_func);
+void register_interrupt_handler(uint8_t interrupt_number, isr_function_handler handler_func);
 
 extern "C" void isr0();
 extern "C" void isr1();

@@ -15,7 +15,7 @@ struct __attribute__((packed)) IdtEntry
 struct __attribute__((packed)) IdtDescriptor
 {
 	uint16_t size;
-	uint64_t base;
+	void* base;
 };
 
 struct __attribute__((packed)) Registers

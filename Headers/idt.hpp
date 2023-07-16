@@ -29,6 +29,7 @@ struct __attribute__((packed)) Registers
 };
 
 using IsrHandlerFunction = void(*) (Registers& registers);
+using IsrFunction = void(*) (void);
 
 void initialize_idt();
 extern "C" void load_idt(IdtDescriptor* ptr);

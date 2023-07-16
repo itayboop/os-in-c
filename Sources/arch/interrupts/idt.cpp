@@ -49,7 +49,7 @@ void initialize_idt()
 	memset(interrupt_handlers, 0, sizeof(interrupt_handlers));
 
 	idt_ptr.size = (sizeof(idt)) - 1;
-	idt_ptr.base = (uintptr_t)&idt;
+	idt_ptr.base = reinterpret_cast<uintptr_t>(&idt);
 
 	// GENERAL CPU INTERRUPTS
 	idt_set_entry(0, (IsrFunction)isr0);

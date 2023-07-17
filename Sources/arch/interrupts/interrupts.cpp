@@ -2,6 +2,7 @@
 
 #include "interrupts.hpp"
 #include "utils.hpp"
+#include "idt.hpp"
 
 void exc_divide_by_zero(Registers& Registers)
 {
@@ -15,13 +16,13 @@ void exc_debug(Registers& Registers)
 	while (1);
 }
 
-void exc_nmi(Registers& Registers)
+void exc_non_maskable_int(Registers& Registers)
 {
 	printf("Non maskable interrupt!\n");
 	while (1);
 }
 
-void exc_bp(Registers& Registers)
+void exc_breakpoint(Registers& Registers)
 {
 	printf("Breakpoint at %x\n", Registers.rip);
 	// TODO: add input check for enter in order to continue.
@@ -45,7 +46,7 @@ void exc_invopcode(Registers& Registers)
 	while(1);
 }
 
-void exc_device_not_avail(Registers& Registers)
+void exc_device_unavailable(Registers& Registers)
 {
 	printf("Device not available.\n");
 	while (1);
@@ -69,7 +70,7 @@ void exc_segment_not_present(Registers& Registers)
 	while (1);
 }
 
-void exc_ssf(Registers& Registers)
+void exc_stack_segment_fault(Registers& Registers)
 {
 	printf("Stacksegment faulted.\n");
 	while (1);
@@ -119,23 +120,23 @@ void exc_virtualization(Registers& Registers)
 
 void register_all_interrupt_handlers()
 {
-	register_interrupt_handler(EXC_DIV_BY_ZERO, exc_divide_by_zero);
-	register_interrupt_handler(EXC_DEBUG, exc_debug);
-	register_interrupt_handler(EXC_NMI, exc_nmi);
-	register_interrupt_handler(EXC_BP, exc_bp);
-	register_interrupt_handler(EXC_OVERFLOW, exc_overflow);
-	register_interrupt_handler(EXC_BR, exc_bound_range);
-	register_interrupt_handler(EXC_INV_OPCODE, exc_invopcode);
-	register_interrupt_handler(EXC_DU, exc_device_not_avail);
-	register_interrupt_handler(EXC_DB_FAULT, exc_double_fault);
-	register_interrupt_handler(EXC_INV_TSS, exc_invtss);
-	register_interrupt_handler(EXC_NOT_PRESENT, exc_segment_not_present);
-	register_interrupt_handler(EXC_SSF, exc_ssf);
-	register_interrupt_handler(EXC_GP, exc_gpf);
-	register_interrupt_handler(EXC_PF, exc_pf);
-	register_interrupt_handler(EXC_MF, exc_kernel_fpu);
-	register_interrupt_handler(EXC_AC, exc_align_check);
-	register_interrupt_handler(EXC_MC, exc_machine_check);
-	register_interrupt_handler(EXC_XM, exc_xm);
-	register_interrupt_handler(EXC_VE, exc_virtualization);
+	register_interrupt_handler(InterruptCode::DIV_BY_ZERO, exc_divide_by_zero);
+	register_interrupt_handler(InterruptCode::DEBUG, exc_debug);
+	register_interrupt_handler(InterruptCode::NON_MASKABLE_INT, exc_non_maskable_int);
+	register_interrupt_handler(InterruptCode::BREAKPOINT, exc_breakpoint);
+	register_interrupt_handler(InterruptCode::OVERFLOW, exc_overflow);
+	register_interrupt_handler(InterruptCode::BOUND_RANGE, exc_bound_range);
+	register_interrupt_handler(InterruptCode::INV_OPCODE, exc_invopcode);
+	register_interrupt_handler(InterruptCode::DEVICE_UNAVAILABLE, exc_device_unavailable);
+	register_interrupt_handler(InterruptCode::DOUBLE_FAULT, exc_double_fault);
+	register_interrupt_handler(InterruptCode::INV_TSS, exc_invtss);
+	register_interrupt_handler(InterruptCode::NOT_PRESENT, exc_segment_not_present);
+	register_interrupt_handler(InterruptCode::STACK_SEGMANT_FAULT, exc_stack_segment_fault);
+	register_interrupt_handler(InterruptCode::GENRAL_PROTECTION_FAULT, exc_gpf);
+	register_interrupt_handler(InterruptCode::PAGE_FAULT, exc_pf);
+	register_interrupt_handler(InterruptCode::KERNEL_FPU, exc_kernel_fpu);
+	register_interrupt_handler(InterruptCode::ALIGN_CHECK, exc_align_check);
+	register_interrupt_handler(InterruptCode::MACHINE_CHECK, exc_machine_check);
+	register_interrupt_handler(InterruptCode::SIMF_FP, exc_xm);
+	register_interrupt_handler(InterruptCode::VIRTUALIZATION, exc_virtualization);
 }

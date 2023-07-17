@@ -1,7 +1,9 @@
 #pragma once
-#include <stdint.h>
 
-struct __attribute__((packed)) IdtEntry
+#include <stdint.h>
+#include "interrupts.hpp"
+
+struct __attribute__((packed)) __attribute__((aligned (16))) IdtEntry
 {
 	uint16_t offset_low;	       // offset bits 0..15
 	uint16_t selector;	// a code segment selector in GDT
@@ -29,11 +31,11 @@ struct __attribute__((packed)) Registers
 };
 
 using IsrHandlerFunction = void(*) (Registers& registers);
-using IsrFunction = void(*) (void);
+using IsrFunction = void(void);
 
 void initialize_idt();
 extern "C" void load_idt(IdtDescriptor* ptr);
-void register_interrupt_handler(uint8_t interrupt_number, IsrHandlerFunction handler_func);
+void register_interrupt_handler(InterruptCode interrupt_number, IsrHandlerFunction handler_func);
 
 extern "C" void isr0();
 extern "C" void isr1();

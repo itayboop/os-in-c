@@ -75,7 +75,7 @@ static void terminal_putentryat(char c)
 	terminal_buffer[index] = vga_entry(c, terminal_color);
 }
 
-static void handle_filled_vga_height(void)
+static void handle_filled_vga_height()
 {
 	terminal_row = 0;
 }

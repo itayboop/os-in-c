@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include "interrupts.hpp"
 
-struct __attribute__((packed)) __attribute__((aligned (16))) IdtEntry
+struct __attribute__((packed)) IdtEntry
 {
 	uint16_t offset_low;	       // offset bits 0..15
 	uint16_t selector;	// a code segment selector in GDT
@@ -11,7 +11,6 @@ struct __attribute__((packed)) __attribute__((aligned (16))) IdtEntry
 	uint8_t type_attributes;
 	uint16_t offset_mid;	// offset bits 16..31
 	uint32_t offset_high;	// offset bits 32..63
-	uint32_t reserved;
 };
 
 struct __attribute__((packed)) IdtDescriptor

@@ -116,7 +116,7 @@ isr_common_stub:
 	iretq
 
 [GLOBAL load_idt]
-; extern void load_idt(void* idt_ptr)
+; extern void load_idt(IdtDescriptor* idt_ptr)
 load_idt:
    lidt [rdi] ; load the IDT pointer.
    ret

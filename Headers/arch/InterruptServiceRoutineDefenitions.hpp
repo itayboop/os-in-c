@@ -1,40 +1,45 @@
 #pragma once
+#include <cstdint>
 
-#include <stdint.h>
-#include "interrupts.hpp"
+#include "Utils/Pair.hpp"
+#include "OsDefinitions.hpp"
+#include "InterruptDescriptorTable.hpp"
 
-struct __attribute__((packed)) IdtEntry
+enum class InterruptCode : uint8_t
 {
-	uint16_t offset_low;	       // offset bits 0..15
-	uint16_t selector;	// a code segment selector in GDT
-	uint8_t ist_index;
-	uint8_t type_attributes;
-	uint16_t offset_mid;	// offset bits 16..31
-	uint32_t offset_high;	// offset bits 32..63
+	DIV_BY_ZERO = 0,
+	DEBUG,
+	NON_MASKABLE_INT,
+	BREAKPOINT,
+	OVERFLOW,
+	BOUND_RANGE,
+	INV_OPCODE,
+	DEVICE_UNAVAILABLE,
+	DOUBLE_FAULT,
+	INV_TSS = 10,
+	NOT_PRESENT,
+	STACK_SEGMANT_FAULT,
+	GENRAL_PROTECTION_FAULT,
+	PAGE_FAULT,
+	KERNEL_FPU = 16,
+	ALIGN_CHECK,
+	MACHINE_CHECK,
+	SIMF_FP,
+	VIRTUALIZATION,
 };
 
-struct __attribute__((packed)) IdtDescriptor
+struct __attribute__((packed)) IsrRegisters : public ProcessorRegisterSet
 {
-	uint16_t size;
-	IdtEntry* base;
-};
-
-struct __attribute__((packed)) Registers
-{
-	uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
-	uint64_t rbp, rdi, rsi, rdx, rcx, rbx, rax;
-
 	uint64_t interrupt_number, error_code;
-
-	uint64_t rip, cs, rflags, rsp, ss;
 };
 
-using IsrHandlerFunction = void(*) (Registers& registers);
-using IsrFunction = void(void);
+using IsrFunction = void(*)(void);
+using IsrHandlerFunction = void(*)(IsrRegisters& registers);
+using IsrEntry = Pair<InterruptCode, IsrHandlerFunction>;
 
-void initialize_idt();
-extern "C" void load_idt(IdtDescriptor* ptr);
+extern "C" IsrRegisters* isr_function_handler(IsrRegisters& registers);
 void register_interrupt_handler(InterruptCode interrupt_number, IsrHandlerFunction handler_func);
+void register_all_interrupt_handlers();
 
 extern "C" void isr0();
 extern "C" void isr1();

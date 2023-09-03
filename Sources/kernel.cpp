@@ -12,10 +12,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "interrupts.hpp"
-#include "vga_buffer.hpp"
 #include "utils.hpp"
-#include "idt.hpp"
+#include "idtUtils.hpp"
+#include "vga_buffer.hpp"
+#include "InterruptDescriptorTable.hpp"
 
 extern "C"
 {
@@ -26,7 +26,7 @@ extern "C"
 		initialize_idt();
 		printf("[*] Interrupt table initialized.\n");
 
-		register_all_interrupt_handlers();
+		IdtUtils::register_all_interrupt_handlers();
 		printf("[*] Preliminary interrupt handlers set up.\n");
 
 		printf("%d\n", 1 /0);
@@ -34,3 +34,6 @@ extern "C"
 		printf("did not crush");
 	}
 }
+
+// TODO: add cpp to each hpp (in it's corresponding tree)
+// TODO: add hpp to each asm (in it's corresponding tree)

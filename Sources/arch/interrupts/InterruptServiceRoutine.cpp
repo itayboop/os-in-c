@@ -137,7 +137,7 @@ IsrRegisters* isr_function_handler(IsrRegisters& isr_registers)
 
 void register_all_interrupt_handlers()
 {
-	constexpr IsrEntry RAW_ISR_ENTRIES[] =
+	static constexpr IsrEntry RAW_ISR_ENTRIES[] =
 	{
 		IsrEntry(InterruptCode::DIV_BY_ZERO, exc_divide_by_zero),
 		IsrEntry(InterruptCode::DEBUG, exc_debug),
@@ -160,5 +160,5 @@ void register_all_interrupt_handlers()
 		IsrEntry(InterruptCode::VIRTUALIZATION, exc_virtualization)
 	};
 
-	constexpr Span<IsrEntry> ISR_ENTRIES {RAW_ISR_ENTRIES, SIZE_OF_ARRAY(RAW_ISR_ENTRIES)};
+	constexpr Span<const IsrEntry> ISR_ENTRIES (RAW_ISR_ENTRIES, SIZE_OF_ARRAY(RAW_ISR_ENTRIES));
 }

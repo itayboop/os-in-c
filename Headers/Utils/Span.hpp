@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <type_traits>
 #include "KernelException.hpp"
 
 template<typename T>
@@ -16,22 +17,22 @@ public:
 	}
 
 public:
-	constexpr const T* cbegin() const
+	constexpr std::add_const_t<T>* cbegin() const
 	{
 		return _ptr;
 	}
 
-	constexpr const T* cend() const
+	constexpr std::add_const_t<T>* cend() const
 	{
 		return _ptr + _count;
 	}
 
-	constexpr T* begin() const
+	constexpr std::add_const_t<T>* begin() const
 	{
 		return _ptr;
 	}
 
-	constexpr T* end() const
+	constexpr std::add_const_t<T>* end() const
 	{
 		return _ptr + _count;
 	}
@@ -61,7 +62,7 @@ public:
 		return _ptr[index];
 	}
 
-	constexpr const T& operator[](uint32_t index) const
+	constexpr std::add_const_t<T>& operator[](uint32_t index) const
 	{
 		if (index >= _count)
 		{

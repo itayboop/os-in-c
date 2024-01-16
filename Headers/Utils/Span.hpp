@@ -17,6 +17,7 @@ public:
 	}
 
 public:
+	// TODO: are cbegin and cend really needed?
 	constexpr std::add_const_t<T>* cbegin() const
 	{
 		return _ptr;

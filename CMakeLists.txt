@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 project(x86_64_c_os CXX ASM_NASM)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(ISO_DIR "isodir")
 set(SOURCE_DIR "Sources")

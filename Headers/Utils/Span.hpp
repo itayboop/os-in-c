@@ -8,6 +8,9 @@ template<typename T>
 class Span
 {
 public:
+	constexpr Span(): _ptr(nullptr), _count(0)
+	{}
+
 	constexpr explicit Span(T* ptr, uint32_t count) : _ptr(ptr), _count(count)
 	{
 		if ((ptr == nullptr) && (count != 0))
@@ -71,6 +74,18 @@ public:
 		}
 
 		return _ptr[index];
+	}
+
+	constexpr T& operator=(Span<T> spanToCopy)
+	{
+		this->_count = spanToCopy._count;
+		this->_ptr = spanToCopy._ptr;
+	}
+
+	constexpr std::add_const_t<T>& operator=(Span<const T> spanToCopy)
+	{
+		this->_count = spanToCopy._count;
+		this->_ptr = spanToCopy._ptr;
 	}
 
 protected:

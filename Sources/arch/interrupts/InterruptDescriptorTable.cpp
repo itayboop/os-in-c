@@ -1,12 +1,14 @@
+#include "memory.hpp"
+#include "Pointer.hpp"
 #include "InterruptDescriptorTable.hpp"
-#include "Utils/Pointer.hpp"
 
-InterruptDescriptorTable::InterruptDescriptorTable()
+InterruptDescriptorTable::InterruptDescriptorTable(const Span<IsrFunction>& functions)
 {
-	// TODO: not to be such a noob
+	memset(&this->_entries, 0, sizeof(&this->_entries));
+	
 }
 
-IdtEntry* InterruptDescriptorTable::getEntries()
+Span<IdtEntry> InterruptDescriptorTable::getEntries()
 {
 	return this->_entries;
 };

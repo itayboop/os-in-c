@@ -1,5 +1,6 @@
 [BITS 64]
 
+# TODO: move pusha64 and popa64 to macros
 %macro pusha64 0
 
 	push rax

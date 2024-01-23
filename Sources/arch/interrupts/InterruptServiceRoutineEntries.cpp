@@ -1,10 +1,9 @@
 #include <stdint.h>
 
-#include "utils.hpp"
-#include "Utils/Vector.hpp"
-#include "Utils/Macros.hpp"
-#include "InterruptDescriptorTable.hpp"
-#include "InterruptServiceRoutineDefenitions.hpp"
+#include "print.hpp"
+#include "Vector.hpp"
+#include "Macros.hpp"
+#include "InterruptServiceRoutineEntries.hpp"
 
 void exc_divide_by_zero(IsrRegisters& isr_registers)
 {
@@ -120,24 +119,10 @@ void exc_virtualization(IsrRegisters& isr_registers)
 	while(1);
 }
 
-IsrRegisters* isr_function_handler(IsrRegisters& isr_registers)
+Span<const IsrEntry> register_all_interrupt_handlers()
 {
-	if (interrupt_handlers[isr_registers.interrupt_number] == 0)
-	{
-		printf("no iv for interrupt");
-		while (1);
-	}
-	else
-	{
-		interrupt_handlers[isr_registers.interrupt_number](isr_registers);
-	}
-
-	return &isr_registers;
-}
-
-void register_all_interrupt_handlers()
-{
-	static constexpr IsrEntry RAW_ISR_ENTRIES[] =
+	// must be static otherwise we get "expression must have a constant value" on Span constructor 
+	static constexpr IsrEntry raw_isr_entries[] =
 	{
 		IsrEntry(InterruptCode::DIV_BY_ZERO, exc_divide_by_zero),
 		IsrEntry(InterruptCode::DEBUG, exc_debug),
@@ -160,5 +145,38 @@ void register_all_interrupt_handlers()
 		IsrEntry(InterruptCode::VIRTUALIZATION, exc_virtualization)
 	};
 
-	constexpr Span<const IsrEntry> ISR_ENTRIES (RAW_ISR_ENTRIES, SIZE_OF_ARRAY(RAW_ISR_ENTRIES));
+	constexpr Span<const IsrEntry> isr_entries (raw_isr_entries, SIZE_OF_ARRAY(raw_isr_entries));
+
+	return isr_entries;
+}
+Span<const IsrEntry> isr_entries = register_all_interrupt_handlers();
+
+InterruptServiceRoutineEntries::InterruptServiceRoutineEntries()
+{
+	this->_isr_entries = isr_entries;
+}
+
+Span<std::add_const_t<IsrEntry>> InterruptServiceRoutineEntries::get_isr_entries()
+{
+	return this->_isr_entries;
+}
+
+void InterruptServiceRoutineEntries::set_isr_entries(Span<std::add_const_t<IsrEntry>> isr_entries)
+{
+	this->_isr_entries = isr_entries;
+}
+
+IsrRegisters* InterruptServiceRoutineEntries::isr_function_handler(IsrRegisters& registers)
+{
+	if (this->_isr_entries [registers.interrupt_number] == 0)
+	{
+		printf("no iv for interrupt");
+		while (1);
+	}
+	else
+	{
+		interrupt_handlers[registers.interrupt_number](registers);
+	}
+
+	return &registers;
 }

@@ -7,7 +7,7 @@
 
 struct __attribute__((packed)) IdtEntry
 {
-	// TODO: can we use PointerValue instead of uint_<16|32>t(s) here
+	// TODO: can i use PointerValue instead of uint_<16|32>t(s) here
 	uint16_t offset_low;	       // offset bits 0..15
 	uint16_t selector;	// a code segment selector in GDT
 	uint8_t ist_index;
@@ -31,17 +31,13 @@ class InterruptDescriptorTable
 		explicit InterruptDescriptorTable(const Span<IsrFunction>& functions);
 
 	public:
-		IdtEntry* getEntries();
+		Span<IdtEntry> getEntries();
 		IdtDescriptor* getIdtDescriptor();
 
 	private:
 		void idt_set_entry(uint8_t entry_number, IsrFunction funcall);
-		void register_interrupt_handler(InterruptCode interrupt_number, IsrHandlerFunction handler_func);
 
 	private:
-		static constexpr uint32_t INTERRUPT_DESCRIPTORS_COUNT = 256;
-
-	private:
-		Vector<IdtEntry, INTERRUPT_DESCRIPTORS_COUNT> _entries;
+		Span<IdtEntry> _entries;
 		alignas(uint16_t) IdtDescriptor* _idt_descriptor;
 };

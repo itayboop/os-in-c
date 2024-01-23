@@ -37,10 +37,6 @@ using IsrFunction = void(*)(void);
 using IsrHandlerFunction = void(*)(IsrRegisters& registers);
 using IsrEntry = Pair<InterruptCode, IsrHandlerFunction>;
 
-extern "C" IsrRegisters* isr_function_handler(IsrRegisters& registers);
-void register_interrupt_handler(InterruptCode interrupt_number, IsrHandlerFunction handler_func);
-void register_all_interrupt_handlers();
-
 extern "C" void isr0();
 extern "C" void isr1();
 extern "C" void isr2();

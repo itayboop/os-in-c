@@ -168,7 +168,7 @@ void InterruptServiceRoutineEntries::set_isr_entries(Span<std::add_const_t<IsrEn
 
 IsrRegisters* InterruptServiceRoutineEntries::isr_function_handler(IsrRegisters& registers)
 {
-	if (this->_isr_entries [registers.interrupt_number] == 0)
+	if (this->_isr_entries[registers.interrupt_number] == 0)
 	{
 		printf("no iv for interrupt");
 		while (1);

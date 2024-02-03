@@ -20,17 +20,6 @@ public:
 	}
 
 public:
-	// TODO: are cbegin and cend really needed?
-	constexpr std::add_const_t<T>* cbegin() const
-	{
-		return _ptr;
-	}
-
-	constexpr std::add_const_t<T>* cend() const
-	{
-		return _ptr + _count;
-	}
-
 	constexpr std::add_const_t<T>* begin() const
 	{
 		return _ptr;
@@ -51,9 +40,34 @@ public:
 		return _ptr + _count;
 	}
 
-	constexpr uint32_t size() const
+	constexpr uint32_t size()
 	{
 		return _count;
+	}
+
+	template <typename U>
+	constexpr Span<T> copy_from_impl(const Span<U>& span_to_copy, size_t size)
+	{
+		if (this == &span_to_copy) {
+			return *this;
+		}
+
+		static_assert(size == this->_count, "Size mismatch in copy_from");
+		for (int i = 0; i < this->_count; ++i) {
+			this->_ptr[i] = span_to_copy[i];
+		}
+
+		return *this;
+	}
+
+	constexpr Span<T> copy_from(const Span<T>& span_to_copy, size_t size)
+	{
+		return copy_from_impl(span_to_copy, size);
+	}
+
+	constexpr Span<T> copy_from(const Span<std::add_const_t<T>>& span_to_copy, size_t size)
+	{
+		return copy_from_impl(span_to_copy, size);
 	}
 
 	constexpr T& operator[](uint32_t index)
@@ -76,19 +90,7 @@ public:
 		return _ptr[index];
 	}
 
-	constexpr T& operator=(Span<T> spanToCopy)
-	{
-		this->_count = spanToCopy._count;
-		this->_ptr = spanToCopy._ptr;
-	}
-
-	constexpr std::add_const_t<T>& operator=(Span<const T> spanToCopy)
-	{
-		this->_count = spanToCopy._count;
-		this->_ptr = spanToCopy._ptr;
-	}
-
 protected:
-	T* const _ptr;
+	T* _ptr;
 	uint32_t _count;
 };

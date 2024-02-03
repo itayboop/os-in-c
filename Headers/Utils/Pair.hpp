@@ -10,12 +10,12 @@ public:
 	constexpr explicit Pair(const T& first, const U& second) : _first(first), _second(second)
 	{}
 
-private:
+public:
 	constexpr T& first();
 	constexpr U& second();
 
 	constexpr const T& first() const;
-	constexpr const T& second() const;
+	constexpr const U& second() const;
 
 private:
 	T _first;

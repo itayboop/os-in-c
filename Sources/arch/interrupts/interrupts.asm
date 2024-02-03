@@ -106,10 +106,12 @@ ISR_NOERRCODE 46
 ISR_NOERRCODE 47
 
 [EXTERN isr_function_handler]
+[EXTERN g__interrupt_service_routine_entries]
 
 isr_common_stub:
 	pusha64
-	lea rdi, [rsp]	; move "pointer" from rsp to rdi (first parameter).
+	lea rdi, [rsp]	; move "registers" parameter.
+	lea rsi, [g__interrupt_service_routine_entries] ; move InterruptServiceRoutineEntries instance.
 	call isr_function_handler
 	mov rsp, rax
 	popa64

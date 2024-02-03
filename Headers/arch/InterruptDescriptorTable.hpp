@@ -1,9 +1,12 @@
 #pragma once
-#include <stdint.h>
+
+#include "stddef.h"
 
 #include "Utils/Span.hpp"
 #include "Utils/Vector.hpp"
-#include "InterruptServiceRoutineDefenitions.hpp"
+#include "InterruptServiceRoutineEntries.hpp"
+
+extern "C" void load_idt(IdtDescriptor* idt_descriptor);
 
 struct __attribute__((packed)) IdtEntry
 {
@@ -19,25 +22,25 @@ struct __attribute__((packed)) IdtEntry
 
 struct __attribute__((packed)) IdtDescriptor
 {
-	uint16_t size;
-	IdtEntry* addr;
+	size_t size;
+	IdtEntry addr;
 };
-
-extern "C" void load_idt(IdtDescriptor* idt_descriptor);
 
 class InterruptDescriptorTable
 {
-	public:
-		explicit InterruptDescriptorTable(const Span<IsrFunction>& functions);
+public:
+	InterruptDescriptorTable();
 
-	public:
-		Span<IdtEntry> getEntries();
-		IdtDescriptor* getIdtDescriptor();
+public:
+	Span<IdtEntry> getEntries();
+	IdtDescriptor* getIdtDescriptor();
 
-	private:
-		void idt_set_entry(uint8_t entry_number, IsrFunction funcall);
+private:
+	void idt_set_entry(uint8_t entry_number, IsrFunction funcall);
+	void set_all_idt_entries();
 
-	private:
-		Span<IdtEntry> _entries;
-		alignas(uint16_t) IdtDescriptor* _idt_descriptor;
+private:
+	Span<IdtEntry> _entries;
+	constexpr static uint16_t IDT_SIZE = 256;
+	alignas(uint16_t) IdtDescriptor* _idt_descriptor;
 };

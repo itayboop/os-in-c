@@ -5,7 +5,7 @@
 
 #include "vga_buffer.hpp"
 
-void printf(const char* formatted_str, ...)
+void printk(const char* formatted_str, ...)
 {
 	va_list arg;
 	char formatted_str_char = 0;
@@ -101,6 +101,23 @@ size_t strlen(const char* str)
 	return string_length;
 }
 
+/* 
+	TODO: maybe convert to template like:
+	```
+	template<typename T>
+	T* memset(T* ptr, char c, size_t size)
+	{
+		unsigned char byte_value = (unsigned char)c;
+
+		for(unsigned int i = 0; i < size; i++)
+		{
+			ptr[i] = byte_value;
+		}
+
+		return ptr;
+	}
+	```
+*/
 void* memset(void* ptr, char c, size_t size)
 {
 	unsigned char* byte_ptr = (unsigned char *)ptr;

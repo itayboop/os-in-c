@@ -12,26 +12,18 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "utils.hpp"
-#include "idtUtils.hpp"
 #include "vga_buffer.hpp"
 #include "InterruptDescriptorTable.hpp"
+#include "InterruptServiceRoutineInitializer.hpp"
 
 extern "C"
 {
 	void kernel_main()
 	{
 		terminal_initialize();
-
-		initialize_idt();
-		printf("[*] Interrupt table initialized.\n");
-
-		IdtUtils::register_all_interrupt_handlers();
-		printf("[*] Preliminary interrupt handlers set up.\n");
-
-		printf("%d\n", 1 /0);
-
-		printf("did not crush");
+		//TOOD: can i just do `InterruptServiceRoutineInitializer();` ?
+		const InterruptServiceRoutineInitializer isr_initializer = InterruptServiceRoutineInitializer();
+		
 	}
 }
 

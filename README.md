@@ -10,4 +10,5 @@ This is my own OS im currently writing!
  - [X] CPU Interrupts
  - [ ] Converting To C++
  - [ ] Memory Management & Heap Allocation
+ - [ ] Syscalls
  - [ ] Shell

@@ -1,4 +1,4 @@
-#include "Headers/arch/InterruptServiceRoutine/InterruptServiceRoutineInitializer.hpp"
+#include "Arch/InterruptServiceRoutine/InterruptServiceRoutineInitializer.hpp"
 
 InterruptServiceRoutineInitializer::InterruptServiceRoutineInitializer()
 {

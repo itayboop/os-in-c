@@ -2,8 +2,8 @@
 #include <cstdint>
 
 #include "Utils/Pair.hpp"
-#include "OsDefinitions.hpp"
-#include "InterruptDescriptorTable.hpp"
+#include "Arch/OsDefinitions.hpp"
+#include "Arch/InterruptDescriptorTable.hpp"
 
 enum class InterruptCode : uint8_t
 {

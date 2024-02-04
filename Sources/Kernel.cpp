@@ -12,7 +12,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "vga_buffer.hpp"
+#include "VgaBuffer.hpp"
 #include "InterruptDescriptorTable.hpp"
 #include "InterruptServiceRoutineInitializer.hpp"
 

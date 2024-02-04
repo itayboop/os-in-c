@@ -4,7 +4,7 @@
 
 #include "Utils/Span.hpp"
 #include "Utils/Vector.hpp"
-#include "InterruptServiceRoutineEntries.hpp"
+#include "InterruptServiceRoutine/InterruptServiceRoutineEntries.hpp"
 
 extern "C" void load_idt(IdtDescriptor* idt_descriptor);
 

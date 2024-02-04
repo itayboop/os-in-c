@@ -1,7 +1,7 @@
 #include <stddef.h>
 
-#include "vga_buffer.hpp"
-#include "utils.hpp"
+#include "VgaBuffer.hpp"
+#include "Utils/Functions/StringsUtils.hpp"
 
 typedef enum vga_color
 {
@@ -102,7 +102,7 @@ void terminal_putchar(const char c)
 
 void terminal_print_string(const char* data)
 {
-   	for (size_t i = 0; i < strlen(data); i++)
+   	for (size_t i = 0; i < StringsUtils::strlen(data); i++)
 	{
 		terminal_putchar(data[i]);
 	}
@@ -112,7 +112,7 @@ void terminal_print_int(const int number)
 {
 	char buffer[64];
 
-	itoa(number, buffer);
+	StringsUtils::itoa(number, buffer);
 
 	terminal_print_string(buffer);
 }

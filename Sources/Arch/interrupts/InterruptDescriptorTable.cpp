@@ -1,6 +1,6 @@
-#include "memory.hpp"
 #include "Pointer.hpp"
-#include "InterruptDescriptorTable.hpp"
+#include "MemoryUtils.hpp"
+#include "Arch/InterruptDescriptorTable.hpp"
 
 void InterruptDescriptorTable::idt_set_entry(uint8_t entry_number, IsrFunction target_function)
 {
@@ -72,7 +72,7 @@ void InterruptDescriptorTable::set_all_idt_entries()
 InterruptDescriptorTable::InterruptDescriptorTable()
 {
 	this->_entries = Span<IdtEntry>(nullptr, this->IDT_SIZE);
-	memset(&this->_entries, 0, this->IDT_SIZE);
+	MemoryUtils::memset(&this->_entries, 0, this->IDT_SIZE);
 
 	this->_idt_descriptor->addr = this->_entries[0];
 	this->_idt_descriptor->size = sizeof(this->_entries) - 1;
@@ -91,4 +91,3 @@ IdtDescriptor* InterruptDescriptorTable::getIdtDescriptor()
 {
 	return this->_idt_descriptor;
 };
-

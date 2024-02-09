@@ -1,5 +1,5 @@
-#include "Pointer.hpp"
-#include "MemoryUtils.hpp"
+#include "Utils/Pointer.hpp"
+#include "Utils/Functions/MemoryUtils.hpp"
 #include "Arch/InterruptDescriptorTable.hpp"
 
 void InterruptDescriptorTable::idt_set_entry(uint8_t entry_number, IsrFunction target_function)

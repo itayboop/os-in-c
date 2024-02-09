@@ -1,7 +1,8 @@
 #pragma once
 
-#include "stddef.h"
+#include <stdint.h>
 
+#include "OsDefenitions/stddef.h"
 #include "Utils/Span.hpp"
 #include "Utils/Vector.hpp"
 #include "InterruptServiceRoutine/InterruptServiceRoutineEntries.hpp"

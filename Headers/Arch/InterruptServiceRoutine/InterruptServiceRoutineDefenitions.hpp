@@ -1,8 +1,6 @@
 #pragma once
-#include <cstdint>
-
 #include "Utils/Pair.hpp"
-#include "Arch/OsDefinitions.hpp"
+#include "OsDefenitions/ProcessorRegisterSet.hpp"
 #include "Arch/InterruptDescriptorTable.hpp"
 
 enum class InterruptCode : uint8_t

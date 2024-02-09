@@ -1,5 +1,3 @@
-#include <stddef.h>
-
 #include "VgaBuffer.hpp"
 #include "Utils/Functions/StringsUtils.hpp"
 

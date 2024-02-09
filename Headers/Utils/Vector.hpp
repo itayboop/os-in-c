@@ -1,5 +1,7 @@
 #pragma once
 
+#include "OsDefenitions/stddef.h"
+
 #include "Span.hpp"
 #include "KernelException.hpp"
 
@@ -9,7 +11,7 @@ class Vector : public Span<T>
 public:
 	constexpr explicit Vector(const T* arr, uint32_t size);
 
-	constexpr explicit Vector() : Span(_arr, 0)
+	constexpr explicit Vector() : Span<T>(_arr, 0)
 	{}
 
 	constexpr explicit Vector(uint32_t initial_size);

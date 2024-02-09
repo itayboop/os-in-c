@@ -1,3 +1,4 @@
+#include "OsDefenitions/stddef.h"
 #include "Utils/Span.hpp"
 
 template<typename T>
@@ -40,8 +41,7 @@ constexpr uint32_t Span<T>::size()
 }
 
 template <typename T>
-template <typename U>
-constexpr Span<T> Span<T>::copy_from_impl(const Span<U>& span_to_copy, size_t size)
+constexpr Span<T> Span<T>::copy_from(const Span<T>& span_to_copy, size_t size)
 {
     if (this == &span_to_copy) {
         return *this;
@@ -53,18 +53,6 @@ constexpr Span<T> Span<T>::copy_from_impl(const Span<U>& span_to_copy, size_t si
     }
 
     return *this;
-}
-
-template <typename T>
-constexpr Span<T> Span<T>::copy_from(const Span<T>& span_to_copy, size_t size)
-{
-    return copy_from_impl(span_to_copy, size);
-}
-
-template <typename T>
-constexpr Span<T> Span<T>::copy_from(const Span<std::add_const_t<T>>& span_to_copy, size_t size)
-{
-    return copy_from_impl(span_to_copy, size);
 }
 
 template <typename T>

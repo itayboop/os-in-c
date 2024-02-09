@@ -1,5 +1,5 @@
 #pragma once
-#include <cstdint>
+#include "OsDefenitions/stddef.h"
 
 struct __attribute__((packed)) Pointer
 {

@@ -1,4 +1,8 @@
-#include <cstdint>
+#pragma once
+
+#include <stdint.h>
+
+#include "OsDefenitions/stddef.h"
 
 struct __attribute__((packed)) ProcessorRegisterSet
 {

@@ -11,11 +11,23 @@ public:
 	{}
 
 public:
-	constexpr T& first();
-	constexpr U& second();
+	constexpr T& first()
+	{
+		return this->_first;
+	}
+	constexpr U& second()
+	{
+		return this->_second
+	}
 
-	constexpr const T& first() const;
-	constexpr const U& second() const;
+	constexpr const T& first() const
+	{
+		return this->_first;
+	}
+	constexpr const U& second() const
+	{
+		return this->_second;
+	}
 
 private:
 	T _first;

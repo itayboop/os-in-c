@@ -7,8 +7,6 @@
 #include "Utils/Vector.hpp"
 #include "InterruptServiceRoutine/InterruptServiceRoutineEntries.hpp"
 
-extern "C" void load_idt(IdtDescriptor* idt_descriptor);
-
 struct __attribute__((packed)) IdtEntry
 {
 	// TODO: can i use PointerValue instead of uint_<16|32>t(s) here
@@ -26,6 +24,9 @@ struct __attribute__((packed)) IdtDescriptor
 	size_t size;
 	IdtEntry addr;
 };
+
+extern "C" void load_idt(IdtDescriptor* idt_descriptor);
+
 
 class InterruptDescriptorTable
 {

@@ -1,11 +1,13 @@
 #pragma once
 
 #include <stdint.h>
-
 #include "OsDefenitions/stddef.h"
+
 #include "Utils/Span.hpp"
 #include "Utils/Vector.hpp"
+
 #include "InterruptServiceRoutine/InterruptServiceRoutineEntries.hpp"
+#include "InterruptServiceRoutine/InterruptServiceRoutineDefenitions.hpp"
 
 struct __attribute__((packed)) IdtEntry
 {
@@ -27,7 +29,6 @@ struct __attribute__((packed)) IdtDescriptor
 
 extern "C" void load_idt(IdtDescriptor* idt_descriptor);
 
-
 class InterruptDescriptorTable
 {
 public:
@@ -38,7 +39,7 @@ public:
 	IdtDescriptor* getIdtDescriptor();
 
 private:
-	void idt_set_entry(uint8_t entry_number, IsrFunction funcall);
+	void idt_set_entry(uint8_t entry_number, IsrFunction_t* funcall);
 	void set_all_idt_entries();
 
 private:

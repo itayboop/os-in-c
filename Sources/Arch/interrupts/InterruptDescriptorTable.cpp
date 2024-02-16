@@ -2,7 +2,7 @@
 #include "Utils/Functions/MemoryUtils.hpp"
 #include "Arch/InterruptDescriptorTable.hpp"
 
-void InterruptDescriptorTable::idt_set_entry(uint8_t entry_number, IsrFunction target_function)
+void InterruptDescriptorTable::idt_set_entry(uint8_t entry_number, IsrFunction_t* target_function)
 {
 	IdtEntry entry = this->_entries[entry_number];
 

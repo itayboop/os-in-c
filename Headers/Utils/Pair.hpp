@@ -17,7 +17,7 @@ public:
 	}
 	constexpr U& second()
 	{
-		return this->_second
+		return this->_second;
 	}
 
 	constexpr const T& first() const

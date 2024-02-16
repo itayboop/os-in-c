@@ -1,7 +1,8 @@
 #pragma once
-#include "Utils/Pair.hpp"
+
 #include "OsDefenitions/ProcessorRegisterSet.hpp"
-#include "Arch/InterruptDescriptorTable.hpp"
+
+#include "Utils/Pair.hpp"
 
 enum class InterruptCode : uint8_t
 {
@@ -31,9 +32,11 @@ struct __attribute__((packed)) IsrRegisters : public ProcessorRegisterSet
 	uint64_t interrupt_number, error_code;
 };
 
-using IsrFunction = void(*)(void);
-using IsrHandlerFunction = void(*)(IsrRegisters& registers);
-using IsrEntry = Pair<InterruptCode, IsrHandlerFunction>;
+// future me: this isnt working in idt.h/cpp
+using IsrFunction_t = void(void);
+using IsrHandlerFunction_t = void(IsrRegisters& registers);
+using IsrEntry_t = Pair<InterruptCode, IsrHandlerFunction_t>;
+
 
 extern "C" void isr0();
 extern "C" void isr1();

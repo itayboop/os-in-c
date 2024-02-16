@@ -11,12 +11,12 @@ public:
     InterruptServiceRoutineEntries();
 
 public:
-    Span<IsrEntry> get_isr_entries();
+    Span<IsrEntry_t> get_isr_entries();
 
 private:
-    Span<const IsrEntry> get_interrupt_handlers_array();
+    Span<const IsrEntry_t> get_interrupt_handlers_array();
 
 private:
-    Span<IsrEntry> _isr_entries;
+    Span<IsrEntry_t> _isr_entries;
 	constexpr static uint16_t ISR_ENTRIES_SIZE = 256;
 };

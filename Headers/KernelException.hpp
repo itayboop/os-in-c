@@ -6,5 +6,8 @@
 class KernelException final
 {
 public:
-	constexpr void raise() const;
+	constexpr void raise() const
+	{
+		while(1);
+	}
 };

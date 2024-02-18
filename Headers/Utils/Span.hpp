@@ -3,7 +3,6 @@
 #include "OsDefenitions/TypeTraits.hpp"
 #include "OsDefenitions/stddef.h"
 
-
 #include "KernelException.hpp"
 
 template<typename T>
@@ -47,29 +46,19 @@ public:
 		return _ptr + _count;
 	}
 
-	constexpr Span<T> copy_from(const Span<T>& span_to_copy, size_t size)
+	constexpr Span<T> copy_from(const Span<T>& other, size_t size)
 	{
-		if (this == &span_to_copy) {
+		if (this == &other) {
 			return *this;
 		}
+		// TODO: uncomment and make it work
+		// if (size == this->_count)
+		// [
+		// 	THROW_KERNEL_EXCEPTION();
+		// ]
 
-		static_assert(size == this->_count, "Size mismatch in copy_from");
 		for (int i = 0; i < this->_count; ++i) {
-			this->_ptr[i] = span_to_copy[i];
-		}
-
-		return *this;
-	}
-
-	constexpr Span<T> copy_from(const Span<std::add_const_t<T>>& span_to_copy, size_t size)
-	{
-		if (this == &span_to_copy) {
-			return *this;
-		}
-
-		static_assert(size == this->_count, "Size mismatch in copy_from");
-		for (int i = 0; i < this->_count; ++i) {
-			this->_ptr[i] = span_to_copy[i];
+			this->_ptr[i] = other[i];
 		}
 
 		return *this;

@@ -13,8 +13,8 @@
 #include <stdint.h>
 
 #include "VgaBuffer.hpp"
-#include "InterruptDescriptorTable.hpp"
-#include "InterruptServiceRoutineInitializer.hpp"
+#include "Arch/InterruptDescriptorTable.hpp"
+#include "Arch/InterruptServiceRoutine/InterruptServiceRoutineInitializer.hpp"
 
 extern "C"
 {
@@ -23,9 +23,8 @@ extern "C"
 		terminal_initialize();
 		//TOOD: can i just do `InterruptServiceRoutineInitializer();` ?
 		const InterruptServiceRoutineInitializer isr_initializer = InterruptServiceRoutineInitializer();
-		
+		const InterruptDescriptorTable idt = InterruptDescriptorTable();
 	}
 }
 
-// TODO: add cpp to each hpp (in it's corresponding tree)
 // TODO: add hpp to each asm (in it's corresponding tree)

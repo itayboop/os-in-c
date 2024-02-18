@@ -34,9 +34,8 @@ struct __attribute__((packed)) IsrRegisters : public ProcessorRegisterSet
 
 // future me: this isnt working in idt.h/cpp
 using IsrFunction_t = void(void);
-using IsrHandlerFunction_t = void(IsrRegisters& registers);
+using IsrHandlerFunction_t = void(*)(IsrRegisters& registers);
 using IsrEntry_t = Pair<InterruptCode, IsrHandlerFunction_t>;
-
 
 extern "C" void isr0();
 extern "C" void isr1();

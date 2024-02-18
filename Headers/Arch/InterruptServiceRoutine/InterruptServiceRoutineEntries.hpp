@@ -14,7 +14,7 @@ public:
     Span<IsrEntry_t> get_isr_entries();
 
 private:
-    Span<const IsrEntry_t> get_interrupt_handlers_array();
+    Span<IsrEntry_t> get_interrupt_handlers_array();
 
 private:
     Span<IsrEntry_t> _isr_entries;

@@ -4,7 +4,7 @@ template<typename T, typename U>
 class Pair final
 {
 public:
-	constexpr explicit Pair()
+	constexpr Pair()
 	{}
 
 	constexpr explicit Pair(const T& first, const U& second) : _first(first), _second(second)

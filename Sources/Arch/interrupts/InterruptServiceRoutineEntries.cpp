@@ -120,10 +120,10 @@ void exc_virtualization(IsrRegisters& isr_registers)
 	while(1);
 }
 
-Span<const IsrEntry_t> InterruptServiceRoutineEntries::get_interrupt_handlers_array()
+Span<IsrEntry_t> InterruptServiceRoutineEntries::get_interrupt_handlers_array()
 {
 	// must be static otherwise we get "expression must have a constant value" on Span constructor 
-	static constexpr IsrEntry_t raw_isr_entries[] =
+	IsrEntry_t raw_isr_entries[] =
 	{
 		IsrEntry_t(InterruptCode::DIV_BY_ZERO, exc_divide_by_zero),
 		IsrEntry_t(InterruptCode::DEBUG, exc_debug),
@@ -146,7 +146,7 @@ Span<const IsrEntry_t> InterruptServiceRoutineEntries::get_interrupt_handlers_ar
 		IsrEntry_t(InterruptCode::VIRTUALIZATION, exc_virtualization)
 	};
 
-	constexpr Span<const IsrEntry_t> isr_entries (raw_isr_entries, SIZE_OF_ARRAY(raw_isr_entries));
+	Span<IsrEntry_t> isr_entries (raw_isr_entries, SIZE_OF_ARRAY(raw_isr_entries));
 
 	return isr_entries;
 }

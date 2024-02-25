@@ -3,8 +3,6 @@
 #include "Utils/Span.hpp"
 #include "InterruptServiceRoutineDefenitions.hpp"
 
-extern "C" IsrRegisters* isr_function_handler(IsrRegisters& registers);
-
 class InterruptServiceRoutineEntries
 {
 public:

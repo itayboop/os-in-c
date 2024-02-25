@@ -9,6 +9,8 @@
 #include "InterruptServiceRoutine/InterruptServiceRoutineEntries.hpp"
 #include "InterruptServiceRoutine/InterruptServiceRoutineDefenitions.hpp"
 
+extern "C" IsrRegisters* isr_function_handler(IsrRegisters& registers, InterruptServiceRoutineEntries& isr_entries);
+
 struct __attribute__((packed)) IdtEntry
 {
 	// TODO: can i use PointerValue instead of uint_<16|32>t(s) here

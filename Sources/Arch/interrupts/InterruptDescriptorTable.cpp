@@ -1,6 +1,23 @@
 #include "Utils/Pointer.hpp"
 #include "Utils/Functions/MemoryUtils.hpp"
+#include "Utils/Functions/PrintUtils.hpp"
 #include "Arch/InterruptDescriptorTable.hpp"
+
+IsrRegisters* isr_function_handler(IsrRegisters& registers, InterruptServiceRoutineEntries& isr_entries)
+{
+	const IsrEntry_t isr_entry = isr_entries.get_isr_entries()[registers.interrupt_number];
+	if (static_cast<int>(isr_entry.first()) == 0)
+	{
+		PrintUtils::printk("no iv for interrupt");
+		while (1);
+	}
+	else
+	{
+		isr_entry.second()(registers);
+	}
+
+	return &registers;
+}
 
 void InterruptDescriptorTable::idt_set_entry(uint8_t entry_number, IsrFunction_t* target_function)
 {

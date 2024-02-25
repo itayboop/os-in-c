@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
 project(x86_64_c_os CXX ASM_NASM)
-set(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(ISO_DIR "isodir")
 set(SOURCE_DIR "Sources")
@@ -10,7 +9,6 @@ set(OUTPUT_DIR "output")
 set(CMAKE_ASM_NASM_COMPILER nasm)
 set(CMAKE_ASM_NASM_FLAGS "${CMAKE_ASM_NASM_FLAGS} -f elf64")
 
-# for future me: figure out if i need to compile with x86_64 or i686 
 set(CMAKE_CXX_COMPILER x86_64-elf-g++)
 # TODO: add optimization flag in cpp flags because it creates UB with IDT
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffreestanding -Wall -Wextra -fno-exceptions -fno-rtti")

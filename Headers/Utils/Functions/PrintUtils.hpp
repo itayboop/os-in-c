@@ -1,7 +1,6 @@
 #pragma once
 
-class PrintUtils
+namespace PrintUtils
 {
-public:
-    static void printk(const char* formatted_str, ...);
-};
+    void printk(const char* formatted_str, ...);
+}

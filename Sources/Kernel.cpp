@@ -14,6 +14,7 @@
 
 #include "VgaBuffer.hpp"
 #include "Arch/InterruptDescriptorTable.hpp"
+#include "Utils/Functions/PrintUtils.hpp"
 #include "Arch/InterruptServiceRoutine/InterruptServiceRoutineInitializer.hpp"
 
 extern "C"
@@ -22,8 +23,9 @@ extern "C"
 	{
 		terminal_initialize();
 		//TOOD: can i just do `InterruptServiceRoutineInitializer();` ?
-		const InterruptServiceRoutineInitializer isr_initializer = InterruptServiceRoutineInitializer();
-		const InterruptDescriptorTable idt = InterruptDescriptorTable();
+		InterruptServiceRoutineInitializer();
+		InterruptDescriptorTable();
+		PrintUtils::printk("hello");
 	}
 }
 

@@ -1,9 +1,19 @@
 #pragma once
 #include "stddef.h"
 
-class MemoryUtils
+namespace MemoryUtils
 {
-public:
     template <typename T>
-    static T* memset(T* ptr, char c, size_t size);
+    constexpr T* memset(T* ptr, char c, size_t size)
+    {
+        unsigned char* byte_ptr = (unsigned char *)ptr;
+        unsigned char byte_value = (unsigned char)c;
+
+        for(unsigned int i = 0; i < size; i++)
+        {
+            byte_ptr[i] = byte_value;
+        }
+
+        return ptr;
+    };
 };

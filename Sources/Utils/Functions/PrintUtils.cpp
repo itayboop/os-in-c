@@ -52,5 +52,4 @@ void PrintUtils::printk(const char* formatted_str, ...)
 	}
 
 	va_end(arg);
-
-};
+}

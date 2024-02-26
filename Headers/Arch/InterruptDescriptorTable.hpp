@@ -47,5 +47,6 @@ private:
 private:
 	Span<IdtEntry> _entries;
 	constexpr static uint16_t IDT_SIZE = 256;
+	constexpr static uint16_t NO_INTERRUPT_HANDLER = 0;
 	alignas(uint16_t) IdtDescriptor* _idt_descriptor;
 };

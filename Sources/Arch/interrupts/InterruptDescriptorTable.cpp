@@ -1,15 +1,19 @@
+
 #include "Utils/Pointer.hpp"
+#include "KernelException.hpp"
 #include "Utils/Functions/MemoryUtils.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
 #include "Arch/InterruptDescriptorTable.hpp"
 
 IsrRegisters* isr_function_handler(IsrRegisters& registers, InterruptServiceRoutineEntries& isr_entries)
 {
+	constexpr int NO_INTERRUPT_HANDLER = 0;
 	const IsrEntry_t isr_entry = isr_entries.get_isr_entries()[registers.interrupt_number];
-	if (static_cast<int>(isr_entry.first()) == 0)
+
+	if (static_cast<int>(isr_entry.first()) == NO_INTERRUPT_HANDLER)
 	{
 		PrintUtils::printk("no iv for interrupt");
-		while (1);
+		THROW_KERNEL_EXCEPTION();
 	}
 	else
 	{
@@ -88,9 +92,10 @@ void InterruptDescriptorTable::set_all_idt_entries()
 
 InterruptDescriptorTable::InterruptDescriptorTable()
 {
-	this->_entries = Span<IdtEntry>(nullptr, this->IDT_SIZE);
-	MemoryUtils::memset(&this->_entries, 0, this->IDT_SIZE);
+	IdtEntry entries_array[this->IDT_SIZE];
+	MemoryUtils::memset(entries_array, NULL, this->IDT_SIZE);
 
+	this->_entries = Span<IdtEntry>(entries_array, this->IDT_SIZE);
 	this->_idt_descriptor->addr = this->_entries[0];
 	this->_idt_descriptor->size = sizeof(this->_entries) - 1;
 

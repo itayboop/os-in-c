@@ -22,10 +22,13 @@ extern "C"
 	void kernel_main()
 	{
 		terminal_initialize();
-		//TOOD: can i just do `InterruptServiceRoutineInitializer();` ?
+
+		PrintUtils::printk("[*] Initializing ISR Entries...\n");
 		InterruptServiceRoutineInitializer();
+		PrintUtils::printk("[*] Initialized.\n\n");
+
 		InterruptDescriptorTable();
-		PrintUtils::printk("hello");
+		PrintUtils::printk("[*] Loaded idt\n");
 	}
 }
 

@@ -122,9 +122,11 @@ void exc_virtualization(IsrRegisters& isr_registers)
 
 Span<IsrEntry_t> InterruptServiceRoutineEntries::get_interrupt_handlers_array()
 {
-	// must be static otherwise we get "expression must have a constant value" on Span constructor 
-	IsrEntry_t raw_isr_entries[] =
-	{
+	IsrEntry_t isr_entries_array[this->ISR_ENTRIES_SIZE];
+	MemoryUtils::memset(isr_entries_array, NULL, this->_isr_entries.size());
+	Span<IsrEntry_t> isr_entries = Span<IsrEntry_t>(isr_entries_array, this->ISR_ENTRIES_SIZE);
+
+	IsrEntry_t interrupt_handlers_array[this->RAW_ISR_ENTRIES_SIZE] = {
 		IsrEntry_t(InterruptCode::DIV_BY_ZERO, exc_divide_by_zero),
 		IsrEntry_t(InterruptCode::DEBUG, exc_debug),
 		IsrEntry_t(InterruptCode::NON_MASKABLE_INT, exc_non_maskable_int),
@@ -145,17 +147,18 @@ Span<IsrEntry_t> InterruptServiceRoutineEntries::get_interrupt_handlers_array()
 		IsrEntry_t(InterruptCode::SIMF_FP, exc_xm),
 		IsrEntry_t(InterruptCode::VIRTUALIZATION, exc_virtualization)
 	};
+	const Span<IsrEntry_t> interrupt_handlers = Span<IsrEntry_t>(interrupt_handlers_array, this->RAW_ISR_ENTRIES_SIZE);
 
-	Span<IsrEntry_t> isr_entries (raw_isr_entries, SIZE_OF_ARRAY(raw_isr_entries));
+	isr_entries.copy_from(interrupt_handlers, this->RAW_ISR_ENTRIES_SIZE);
 
 	return isr_entries;
 }
 
 InterruptServiceRoutineEntries::InterruptServiceRoutineEntries()
 {
-	this->_isr_entries = Span<IsrEntry_t>(nullptr, this->ISR_ENTRIES_SIZE);
-	MemoryUtils::memset(&this->_isr_entries, 0, this->_isr_entries.size());
-	this->_isr_entries.copy_from(get_interrupt_handlers_array(), this->_isr_entries.size());
+	PrintUtils::printk("[*] Initializing ISR Entries...\n");
+	this->_isr_entries = Span<IsrEntry_t>(get_interrupt_handlers_array());
+	PrintUtils::printk("[*] Initialized.\n\n");
 }
 
 Span<IsrEntry_t> InterruptServiceRoutineEntries::get_isr_entries()

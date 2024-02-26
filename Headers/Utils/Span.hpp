@@ -3,6 +3,7 @@
 #include "OsDefenitions/TypeTraits.hpp"
 #include "OsDefenitions/stddef.h"
 
+#include "Utils/Functions/PrintUtils.hpp"
 #include "KernelException.hpp"
 
 template<typename T>
@@ -12,10 +13,14 @@ public:
 	constexpr Span(): _ptr(nullptr), _count(0)
 	{}
 
+	constexpr Span(const Span<T>& other) : _ptr(other._ptr), _count(other._count)
+	{}
+
 	constexpr Span(T* ptr, uint32_t count) : _ptr(ptr), _count(count)
 	{
-		if ((ptr == nullptr) && (count != 0))
+		if ((ptr == nullptr) && (count > 0))
 		{
+			PrintUtils::printk("PTR is null but count is bigger than zero. ");
 			THROW_KERNEL_EXCEPTION();
 		}
 	}
@@ -51,13 +56,14 @@ public:
 		if (this == &other) {
 			return *this;
 		}
-		// TODO: uncomment and make it work
-		// if (size == this->_count)
-		// [
-		// 	THROW_KERNEL_EXCEPTION();
-		// ]
 
-		for (int i = 0; i < this->_count; ++i) {
+		if (size > this->_count)
+		{
+			PrintUtils::printk("Source size is bigger than destination size. ");
+			THROW_KERNEL_EXCEPTION();
+		}
+
+		for (unsigned int i = 0; i < size; ++i) {
 			this->_ptr[i] = other[i];
 		}
 
@@ -68,17 +74,18 @@ public:
 	{
 		if (index >= _count)
 		{
+			PrintUtils::printk("Cannot access index larger than size span. ");
 			THROW_KERNEL_EXCEPTION();
 		}
 
 		return _ptr[index];
 	}
 
-
 	constexpr std::add_const_t<T>& operator[](uint32_t index) const
 	{
 		if (index >= _count)
 		{
+			PrintUtils::printk("Cannot access index larger than size span. ");
 			THROW_KERNEL_EXCEPTION();
 		}
 

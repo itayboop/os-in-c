@@ -122,3 +122,12 @@ _deps
 # Ignore all local history of files
 .history
 .ionide
+/.idea/.gitignore
+/cmake-build-debug/.cmake/api/v1/query/cache-v2
+/cmake-build-debug/.cmake/api/v1/query/cmakeFiles-v1
+/cmake-build-debug/.cmake/api/v1/query/codemodel-v2
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/os-in-c.iml
+/cmake-build-debug/.cmake/api/v1/query/toolchains-v1
+/.idea/vcs.xml

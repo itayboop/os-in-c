@@ -6,118 +6,118 @@
 #include "Utils/Functions/MemoryUtils.hpp"
 #include "Arch/InterruptServiceRoutine/InterruptServiceRoutineEntries.hpp"
 
-void exc_divide_by_zero(IsrRegisters& isr_registers)
+void exc_divide_by_zero(ProcessorRegisterSet* isr_registers)
 {
-	PrintUtils::printk("Divide by zero at %x\n", isr_registers.rip);
-	while(1);
+	PrintUtils::printk("Divide by zero at %x\n", isr_registers->rip);
+	while (1);
 }
 
-void exc_debug(IsrRegisters& isr_registers)
+void exc_debug(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Debug!\n");
 	while (1);
 }
 
-void exc_non_maskable_int(IsrRegisters& isr_registers)
+void exc_non_maskable_int(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Non maskable interrupt!\n");
 	while (1);
 }
 
-void exc_breakpoint(IsrRegisters& isr_registers)
+void exc_breakpoint(ProcessorRegisterSet* isr_registers)
 {
-	PrintUtils::printk("Breakpoint at %x\n", isr_registers.rip);
+	PrintUtils::printk("Breakpoint at %x\n", isr_registers->rip);
 	// TODO: add input check for enter in order to continue.
 }
 
-void exc_overflow(IsrRegisters& isr_registers)
+void exc_overflow(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Overflow!\n");
 	while (1);
 }
 
-void exc_bound_range(IsrRegisters& isr_registers)
+void exc_bound_range(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Bound range exceeded.\n");
 	while (1);
 }
 
-void exc_invopcode(IsrRegisters& isr_registers)
+void exc_invopcode(ProcessorRegisterSet* isr_registers)
 {
-	PrintUtils::printk("Invalid opcode at %x\n", isr_registers.rip);
-	while(1);
+	PrintUtils::printk("Invalid opcode at %x\n", isr_registers->rip);
+	while (1);
 }
 
-void exc_device_unavailable(IsrRegisters& isr_registers)
+void exc_device_unavailable(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Device not available.\n");
 	while (1);
 }
 
-void exc_double_fault(IsrRegisters& isr_registers)
+void exc_double_fault(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Double fault, halting.\n");
-	while(1);
+	while (1);
 }
 
-void exc_invtss(IsrRegisters& isr_registers)
+void exc_invtss(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("TSS invalid.\n");
 	while (1);
 }
 
-void exc_segment_not_present(IsrRegisters& isr_registers)
+void exc_segment_not_present(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Segment not present.\n");
 	while (1);
 }
 
-void exc_stack_segment_fault(IsrRegisters& isr_registers)
+void exc_stack_segment_fault(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Stacksegment faulted.\n");
 	while (1);
 }
 
-void exc_gpf(IsrRegisters& isr_registers)
+void exc_gpf(ProcessorRegisterSet* isr_registers)
 {
-	PrintUtils::printk("General protection fault at %x.\n", isr_registers.rip);
+	PrintUtils::printk("General protection fault at %x.\n", isr_registers->rip);
 	while (1);
 }
 
-void exc_pf(IsrRegisters& isr_registers)
+void exc_pf(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Page fault.\n");
 	while (1);
 }
 
-void exc_kernel_fpu(IsrRegisters& isr_registers)
+void exc_kernel_fpu(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Kernel FPU error.\n");
 	while (1);
 }
 
-void exc_align_check(IsrRegisters& isr_registers)
+void exc_align_check(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Align check error.\n");
 	while (1);
 }
 
-void exc_machine_check(IsrRegisters& isr_registers)
+void exc_machine_check(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Machine check exception.\n");
 	while (1);
 }
 
-void exc_xm(IsrRegisters& isr_registers)
+void exc_xm(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("SIMD FP.\n");
 	while (1);
 }
 
-void exc_virtualization(IsrRegisters& isr_registers)
+void exc_virtualization(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Kernel virtualization exception.\n");
-	while(1);
+	while (1);
 }
 
 Span<IsrEntry_t> InterruptServiceRoutineEntries::get_interrupt_handlers_array()
@@ -147,18 +147,15 @@ Span<IsrEntry_t> InterruptServiceRoutineEntries::get_interrupt_handlers_array()
 		IsrEntry_t(InterruptCode::SIMF_FP, exc_xm),
 		IsrEntry_t(InterruptCode::VIRTUALIZATION, exc_virtualization)
 	};
-	const Span<IsrEntry_t> interrupt_handlers = Span<IsrEntry_t>(interrupt_handlers_array, this->RAW_ISR_ENTRIES_SIZE);
 
-	isr_entries.copy_from(interrupt_handlers, this->RAW_ISR_ENTRIES_SIZE);
+	isr_entries.copy_from(Span<IsrEntry_t>(interrupt_handlers_array, this->RAW_ISR_ENTRIES_SIZE), this->RAW_ISR_ENTRIES_SIZE);
 
 	return isr_entries;
 }
 
 InterruptServiceRoutineEntries::InterruptServiceRoutineEntries()
 {
-	PrintUtils::printk("[*] Initializing ISR Entries...\n");
 	this->_isr_entries = Span<IsrEntry_t>(get_interrupt_handlers_array());
-	PrintUtils::printk("[*] Initialized.\n\n");
 }
 
 Span<IsrEntry_t> InterruptServiceRoutineEntries::get_isr_entries()

@@ -2,41 +2,40 @@
 
 %macro pusha64 0
 
-	push rax
-	push rbx
-	push rcx
-	push rdx
-	push rsi
-	push rdi
-	push rbp
-	push r8
-	push r9
-	push r10
-	push r11
-	push r12
-	push r13
-	push r14
-	push r15
+    push rax
+    push rbx
+    push rcx
+    push rdx
+    push rsi
+    push rdi
+    push rbp
+    push r8
+    push r9
+    push r10
+    push r11
+    push r12
+    push r13
+    push r14
+    push r15
 
 %endmacro
 
 %macro popa64 0
 
-	pop r15
-	pop r14
-	pop r13
-	pop r12
-	pop r11
-	pop r10
-	pop r9
-	pop r8
-	pop rbp
-	pop rdi
-	pop rsi
-	pop rdx
-	pop rcx
-	pop rbx
-	pop rax
+    pop r15
+    pop r14
+    pop r13
+    pop r12
+    pop r11
+    pop r10
+    pop r9
+    pop r8
+    pop rbp
+    pop rcx
+    pop rbx
+    pop rdx
+    pop rsi
+    pop rdi
 
 %endmacro
 
@@ -104,18 +103,66 @@ ISR_NOERRCODE 45
 ISR_NOERRCODE 46
 ISR_NOERRCODE 47
 
-[EXTERN isr_function_handler]
-[EXTERN g__interrupt_service_routine_entries]
+EXTERN isr_function_handler
+EXTERN g__interrupt_service_routine_entries
 
 isr_common_stub:
-	pusha64
-	lea rdi, [rsp]	; move "registers" parameter.
-	lea rsi, [g__interrupt_service_routine_entries] ; move InterruptServiceRoutineEntries instance.
-	call isr_function_handler
-	mov rsp, rax
-	popa64
-	add rsp, 16	; pop error code and interrupt number.
-	iretq
+        push rax
+        push rbx
+        push rcx
+        push rdx
+        push rsi
+        push rdi
+        push rbp
+        push r8
+        push r9
+        push r10
+        push r11
+        push r12
+        push r13
+        push r14
+        push r15
+
+        mov rax, 0x0010001000100010
+        push rax
+
+        mov rax, rsp
+        and rsp, -16
+        sub rsp, 512
+        fxsave [rsp]
+
+        push rsp
+        push rax
+
+        mov rdi, rsp
+        mov rsi, g__interrupt_service_routine_entries
+        call isr_function_handler
+
+        pop rax
+        pop rcx
+        fxrstor [rcx]
+        mov rsp, rax
+
+        pop rax
+
+        pop r15
+        pop r14
+        pop r13
+        pop r12
+        pop r11
+        pop r10
+        pop r9
+        pop r8
+        pop rbp
+        pop rdi
+        pop rsi
+        pop rdx
+        pop rcx
+        pop rbx
+        pop rax
+
+        add esp,16
+        iretq
 
 [GLOBAL load_idt]
 ; extern void load_idt(IdtDescriptor* idt_descriptor)

@@ -4,37 +4,38 @@
 #include "Utils/Functions/MemoryUtils.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
 #include "Arch/InterruptDescriptorTable.hpp"
+#include "Arch/InterruptServiceRoutine/InterruptServiceRoutineInitializer.hpp"
 
-IsrRegisters* isr_function_handler(IsrRegisters& registers, InterruptServiceRoutineEntries& isr_entries)
+ProcessorRegisterSet* isr_function_handler(ProcessorRegisterSet* registers, InterruptServiceRoutineEntries* isr_entries)
 {
 	constexpr int NO_INTERRUPT_HANDLER = 0;
-	const IsrEntry_t isr_entry = isr_entries.get_isr_entries()[registers.interrupt_number];
+    const IsrEntry_t* isr_entry = &(isr_entries->get_isr_entries()[registers->interrupt_number]);
 
-	if (static_cast<int>(isr_entry.first()) == NO_INTERRUPT_HANDLER)
+	if (isr_entry == NULL)
 	{
-		PrintUtils::printk("no iv for interrupt");
+		PrintUtils::printk("no function to handle interrupt. ");
 		THROW_KERNEL_EXCEPTION();
 	}
 	else
 	{
-		isr_entry.second()(registers);
+		isr_entry->second()(registers);
 	}
 
-	return &registers;
+	return registers;
 }
 
 void InterruptDescriptorTable::idt_set_entry(uint8_t entry_number, IsrFunction_t* target_function)
 {
-	IdtEntry entry = this->_entries[entry_number];
+	uint64_t funcAddr = reinterpret_cast<uint64_t>(target_function);
+	IdtEntry* entry = &this->_entries[0];
 
-	const Pointer* function_ptr = reinterpret_cast<const Pointer*>(target_function);
-	entry.offset_high = function_ptr->high;
-	entry.offset_mid = function_ptr->middle;
-	entry.offset_low = function_ptr->low;
+	entry->isr_low = funcAddr & 0XFFFF;
+	entry->isr_mid = (funcAddr >> 16) & 0xFFFF;
+	entry->isr_high = (funcAddr >> 32) & 0XFFFFFFFF;
 
-	entry.type_attributes = 0xEF;
-	entry.ist_index = 0;
-	entry.selector = 8; // CODE descriptor, see gdt64.code
+	entry->type_attributes = 0xEF;
+	entry->ist_index = 0;
+	entry->selector = 8; // CODE descriptor, see gdt64.code
 }
 
 void InterruptDescriptorTable::set_all_idt_entries()

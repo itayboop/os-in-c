@@ -16,6 +16,6 @@ private:
 
 private:
     Span<IsrEntry_t> _isr_entries;
-	constexpr static uint16_t ISR_ENTRIES_SIZE = 256;
-	constexpr static uint16_t RAW_ISR_ENTRIES_SIZE = 19;
+    constexpr static uint16_t ISR_ENTRIES_SIZE = 256;
+    constexpr static uint16_t RAW_ISR_ENTRIES_SIZE = 19;
 };

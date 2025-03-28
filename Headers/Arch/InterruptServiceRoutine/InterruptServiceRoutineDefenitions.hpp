@@ -27,14 +27,13 @@ enum class InterruptCode : uint8_t
 	VIRTUALIZATION,
 };
 
-struct __attribute__((packed)) IsrRegisters : public ProcessorRegisterSet
-{
-	uint64_t interrupt_number, error_code;
-};
+// struct __attribute__((packed)) IsrRegisters : public ProcessorRegisterSet
+// {
+// 	uint64_t interrupt_number, error_code;
+// };
 
-// future me: this isnt working in idt.h/cpp
 using IsrFunction_t = void(void);
-using IsrHandlerFunction_t = void(*)(IsrRegisters& registers);
+using IsrHandlerFunction_t = void(*)(ProcessorRegisterSet* registers);
 using IsrEntry_t = Pair<InterruptCode, IsrHandlerFunction_t>;
 
 extern "C" void isr0();

@@ -6,7 +6,13 @@
 
 struct __attribute__((packed)) ProcessorRegisterSet
 {
-	uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
-	uint64_t rbp, rdi, rsi, rdx, rcx, rbx, rax;
-	uint64_t rip, cs, rflags, rsp, ss;
+	uint16_t ds, es, fs, gs;
+	uint64_t rax, rbx, rcx, rdx, rsi, rdi, rbp;
+	uint64_t r8, r9, r10, r11, r12, r13, r14, r15;
+	uint64_t interrupt_number, error_code;
+	uint64_t rip;
+	uint64_t cs;
+	uint64_t rflags;
+	uint64_t rsp;
+	uint64_t ss;
 };

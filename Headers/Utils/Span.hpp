@@ -10,7 +10,7 @@ template<typename T>
 class Span
 {
 public:
-	constexpr Span(): _ptr(nullptr), _count(0)
+	constexpr Span() : _ptr(nullptr), _count(0)
 	{}
 
 	constexpr Span(const Span<T>& other) : _ptr(other._ptr), _count(other._count)
@@ -74,7 +74,7 @@ public:
 	{
 		if (index >= _count)
 		{
-			PrintUtils::printk("Cannot access index larger than size span. ");
+			PrintUtils::printk("Index out of bounds. ");
 			THROW_KERNEL_EXCEPTION();
 		}
 
@@ -85,7 +85,7 @@ public:
 	{
 		if (index >= _count)
 		{
-			PrintUtils::printk("Cannot access index larger than size span. ");
+			PrintUtils::printk("Index out of bounds. ");
 			THROW_KERNEL_EXCEPTION();
 		}
 

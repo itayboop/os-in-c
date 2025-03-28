@@ -9,27 +9,27 @@
 #include "InterruptServiceRoutine/InterruptServiceRoutineEntries.hpp"
 #include "InterruptServiceRoutine/InterruptServiceRoutineDefenitions.hpp"
 
-extern "C" IsrRegisters* isr_function_handler(IsrRegisters& registers, InterruptServiceRoutineEntries& isr_entries);
+extern "C" ProcessorRegisterSet * isr_function_handler(ProcessorRegisterSet * registers, InterruptServiceRoutineEntries * isr_entries);
 
 struct __attribute__((packed)) IdtEntry
 {
 	// TODO: can i use PointerValue instead of uint_<16|32>t(s) here
-	uint16_t offset_low;	       // offset bits 0..15
+	uint16_t isr_low;	       // offset bits 0..15
 	uint16_t selector;	// a code segment selector in GDT
 	uint8_t ist_index;
 	uint8_t type_attributes;
-	uint16_t offset_mid;	// offset bits 16..31
-	uint32_t offset_high;	// offset bits 32..63
+	uint16_t isr_mid;	// offset bits 16..31
+	uint32_t isr_high;	// offset bits 32..63
 	uint8_t reserved;
 };
 
 struct __attribute__((packed)) IdtDescriptor
 {
-	size_t size;
+	uint16_t size;
 	IdtEntry addr;
 };
 
-extern "C" void load_idt(IdtDescriptor* idt_descriptor);
+extern "C" void load_idt(IdtDescriptor * idt_descriptor);
 
 class InterruptDescriptorTable
 {

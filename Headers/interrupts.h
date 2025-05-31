@@ -1,4 +1,5 @@
 #pragma once
+
 #include "idt.h"
 
 #define EXC_DIV_BY_ZERO 0

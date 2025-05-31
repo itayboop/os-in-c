@@ -2,7 +2,6 @@
 #include <stdint.h>
 
 #include "utils.h"
-#include "interrupts.h"
 
 isr_t interrupt_handlers[256] __attribute__((aligned(16)));
 idt_64_pointer_t idt_ptr __attribute__((aligned(16)));
@@ -49,7 +48,7 @@ void initialize_idt()
     memset(interrupt_handlers, 0, sizeof(interrupt_handlers));
 
     idt_ptr.limit = (sizeof(idt)) - 1;
-    idt_ptr.base = (uintptr_t) & idt;
+    idt_ptr.base = (uintptr_t) &idt;
 
     // GENERAL CPU INTERRUPTS
     idt_set_gate(0, (uintptr_t) isr0);

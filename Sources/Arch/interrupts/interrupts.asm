@@ -1,14 +1,13 @@
 [BITS 64]
 
 %macro pusha64 0
-
     push rax
-    push rbx
     push rcx
     push rdx
+    push rbx
+    push rbp
     push rsi
     push rdi
-    push rbp
     push r8
     push r9
     push r10
@@ -17,11 +16,9 @@
     push r13
     push r14
     push r15
-
 %endmacro
 
 %macro popa64 0
-
     pop r15
     pop r14
     pop r13
@@ -30,13 +27,13 @@
     pop r10
     pop r9
     pop r8
+    pop rdi
+    pop rsi
     pop rbp
-    pop rcx
     pop rbx
     pop rdx
-    pop rsi
-    pop rdi
-
+    pop rcx
+    pop rax
 %endmacro
 
 %macro ISR_NOERRCODE 1
@@ -107,21 +104,7 @@ EXTERN isr_function_handler
 EXTERN g__interrupt_service_routine_entries
 
 isr_common_stub:
-        push rax
-        push rbx
-        push rcx
-        push rdx
-        push rsi
-        push rdi
-        push rbp
-        push r8
-        push r9
-        push r10
-        push r11
-        push r12
-        push r13
-        push r14
-        push r15
+        pusha64
 
         mov rax, 0x0010001000100010
         push rax
@@ -145,21 +128,7 @@ isr_common_stub:
 
         pop rax
 
-        pop r15
-        pop r14
-        pop r13
-        pop r12
-        pop r11
-        pop r10
-        pop r9
-        pop r8
-        pop rbp
-        pop rdi
-        pop rsi
-        pop rdx
-        pop rcx
-        pop rbx
-        pop rax
+        popa64
 
         add esp,16
         iretq

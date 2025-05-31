@@ -1,4 +1,3 @@
-
 #include "Utils/Pointer.hpp"
 #include "KernelException.hpp"
 #include "Utils/Functions/MemoryUtils.hpp"

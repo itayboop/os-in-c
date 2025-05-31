@@ -26,7 +26,7 @@ struct __attribute__((packed)) IdtEntry
 struct __attribute__((packed)) IdtDescriptor
 {
 	uint16_t size;
-	IdtEntry addr;
+	IdtEntry *addr;
 };
 
 extern "C" void load_idt(IdtDescriptor * idt_descriptor);

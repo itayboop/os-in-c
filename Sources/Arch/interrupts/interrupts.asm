@@ -134,7 +134,7 @@ isr_common_stub:
         push rsp
         push rax
 
-        mov rdi, rsp
+        mov rdi, [rsp]
         mov rsi, [g__interrupt_service_routine_entries]
         call isr_function_handler
 

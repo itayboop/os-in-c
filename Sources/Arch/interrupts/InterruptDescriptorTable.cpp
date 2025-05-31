@@ -95,7 +95,7 @@ InterruptDescriptorTable::InterruptDescriptorTable()
     MemoryUtils::memset(entries_array, NULL, this->IDT_SIZE);
 
     this->_entries = Span<IdtEntry>(entries_array, this->IDT_SIZE);
-    this->_idt_descriptor->addr = this->_entries[0];
+    this->_idt_descriptor->addr = &this->_entries[0];
     this->_idt_descriptor->size = sizeof(this->_entries) - 1;
 
     this->set_all_idt_entries();

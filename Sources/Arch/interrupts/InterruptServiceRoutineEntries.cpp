@@ -27,6 +27,7 @@ void exc_non_maskable_int(ProcessorRegisterSet* isr_registers)
 void exc_breakpoint(ProcessorRegisterSet* isr_registers)
 {
 	PrintUtils::printk("Breakpoint at %x\n", isr_registers->rip);
+	while(1);
 	// TODO: add input check for enter in order to continue.
 }
 
@@ -155,7 +156,7 @@ Span<IsrEntry_t> InterruptServiceRoutineEntries::get_interrupt_handlers_array()
 
 InterruptServiceRoutineEntries::InterruptServiceRoutineEntries()
 {
-	this->_isr_entries = Span<IsrEntry_t>(get_interrupt_handlers_array());
+	this->_isr_entries = Span<IsrEntry_t>(this->get_interrupt_handlers_array());
 }
 
 Span<IsrEntry_t> InterruptServiceRoutineEntries::get_isr_entries()

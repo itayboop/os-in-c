@@ -13,14 +13,14 @@ public:
 	constexpr Span() : _ptr(nullptr), _count(0)
 	{}
 
-	constexpr Span(const Span<T>& other) : _ptr(other._ptr), _count(other._count)
+	constexpr Span(const Span<T> &other) : _ptr(other._ptr), _count(other._count)
 	{}
 
-	constexpr Span(T* ptr, uint32_t count) : _ptr(ptr), _count(count)
+	constexpr Span(T *ptr, uint32_t count) : _ptr(ptr), _count(count)
 	{
 		if ((ptr == nullptr) && (count > 0))
 		{
-			PrintUtils::printk("PTR is null but count is bigger than zero. ");
+			PrintUtils::printk("PTR is null but count is bigger than zero.\n");
 			THROW_KERNEL_EXCEPTION();
 		}
 	}
@@ -31,27 +31,27 @@ public:
 		return _count;
 	}
 
-	constexpr T* begin()
+	constexpr T * begin()
 	{
 		return _ptr;
 	}
 
-	constexpr std::add_const_t<T>* begin() const
+	constexpr std::add_const_t<T> * begin() const
 	{
 		return _ptr;
 	}
 
-	constexpr T* end()
+	constexpr T * end()
 	{
 		return _ptr + _count;
 	}
 
-	constexpr std::add_const_t<T>* end() const
+	constexpr std::add_const_t<T> * end() const
 	{
 		return _ptr + _count;
 	}
 
-	constexpr Span<T> copy_from(const Span<T>& other, size_t size)
+	constexpr Span<T> copy_from(const Span<T> &other, size_t size)
 	{
 		if (this == &other) {
 			return *this;
@@ -70,7 +70,7 @@ public:
 		return *this;
 	}
 
-	constexpr T& operator[](uint32_t index)
+	constexpr T &operator[](uint32_t index)
 	{
 		if (index >= _count)
 		{
@@ -81,7 +81,7 @@ public:
 		return _ptr[index];
 	}
 
-	constexpr std::add_const_t<T>& operator[](uint32_t index) const
+	constexpr std::add_const_t<T> &operator[](uint32_t index) const
 	{
 		if (index >= _count)
 		{
@@ -93,6 +93,6 @@ public:
 	}
 
 protected:
-	T* _ptr;
+	T *_ptr;
 	uint32_t _count;
 };

@@ -1,5 +1,3 @@
-#include <stdint.h>
-
 #include "interrupts.h"
 #include "utils.h"
 
@@ -7,7 +5,6 @@ void exc_divide_by_zero(registers_t* registers)
 {
 	printf("Divide by zero at %x\n", registers->rip);
 	while(1);
-	// TODO: remove hanging and write a better resolve.
 }
 
 void exc_debug(registers_t* registers)
@@ -25,7 +22,7 @@ void exc_nmi(registers_t* registers)
 void exc_bp(registers_t* registers)
 {
 	printf("Breakpoint at %x\n", registers->rip);
-	// TODO: add input check for enter in order to continue.
+	while(1);
 }
 
 void exc_overflow(registers_t* registers)

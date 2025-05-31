@@ -4,7 +4,7 @@
 namespace MemoryUtils
 {
     template <typename T>
-    constexpr T* memset(T* ptr, char c, size_t size)
+    constexpr T* memset(T *ptr, char c, size_t size)
     {
         unsigned char* byte_ptr = (unsigned char *)ptr;
         unsigned char byte_value = (unsigned char)c;

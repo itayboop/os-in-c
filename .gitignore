@@ -131,3 +131,4 @@ _deps
 /.idea/os-in-c.iml
 /cmake-build-debug/.cmake/api/v1/query/toolchains-v1
 /.idea/vcs.xml
+/.idea/codeStyles/codeStyleConfig.xml

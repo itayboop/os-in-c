@@ -6,25 +6,25 @@
 
 enum class InterruptCode : uint8_t
 {
-	DIV_BY_ZERO = 0,
-	DEBUG,
-	NON_MASKABLE_INT,
-	BREAKPOINT,
-	OVERFLOW,
-	BOUND_RANGE,
-	INV_OPCODE,
-	DEVICE_UNAVAILABLE,
-	DOUBLE_FAULT,
-	INV_TSS = 10,
-	NOT_PRESENT,
-	STACK_SEGMANT_FAULT,
-	GENRAL_PROTECTION_FAULT,
-	PAGE_FAULT,
-	KERNEL_FPU = 16,
-	ALIGN_CHECK,
-	MACHINE_CHECK,
-	SIMF_FP,
-	VIRTUALIZATION,
+    DIV_BY_ZERO = 0,
+    DEBUG,
+    NON_MASKABLE_INT,
+    BREAKPOINT,
+    OVERFLOW,
+    BOUND_RANGE,
+    INV_OPCODE,
+    DEVICE_UNAVAILABLE,
+    DOUBLE_FAULT,
+    INV_TSS = 10,
+    NOT_PRESENT,
+    STACK_SEGMANT_FAULT,
+    GENRAL_PROTECTION_FAULT,
+    PAGE_FAULT,
+    KERNEL_FPU = 16,
+    ALIGN_CHECK,
+    MACHINE_CHECK,
+    SIMF_FP,
+    VIRTUALIZATION,
 };
 
 // struct __attribute__((packed)) IsrRegisters : public ProcessorRegisterSet
@@ -33,7 +33,7 @@ enum class InterruptCode : uint8_t
 // };
 
 using IsrFunction_t = void(void);
-using IsrHandlerFunction_t = void(*)(ProcessorRegisterSet* registers);
+using IsrHandlerFunction_t = void (*)(ProcessorRegisterSet *registers);
 using IsrEntry_t = Pair<InterruptCode, IsrHandlerFunction_t>;
 
 extern "C" void isr0();

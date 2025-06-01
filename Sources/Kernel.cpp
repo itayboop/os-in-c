@@ -10,7 +10,8 @@
 
 #include "VgaBuffer.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
-#include "Arch/InterruptServiceRoutine/InterruptServiceRoutineInitializer.hpp"
+#include "../Headers/Interrupts/idt.hpp"
+#include "../Headers/Interrupts/interrupts.hpp"
 
 extern "C"
 {
@@ -18,11 +19,15 @@ extern "C"
 	{
 		terminal_initialize();
 
+        initialize_idt();
+        PrintUtils::printk("[*] Interrupt table initialized.\n");
 
+        register_all_interrupt_handlers();
+        PrintUtils::printk("[*] Preliminary interrupt handlers set up.\n");
 
+        PrintUtils::printk("%d\n", 1/ 0);
 		while (1);
 	}
 }
 
 // TODO: add hpp to each asm (in it's corresponding tree)
-// TODO: change "initializer" to scoped (::initialize())

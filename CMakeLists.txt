@@ -13,7 +13,7 @@ set(CMAKE_CXX_COMPILER x86_64-elf-g++)
 # TODO: add optimization flag in cpp flags because it creates UB with IDT
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffreestanding -g -Wall -Wextra -fno-exceptions -fno-rtti")
 
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ${CMAKE_SOURCE_DIR}/linker.ld -ffreestanding -O2 -n -nostdlib -lgcc -o ${PROJECT_NAME}.bin")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ${CMAKE_SOURCE_DIR}/linker.ld -ffreestanding -n -nostdlib -lgcc -o ${PROJECT_NAME}.bin")
 
 file(GLOB_RECURSE SOURCES "${INCLUDE_DIR}/*.h" "${INCLUDE_DIR}/*.hpp" "${SOURCE_DIR}/*.c" "${SOURCE_DIR}/*.cpp" "${SOURCE_DIR}/*.s" "${SOURCE_DIR}/*.asm" "${SOURCE_DIR}/*.nasm")
 

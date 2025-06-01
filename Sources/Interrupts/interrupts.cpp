@@ -1,7 +1,8 @@
 #include "../../Headers/Interrupts/interrupts.hpp"
 #include "../../Headers/Utils/Functions/PrintUtils.hpp"
 
-enum class InterruptVector : uint8_t {
+enum class InterruptVector : uint8_t
+{
     DIVIDE_BY_ZERO             = 0,
     DEBUG                      = 1,
     NON_MASKABLE_INTERRUPT     = 2,
@@ -26,13 +27,13 @@ enum class InterruptVector : uint8_t {
 
 void exc_divide_by_zero(registers_t *registers)
 {
-   PrintUtils::printk("Divide by zero at %x\n", registers->rip);
+    PrintUtils::printk("Divide by zero at %x\n", registers->rip);
     while (1);
 }
 
 void exc_debug(registers_t *registers)
 {
-   PrintUtils::printk("Debug!\n");
+    PrintUtils::printk("Debug!\n");
     while (1);
 }
 
@@ -140,24 +141,24 @@ void exc_virtualization(registers_t *registers)
 
 void register_all_interrupt_handlers()
 {
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::DIVIDE_BY_ZERO),           exc_divide_by_zero);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::DEBUG),                    exc_debug);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::NON_MASKABLE_INTERRUPT),   exc_nmi);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::BREAKPOINT),               exc_bp);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::OVERFLOW),                 exc_overflow);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::BOUND_RANGE_EXCEEDED),     exc_bound_range);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::INVALID_OPCODE),           exc_invopcode);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::DEVICE_NOT_AVAILABLE),     exc_device_not_avail);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::DOUBLE_FAULT),             exc_double_fault);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::INVALID_TSS),              exc_invtss);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::SEGMENT_NOT_PRESENT),      exc_segment_not_present);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::STACK_SEGMENT_FAULT),      exc_ssf);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::DIVIDE_BY_ZERO), exc_divide_by_zero);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::DEBUG), exc_debug);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::NON_MASKABLE_INTERRUPT), exc_nmi);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::BREAKPOINT), exc_bp);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::OVERFLOW), exc_overflow);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::BOUND_RANGE_EXCEEDED), exc_bound_range);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::INVALID_OPCODE), exc_invopcode);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::DEVICE_NOT_AVAILABLE), exc_device_not_avail);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::DOUBLE_FAULT), exc_double_fault);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::INVALID_TSS), exc_invtss);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::SEGMENT_NOT_PRESENT), exc_segment_not_present);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::STACK_SEGMENT_FAULT), exc_ssf);
     register_interrupt_handler(static_cast<uint8_t>(InterruptVector::GENERAL_PROTECTION_FAULT), exc_gpf);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::PAGE_FAULT),               exc_pf);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::KERNEL_FPU_EXCEPTION),     exc_kernel_fpu);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::ALIGNMENT_CHECK),          exc_align_check);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::MACHINE_CHECK),            exc_machine_check);
-    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::SIMD_FP_EXCEPTION),        exc_xm);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::PAGE_FAULT), exc_pf);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::KERNEL_FPU_EXCEPTION), exc_kernel_fpu);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::ALIGNMENT_CHECK), exc_align_check);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::MACHINE_CHECK), exc_machine_check);
+    register_interrupt_handler(static_cast<uint8_t>(InterruptVector::SIMD_FP_EXCEPTION), exc_xm);
     register_interrupt_handler(static_cast<uint8_t>(InterruptVector::VIRTUALIZATION_EXCEPTION), exc_virtualization);
 
 }

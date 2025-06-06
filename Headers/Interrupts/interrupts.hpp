@@ -22,4 +22,4 @@
 #define EXC_XM 19
 #define EXC_VE 20
 
-void register_all_interrupt_handlers();
+void register_all_interrupt_handlers(IDT *idt);

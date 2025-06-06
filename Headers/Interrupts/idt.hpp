@@ -35,10 +35,6 @@ extern "C" registers_t *isr_handler(registers_t *registers);
 
 extern "C" void load_idt(idt_64_pointer_t *ptr);
 
-void initialize_idt();
-
-void register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func);
-
 extern "C" void isr0();
 extern "C" void isr1();
 extern "C" void isr2();
@@ -87,3 +83,17 @@ extern "C" void isr44();
 extern "C" void isr45();
 extern "C" void isr46();
 extern "C" void isr47();
+
+class IDT
+{
+private:
+    idt_64_pointer_t idt_ptr __attribute__((aligned(16)));
+    idt_entry_64_t idt[256] __attribute__((aligned(16)));
+
+private:
+    void idt_set_gate(uint8_t entry_number, uintptr_t funcall);
+
+public:
+    void initialize_idt();
+    void register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func);
+};

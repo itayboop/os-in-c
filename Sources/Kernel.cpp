@@ -18,11 +18,11 @@ extern "C"
 	void kernel_main()
 	{
 		terminal_initialize();
-
-        initialize_idt();
+        IDT idt = IDT();
+        idt.initialize_idt();
         PrintUtils::printk("[*] Interrupt table initialized.\n");
 
-        register_all_interrupt_handlers();
+        register_all_interrupt_handlers(&idt);
         PrintUtils::printk("[*] Preliminary interrupt handlers set up.\n");
 
         PrintUtils::printk("%d\n", 1/ 0);

@@ -91,7 +91,7 @@ private:
     idt_entry_64_t idt[256] __attribute__((aligned(16)));
 
 private:
-    void idt_set_gate(uint8_t entry_number, uintptr_t funcall);
+    void set_gate(uint8_t entry_number, uintptr_t funcall);
 
 public:
     void initialize_idt();

@@ -24,7 +24,7 @@ extern "C"
 
         register_all_interrupt_handlers(&idt);
         PrintUtils::printk("[*] Preliminary interrupt handlers set up.\n");
-
+        asm volatile (".word 0xFFFF");
         PrintUtils::printk("%d\n", 1/ 0);
 		while (1);
 	}

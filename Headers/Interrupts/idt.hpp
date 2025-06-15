@@ -93,8 +93,9 @@ private:
 private:
     void set_gate(uint8_t entry_number, uintptr_t funcall);
     void set_all_gates();
+    void register_all_interrupt_handlers();
+    void register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func);
 
 public:
     void initialize_idt();
-    void register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func);
 };

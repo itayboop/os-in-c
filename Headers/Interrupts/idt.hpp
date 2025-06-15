@@ -92,6 +92,7 @@ private:
 
 private:
     void set_gate(uint8_t entry_number, uintptr_t funcall);
+    void set_all_gates();
 
 public:
     void initialize_idt();

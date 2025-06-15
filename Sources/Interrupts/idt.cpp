@@ -32,19 +32,8 @@ void IDT::set_gate(uint8_t entry_number, uintptr_t funcall)
     entry->selector = 8; // CODE descriptor, see gdt64.code
 }
 
-void IDT::register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func)
+void IDT::set_all_gates()
 {
-    interrupt_handlers[interrupt_number] = handler_func;
-}
-
-void IDT::initialize_idt()
-{
-    MemoryUtils::memset(this->idt, 0, sizeof(this->idt));
-    MemoryUtils::memset(interrupt_handlers, 0, sizeof(interrupt_handlers));
-
-    this->idt_ptr.limit = (sizeof(this->idt)) - 1;
-    this->idt_ptr.base = (uintptr_t) &this->idt;
-
     this->set_gate(0, (uintptr_t) isr0);
     this->set_gate(1, (uintptr_t) isr1);
     this->set_gate(2, (uintptr_t) isr2);
@@ -93,6 +82,22 @@ void IDT::initialize_idt()
     this->set_gate(45, (uintptr_t) isr45);
     this->set_gate(46, (uintptr_t) isr46);
     this->set_gate(47, (uintptr_t) isr47);
+}
+
+void IDT::register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func)
+{
+    interrupt_handlers[interrupt_number] = handler_func;
+}
+
+void IDT::initialize_idt()
+{
+    MemoryUtils::memset(this->idt, 0, sizeof(this->idt));
+    MemoryUtils::memset(interrupt_handlers, 0, sizeof(interrupt_handlers));
+
+    set_all_gates();
+
+    this->idt_ptr.limit = (sizeof(this->idt)) - 1;
+    this->idt_ptr.base = (uintptr_t) &this->idt;
 
     load_idt(&this->idt_ptr);
 }

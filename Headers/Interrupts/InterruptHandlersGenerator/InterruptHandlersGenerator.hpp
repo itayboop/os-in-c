@@ -2,39 +2,6 @@
 
 #include <stdint.h>
 
-typedef struct __attribute__((packed)) idt_entry_64_s
-{
-    uint16_t offset_low;    // offset bits 0..15
-    uint16_t selector;    // a code segment selector in GDT
-    uint8_t ist_index;
-    uint8_t type_attributes;
-    uint16_t offset_mid;    // offset bits 16..31
-    uint32_t offset_high;    // offset bits 32..63
-    uint32_t reserved;
-} idt_entry_64_t;
-
-typedef struct __attribute__((packed)) idt_64_pointer_s
-{
-    uint16_t limit;
-    uintptr_t base;
-} idt_64_pointer_t;
-
-typedef struct __attribute__((packed)) registers_s
-{
-    uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
-    uint64_t rbp, rdi, rsi, rdx, rcx, rbx, rax;
-
-    uint64_t interrupt_number, error_code;
-
-    uint64_t rip, cs, rflags, rsp, ss;
-} registers_t;
-
-typedef void (*isr_t)(registers_t *registers);
-
-extern "C" registers_t *isr_handler(registers_t *registers);
-
-extern "C" void load_idt(idt_64_pointer_t *ptr);
-
 extern "C" void isr0();
 extern "C" void isr1();
 extern "C" void isr2();
@@ -84,18 +51,49 @@ extern "C" void isr45();
 extern "C" void isr46();
 extern "C" void isr47();
 
-class IDT
+typedef struct __attribute__((packed)) isr_registers_s
+{
+    uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
+    uint64_t rbp, rdi, rsi, rdx, rcx, rbx, rax;
+
+    uint64_t interrupt_number, error_code;
+
+    uint64_t rip, cs, rflags, rsp, ss;
+} isr_registers_t;
+
+typedef void (*isr_t)(isr_registers_t *registers);
+
+extern "C" isr_registers_t *isr_handler(isr_registers_t *registers);
+
+enum class InterruptVector : uint8_t
+{
+    DIVIDE_BY_ZERO             = 0,
+    DEBUG                      = 1,
+    NON_MASKABLE_INTERRUPT     = 2,
+    BREAKPOINT                 = 3,
+    OVERFLOW                   = 4,
+    BOUND_RANGE_EXCEEDED       = 5,
+    INVALID_OPCODE             = 6,
+    DEVICE_NOT_AVAILABLE       = 7,
+    DOUBLE_FAULT               = 8,
+    INVALID_TSS                = 10,
+    SEGMENT_NOT_PRESENT        = 11,
+    STACK_SEGMENT_FAULT        = 12,
+    GENERAL_PROTECTION_FAULT   = 13,
+    PAGE_FAULT                 = 14,
+    KERNEL_FPU_EXCEPTION       = 16,
+    ALIGNMENT_CHECK            = 17,
+    MACHINE_CHECK              = 18,
+    SIMD_FP_EXCEPTION          = 19,
+    VIRTUALIZATION_EXCEPTION   = 20,
+};
+
+class InterruptHandlersGenerator
 {
 private:
-    idt_64_pointer_t idt_ptr __attribute__((aligned(16)));
-    idt_entry_64_t idt[256] __attribute__((aligned(16)));
-
-private:
-    void set_gate(uint8_t entry_number, uintptr_t funcall);
-    void set_all_gates();
-    void register_all_interrupt_handlers();
     void register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func);
+    void register_all_interrupt_handlers();
 
 public:
-    void initialize_idt();
+    void generate();
 };

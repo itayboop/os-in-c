@@ -10,21 +10,25 @@
 
 #include "VgaBuffer.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
-#include "../Headers/Interrupts/idt.hpp"
-#include "../Headers/Interrupts/interrupts.hpp"
+#include "../Headers/Interrupts/InterruptsDescriptorTable.hpp"
+#include "../Headers/Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
 
 extern "C"
 {
 	void kernel_main()
 	{
 		terminal_initialize();
+
+        InterruptHandlersGenerator interruptHandlersGenerator = InterruptHandlersGenerator();
+        interruptHandlersGenerator.generate();
+
         IDT idt = IDT();
-        idt.initialize_idt();
+        idt.initialize();
+
         PrintUtils::printk("[*] Interrupt table initialized.\n");
 
-        register_all_interrupt_handlers(&idt);
-        PrintUtils::printk("[*] Preliminary interrupt handlers set up.\n");
-
+        asm volatile("int $3");
+        asm volatile (".word 0xFFFF");
         PrintUtils::printk("%d\n", 1/ 0);
 		while (1);
 	}

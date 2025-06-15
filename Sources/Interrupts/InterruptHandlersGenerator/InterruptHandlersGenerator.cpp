@@ -2,7 +2,7 @@
 #include "../../../Headers/Utils/Functions/PrintUtils.hpp"
 #include "../../../Headers/Utils/Functions/MemoryUtils.hpp"
 
-static isr_t interrupt_handlers[256] __attribute__((aligned(16)));
+isr_t interrupt_handlers[256] __attribute__((aligned(16)));
 
 isr_registers_t *isr_handler(isr_registers_t *registers)
 {
@@ -18,115 +18,115 @@ isr_registers_t *isr_handler(isr_registers_t *registers)
     return registers;
 }
 
-void exc_divide_by_zero(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_divide_by_zero(isr_registers_t *registers)
 {
     PrintUtils::printk("Divide by zero at %x\n", registers->rip);
     while (1);
 }
 
-void exc_debug(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_debug(isr_registers_t *registers)
 {
     PrintUtils::printk("Debug!\n");
     while (1);
 }
 
-void exc_nmi(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_nmi(isr_registers_t *registers)
 {
     PrintUtils::printk("Non maskable interrupt!\n");
     while (1);
 }
 
-void exc_bp(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_bp(isr_registers_t *registers)
 {
     PrintUtils::printk("Breakpoint at %x\n", registers->rip);
     while (1);
 }
 
-void exc_overflow(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_overflow(isr_registers_t *registers)
 {
     PrintUtils::printk("Overflow!\n");
     while (1);
 }
 
-void exc_bound_range(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_bound_range(isr_registers_t *registers)
 {
     PrintUtils::printk("Bound range exceeded.\n");
     while (1);
 }
 
-void exc_invopcode(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_invopcode(isr_registers_t *registers)
 {
     PrintUtils::printk("Invalid opcode at %x\n", registers->rip);
     while (1);
 }
 
-void exc_device_not_avail(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_device_not_avail(isr_registers_t *registers)
 {
     PrintUtils::printk("Device not available.\n");
     while (1);
 }
 
-void exc_double_fault(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_double_fault(isr_registers_t *registers)
 {
     PrintUtils::printk("Double fault, halting.\n");
     while (1);
 }
 
-void exc_invtss(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_invtss(isr_registers_t *registers)
 {
     PrintUtils::printk("TSS invalid.\n");
     while (1);
 }
 
-void exc_segment_not_present(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_segment_not_present(isr_registers_t *registers)
 {
     PrintUtils::printk("Segment not present.\n");
     while (1);
 }
 
-void exc_ssf(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_ssf(isr_registers_t *registers)
 {
     PrintUtils::printk("Stacksegment faulted.\n");
     while (1);
 }
 
-void exc_gpf(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_gpf(isr_registers_t *registers)
 {
     PrintUtils::printk("General protection fault at %x.\n", registers->rip);
     while (1);
 }
 
-void exc_pf(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_pf(isr_registers_t *registers)
 {
     PrintUtils::printk("Page fault.\n");
     while (1);
 }
 
-void exc_kernel_fpu(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_kernel_fpu(isr_registers_t *registers)
 {
     PrintUtils::printk("Kernel FPU error.\n");
     while (1);
 }
 
-void exc_align_check(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_align_check(isr_registers_t *registers)
 {
     PrintUtils::printk("Align check error.\n");
     while (1);
 }
 
-void exc_machine_check(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_machine_check(isr_registers_t *registers)
 {
     PrintUtils::printk("Machine check exception.\n");
     while (1);
 }
 
-void exc_xm(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_xm(isr_registers_t *registers)
 {
     PrintUtils::printk("SIMD FP.\n");
     while (1);
 }
 
-void exc_virtualization(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_virtualization(isr_registers_t *registers)
 {
     PrintUtils::printk("Kernel virtualization exception.\n");
     while (1);

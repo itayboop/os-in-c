@@ -91,6 +91,26 @@ enum class InterruptVector : uint8_t
 class InterruptHandlersGenerator
 {
 private:
+    void static exc_divide_by_zero(isr_registers_t *registers);
+    void static exc_debug(isr_registers_t *registers);
+    void static exc_nmi(isr_registers_t *registers);
+    void static exc_bp(isr_registers_t *registers);
+    void static exc_overflow(isr_registers_t *registers);
+    void static exc_bound_range(isr_registers_t *registers);
+    void static exc_invopcode(isr_registers_t *registers);
+    void static exc_device_not_avail(isr_registers_t *registers);
+    void static exc_double_fault(isr_registers_t *registers);
+    void static exc_invtss(isr_registers_t *registers);
+    void static exc_segment_not_present(isr_registers_t *registers);
+    void static exc_ssf(isr_registers_t *registers);
+    void static exc_gpf(isr_registers_t *registers);
+    void static exc_pf(isr_registers_t *registers);
+    void static exc_kernel_fpu(isr_registers_t *registers);
+    void static exc_align_check(isr_registers_t *registers);
+    void static exc_machine_check(isr_registers_t *registers);
+    void static exc_xm(isr_registers_t *registers);
+    void static exc_virtualization(isr_registers_t *registers);
+
     void register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func);
     void register_all_interrupt_handlers();
 

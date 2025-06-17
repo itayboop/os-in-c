@@ -33,5 +33,3 @@ extern "C"
 		while (1);
 	}
 }
-
-// TODO: add hpp to each asm (in it's corresponding tree)

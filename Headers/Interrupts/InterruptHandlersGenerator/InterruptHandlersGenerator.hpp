@@ -111,7 +111,7 @@ private:
     void static exc_xm(isr_registers_t *registers);
     void static exc_virtualization(isr_registers_t *registers);
 
-    void register_interrupt_handler(uint8_t interrupt_number, isr_t handler_func);
+    void register_interrupt_handler(InterruptVector interrupt_number, isr_t handler_func);
     void register_all_interrupt_handlers();
 
 public:

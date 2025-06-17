@@ -134,7 +134,7 @@ void InterruptHandlersGenerator::exc_virtualization(isr_registers_t *registers)
 
 void InterruptHandlersGenerator::register_interrupt_handler(InterruptVector interrupt_number, isr_t handler_func)
 {
-    interrupt_handlers[interrupt_number] = handler_func;
+    interrupt_handlers[static_cast<uint8_t>(interrupt_number)] = handler_func;
 }
 
 void InterruptHandlersGenerator::register_all_interrupt_handlers()

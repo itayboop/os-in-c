@@ -21,11 +21,11 @@ include_directories(${INCLUDE_DIR})
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIR}
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${ISO_DIR}/boot/grub
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> ${ISO_DIR}/boot/${OS_BIN}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/grub.cfg ${ISO_DIR}/boot/grub
-    COMMAND grub-mkrescue -o ${OUTPUT_DIR}/${PROJECT_NAME}.iso ${ISO_DIR}
-    COMMAND qemu-system-x86_64 -cdrom ${OUTPUT_DIR}/${PROJECT_NAME}.iso
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIR}
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${ISO_DIR}/boot/grub
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> ${ISO_DIR}/boot/${OS_BIN}
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/grub.cfg ${ISO_DIR}/boot/grub
+        COMMAND grub-mkrescue -o ${OUTPUT_DIR}/${PROJECT_NAME}.iso ${ISO_DIR}
+        COMMAND qemu-system-x86_64 -cdrom ${OUTPUT_DIR}/${PROJECT_NAME}.iso
 )

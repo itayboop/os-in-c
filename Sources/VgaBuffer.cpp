@@ -45,11 +45,6 @@ static void handle_new_line()
 	terminal_column = 0;
 }
 
-void terminal_setcolor(uint8_t color)
-{
-	terminal_color = color;
-}
-
 void terminal_initialize()
 {
 	terminal_row = 0;

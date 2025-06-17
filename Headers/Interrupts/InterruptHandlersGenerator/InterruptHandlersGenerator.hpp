@@ -61,7 +61,7 @@ typedef struct __attribute__((packed)) isr_registers_s
     uint64_t rip, cs, rflags, rsp, ss;
 } isr_registers_t;
 
-typedef void (*isr_t)(isr_registers_t *registers);
+using isr_t = void(*)(isr_registers_t *registers);
 
 extern "C" isr_registers_t *isr_handler(isr_registers_t *registers);
 

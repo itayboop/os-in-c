@@ -73,6 +73,7 @@ void IDT::initialize()
     MemoryUtils::memset(this->idt, 0, sizeof(this->idt));
     this->idt_ptr.limit = (sizeof(this->idt)) - 1;
     this->idt_ptr.base = (uintptr_t) &this->idt;
+
     this->set_all_gates();
 
     load_idt(&this->idt_ptr);

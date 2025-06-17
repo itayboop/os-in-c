@@ -21,7 +21,6 @@ extern "C"
 
         InterruptHandlersGenerator interruptHandlersGenerator = InterruptHandlersGenerator();
         interruptHandlersGenerator.generate();
-
         IDT idt = IDT();
         idt.initialize();
 

@@ -25,8 +25,8 @@ extern "C" void load_interrupt_descriptor_table(InterruptDescriptorTablePtr *ptr
 class IDT
 {
 private:
-    InterruptDescriptorTablePtr _interrupt_descriptor_table_ptr __attribute__((aligned(16)));
-    InterruptDescriptorTableEntry _interrupt_descriptor_table[256] __attribute__((aligned(16)));
+    InterruptDescriptorTablePtr ptr __attribute__((aligned(16)));
+    InterruptDescriptorTableEntry table[256] __attribute__((aligned(16)));
 
 private:
     void set_gate(uint8_t entry_number, uintptr_t funcall);

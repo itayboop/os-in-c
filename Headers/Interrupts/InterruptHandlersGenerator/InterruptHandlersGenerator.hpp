@@ -63,7 +63,7 @@ typedef struct __attribute__((packed)) InterruptServiceRoutineRegisters
 
 using interrupt_service_routine_t = void(*)(InterruptServiceRoutineRegisters &registers);
 
-extern "C" InterruptServiceRoutineRegisters *isr_handler(InterruptServiceRoutineRegisters *registers);
+extern "C" InterruptServiceRoutineRegisters *isr_handler_wrapper(InterruptServiceRoutineRegisters *registers);
 
 enum class InterruptVector : uint8_t
 {
@@ -115,5 +115,6 @@ private:
     void register_all_interrupt_handlers();
 
 public:
+    static InterruptServiceRoutineRegisters * isr_handler(InterruptServiceRoutineRegisters *registers);
     void generate();
 };

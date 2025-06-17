@@ -64,7 +64,7 @@ ISR_NOERRCODE 45
 ISR_NOERRCODE 46
 ISR_NOERRCODE 47
 
-[EXTERN isr_handler]
+[EXTERN isr_handler_wrapper]
 
 isr_common_stub:
     push rax
@@ -84,7 +84,7 @@ isr_common_stub:
     push r15
 
 	mov rdi, rsp ; copies registers to rdi
-	call isr_handler
+	call isr_handler_wrapper
 	mov rsp, rax
 
     pop r15

@@ -15,7 +15,7 @@ typedef struct __attribute__((packed)) idt_entry_64_s
 
 typedef struct __attribute__((packed)) idt_64_pointer_s
 {
-    uint16_t limit;
+    uint16_t size;
     uintptr_t base;
 } idt_64_pointer_t;
 

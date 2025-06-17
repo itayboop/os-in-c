@@ -1,7 +1,7 @@
 [BITS 64]
 
-[GLOBAL load_idt]
-; extern void load_idt(void* idt_ptr)
-load_idt:
+[GLOBAL load_interrupt_descriptor_table]
+; extern void load_interrupt_descriptor_table(void* _interrupt_descriptor_table_ptr)
+load_interrupt_descriptor_table:
    lidt [rdi] ; load the IDT pointer.
    ret

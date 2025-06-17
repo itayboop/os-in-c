@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-typedef struct __attribute__((packed)) idt_entry_64_s
+typedef struct __attribute__((packed)) InterruptDescriptorTableEntry
 {
     uint16_t offset_low;    // offset bits 0..15
     uint16_t selector;    // a code segment selector in GDT
@@ -11,22 +11,22 @@ typedef struct __attribute__((packed)) idt_entry_64_s
     uint16_t offset_mid;    // offset bits 16..31
     uint32_t offset_high;    // offset bits 32..63
     uint32_t reserved;
-} idt_entry_64_t;
+} InterruptDescriptorTableEntry;
 
-typedef struct __attribute__((packed)) idt_64_pointer_s
+typedef struct __attribute__((packed)) InterruptDescriptorTablePtr
 {
     uint16_t size;
     uintptr_t base;
-} idt_64_pointer_t;
+} InterruptDescriptorTablePtr;
 
 
-extern "C" void load_idt(idt_64_pointer_t *ptr);
+extern "C" void load_interrupt_descriptor_table(InterruptDescriptorTablePtr *ptr);
 
 class IDT
 {
 private:
-    idt_64_pointer_t idt_ptr __attribute__((aligned(16)));
-    idt_entry_64_t idt[256] __attribute__((aligned(16)));
+    InterruptDescriptorTablePtr _interrupt_descriptor_table_ptr __attribute__((aligned(16)));
+    InterruptDescriptorTableEntry _interrupt_descriptor_table[256] __attribute__((aligned(16)));
 
 private:
     void set_gate(uint8_t entry_number, uintptr_t funcall);

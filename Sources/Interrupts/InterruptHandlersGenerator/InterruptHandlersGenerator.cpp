@@ -2,9 +2,9 @@
 #include "../../../Headers/Utils/Functions/PrintUtils.hpp"
 #include "../../../Headers/Utils/Functions/MemoryUtils.hpp"
 
-isr_t interrupt_handlers[256] __attribute__((aligned(16)));
+interrupt_service_routine_t interrupt_handlers[256] __attribute__((aligned(16)));
 
-isr_registers_t *isr_handler(isr_registers_t *registers)
+InterruptServiceRoutineRegisters *isr_handler(InterruptServiceRoutineRegisters *registers)
 {
     if (interrupt_handlers[registers->interrupt_number] == 0)
     {
@@ -18,121 +18,121 @@ isr_registers_t *isr_handler(isr_registers_t *registers)
     return registers;
 }
 
-void InterruptHandlersGenerator::exc_divide_by_zero(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_divide_by_zero(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Divide by zero at %x\n", registers->rip);
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_debug(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_debug(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Debug!\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_nmi(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_nmi(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Non maskable interrupt!\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_bp(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_bp(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Breakpoint at %x\n", registers->rip);
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_overflow(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_overflow(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Overflow!\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_bound_range(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_bound_range(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Bound range exceeded.\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_invopcode(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_invopcode(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Invalid opcode at %x\n", registers->rip);
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_device_not_avail(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_device_not_avail(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Device not available.\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_double_fault(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_double_fault(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Double fault, halting.\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_invtss(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_invtss(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("TSS invalid.\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_segment_not_present(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_segment_not_present(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Segment not present.\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_ssf(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_ssf(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Stacksegment faulted.\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_gpf(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_gpf(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("General protection fault at %x.\n", registers->rip);
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_pf(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_pf(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Page fault.\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_kernel_fpu(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_kernel_fpu(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Kernel FPU error.\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_align_check(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_align_check(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Align check error.\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_machine_check(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_machine_check(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Machine check exception.\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_xm(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_xm(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("SIMD FP.\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::exc_virtualization(isr_registers_t *registers)
+void InterruptHandlersGenerator::exc_virtualization(InterruptServiceRoutineRegisters *registers)
 {
     PrintUtils::printk("Kernel virtualization exception.\n");
     while (1);
 }
 
-void InterruptHandlersGenerator::register_interrupt_handler(InterruptVector interrupt_number, isr_t handler_func)
+void InterruptHandlersGenerator::register_interrupt_handler(InterruptVector interrupt_number, interrupt_service_routine_t handler_func)
 {
     interrupt_handlers[static_cast<uint8_t>(interrupt_number)] = handler_func;
 }

@@ -6,7 +6,7 @@
 
 void IDT::set_gate(uint8_t entry_number, uintptr_t funcall)
 {
-    idt_entry_64_t *entry = &this->idt[entry_number];
+    InterruptDescriptorTableEntry *entry = &this->_interrupt_descriptor_table[entry_number];
 
     entry->offset_high = (funcall >> 32) & 0xFFFFFFFF;
     entry->offset_mid = (funcall >> 16) & 0xFFFF;
@@ -70,11 +70,11 @@ void IDT::set_all_gates()
 
 void IDT::initialize()
 {
-    MemoryUtils::memset(this->idt, 0, sizeof(this->idt));
-    this->idt_ptr.size = (sizeof(this->idt)) - 1;
-    this->idt_ptr.base = (uintptr_t) &this->idt;
+    MemoryUtils::memset(this->_interrupt_descriptor_table, 0, sizeof(this->_interrupt_descriptor_table));
+    this->_interrupt_descriptor_table_ptr.size = (sizeof(this->_interrupt_descriptor_table)) - 1;
+    this->_interrupt_descriptor_table_ptr.base = (uintptr_t) & this->_interrupt_descriptor_table;
 
     this->set_all_gates();
 
-    load_idt(&this->idt_ptr);
+    load_interrupt_descriptor_table(&this->_interrupt_descriptor_table_ptr);
 }

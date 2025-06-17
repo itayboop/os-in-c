@@ -1,5 +1,6 @@
 #include "VgaBuffer.hpp"
 #include "Utils/Functions/StringsUtils.hpp"
+#include "../Headers/Utils/Functions/HexUtils.hpp"
 
 Terminal & Terminal::get() {
     static Terminal instance;
@@ -68,8 +69,8 @@ void Terminal::print_hex(int value) {
     print("0x");
     unsigned int mask = 0xF0000000;
 
-    for (int i = 0; i < 8; i++) {
-        unsigned int hex_digit = (value & mask) >> (28 - (i * 4));
+    for (unsigned int i = 0; i < 8; i++) {
+        unsigned int hex_digit = HexUtils::extract_nibble(value, i);
         if (hex_digit < 10) {
             put_char('0' + hex_digit);
         } else {

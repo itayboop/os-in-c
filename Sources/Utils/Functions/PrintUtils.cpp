@@ -5,6 +5,7 @@
 
 void PrintUtils::printk(const char *formatted_str, ...)
 {
+    Terminal &terminal = Terminal::get();
 	va_list arg;
 	char formatted_str_char = 0;
 
@@ -14,7 +15,7 @@ void PrintUtils::printk(const char *formatted_str, ...)
 	{
 		if(formatted_str_char != '%')
 		{
-			terminal_putchar(formatted_str_char);
+            terminal.put_char(formatted_str_char);
 		} else
 		{
 			formatted_str_char = *formatted_str++;
@@ -24,25 +25,25 @@ void PrintUtils::printk(const char *formatted_str, ...)
 				case 'd':
 				{
 					int number_to_print = va_arg(arg, int);
-					terminal_print_int(number_to_print);
+					terminal.print_int(number_to_print);
 				}
 					break;
 				case 's':
 				{
 					char* string_to_print = va_arg(arg, char *);
-					terminal_print_string(string_to_print);
+					terminal.print(string_to_print);
 				}
 					break;
 				case 'c':
 				{
 					char char_to_print = va_arg(arg, int); // 'char' is promoted to 'int' when passed through '...'
-					terminal_putchar(char_to_print);
+					terminal.put_char(char_to_print);
 				}
 					break;
 				case 'x':
 				{
 					int hex_to_print = va_arg(arg, int);
-					terminal_print_hex(hex_to_print);
+					terminal.print_hex(hex_to_print);
 				}
 					break;
 				default:

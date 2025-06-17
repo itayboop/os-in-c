@@ -1,113 +1,89 @@
 #include "VgaBuffer.hpp"
 #include "Utils/Functions/StringsUtils.hpp"
 
-static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg)
-{
-	return fg | bg << 4;
+Terminal & Terminal::get() {
+    static Terminal instance;
+    return instance;
 }
 
-static inline uint16_t vga_entry(unsigned char uc, uint8_t color)
-{
-	return (uint16_t)uc | (uint16_t)color << 8;
+Terminal::Terminal() {
+    buffer = reinterpret_cast<uint16_t*>(0xB8000);
+    row = 0;
+    column = 0;
+    color = entry_color(LIGHT_GREY, BLACK);
 }
 
-static const size_t VGA_WIDTH = 80;
-static const size_t VGA_HEIGHT = 25;
-
-static size_t terminal_row;
-static size_t terminal_column;
-static uint8_t terminal_color;
-static uint16_t* terminal_buffer;
-
-static void handle_new_line()
-{
-	terminal_row++;
-	terminal_column = 0;
+void Terminal::initialize() {
+    for (size_t y = 0; y < HEIGHT; y++) {
+        for (size_t x = 0; x < WIDTH; x++) {
+            const size_t index = y * WIDTH + x;
+            buffer[index] = make_entry(' ', color);
+        }
+    }
 }
 
-void terminal_initialize()
-{
-	terminal_row = 0;
-	terminal_column = 0;
-	terminal_color = vga_entry_color(LIGHT_GREY, BLACK);
-	terminal_buffer = (uint16_t*) 0xB8000;
+void Terminal::put_char(char c) {
+    if (c == '\n') {
+        new_line();
+    } else {
+        put_entry_at(c);
+        if (++column == WIDTH) {
+            new_line();
+        }
+    }
 
-	for (size_t i = 0; i < VGA_HEIGHT; i++)
-	{
-		for (size_t j = 0; j < VGA_WIDTH; j++)
-		{
-			const size_t index = i * VGA_WIDTH + j;
-			terminal_buffer[index] = vga_entry(' ', terminal_color);
-		}
-	}
+    if (row == HEIGHT) {
+        handle_scroll();
+    }
 }
 
-static void terminal_putentryat(char c)
-{
-	const size_t index = terminal_row * VGA_WIDTH + terminal_column;
-	terminal_buffer[index] = vga_entry(c, terminal_color);
+void Terminal::put_entry_at(char c) {
+    const size_t index = row * WIDTH + column;
+    buffer[index] = make_entry(c, color);
 }
 
-static void handle_filled_vga_height()
-{
-	terminal_row = 0;
+void Terminal::new_line() {
+    row++;
+    column = 0;
 }
 
-void terminal_putchar(const char c)
-{
-	if(c == '\n')
-	{
-		handle_new_line();
-	} else
-	{
-		terminal_putentryat(c);
-		if (++terminal_column == VGA_WIDTH)
-		{
-			handle_new_line();
-		}
-	}
-
-	if (terminal_row == VGA_HEIGHT)
-	{
-		handle_filled_vga_height();
-	}
+void Terminal::handle_scroll() {
+    // for now, just reset (can implement actual scrolling later)
+    row = 0;
 }
 
-void terminal_print_string(const char* data)
-{
-   	for (size_t i = 0; i < StringsUtils::strlen(data); i++)
-	{
-		terminal_putchar(data[i]);
-	}
+void Terminal::print(const char* str) {
+    for (size_t i = 0; i < StringsUtils::strlen(str); i++) {
+        put_char(str[i]);
+    }
 }
 
-void terminal_print_int(const int number)
-{
-	char buffer[64];
-
-	StringsUtils::itoa(number, buffer);
-
-	terminal_print_string(buffer);
+void Terminal::print_int(int number) {
+    char buffer[64];
+    StringsUtils::itoa(number, buffer);
+    print(buffer);
 }
 
-void terminal_print_hex(const int value)
-{
-	unsigned int mask = 0xF0000000; // Mask for the most significant hex digit
+void Terminal::print_hex(int value) {
+    print("0x");
+    unsigned int mask = 0xF0000000;
 
-	terminal_print_string("0x");
+    for (int i = 0; i < 8; i++) {
+        unsigned int hex_digit = (value & mask) >> (28 - (i * 4));
+        if (hex_digit < 10) {
+            put_char('0' + hex_digit);
+        } else {
+            put_char('A' + (hex_digit - 10));
+        }
 
-	for (int i = 0; i < 8; i++)
-	{
-		unsigned int hex_digit = (value & mask) >> (28 - (i * 4));
-		if (hex_digit < 10)
-		{
-			terminal_print_int(hex_digit);
-		}
-		else
-		{
-			terminal_putchar('A' + (hex_digit - 10));
-		}
+        mask >>= 4;
+    }
+}
 
-		mask >>= 4;
-	}
+uint8_t Terminal::entry_color(VgaColor fg, VgaColor bg) {
+    return fg | (bg << 4);
+}
+
+uint16_t Terminal::make_entry(unsigned char uc, uint8_t color) {
+    return static_cast<uint16_t>(uc) | (static_cast<uint16_t>(color) << 8);
 }

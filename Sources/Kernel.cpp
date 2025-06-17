@@ -10,14 +10,14 @@
 
 #include "VgaBuffer.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
-#include "../Headers/Interrupts/InterruptsDescriptorTable.hpp"
-#include "../Headers/Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
+#include "Interrupts/InterruptsDescriptorTable.hpp"
+#include "Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
 
 extern "C"
 {
 	void kernel_main()
 	{
-		terminal_initialize();
+        Terminal::get().initialize();
 
         InterruptHandlersGenerator interruptHandlersGenerator = InterruptHandlersGenerator();
         interruptHandlersGenerator.generate();

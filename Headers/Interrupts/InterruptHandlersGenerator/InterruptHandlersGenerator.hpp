@@ -61,7 +61,7 @@ typedef struct __attribute__((packed)) InterruptServiceRoutineRegisters
     uint64_t rip, cs, rflags, rsp, ss;
 } InterruptServiceRoutineRegisters;
 
-using interrupt_service_routine_t = void(*)(InterruptServiceRoutineRegisters *registers);
+using interrupt_service_routine_t = void(*)(InterruptServiceRoutineRegisters &registers);
 
 extern "C" InterruptServiceRoutineRegisters *isr_handler(InterruptServiceRoutineRegisters *registers);
 
@@ -91,25 +91,25 @@ enum class InterruptVector : uint8_t
 class InterruptHandlersGenerator
 {
 private:
-    void static exc_divide_by_zero(InterruptServiceRoutineRegisters *registers);
-    void static exc_debug(InterruptServiceRoutineRegisters *registers);
-    void static exc_nmi(InterruptServiceRoutineRegisters *registers);
-    void static exc_bp(InterruptServiceRoutineRegisters *registers);
-    void static exc_overflow(InterruptServiceRoutineRegisters *registers);
-    void static exc_bound_range(InterruptServiceRoutineRegisters *registers);
-    void static exc_invopcode(InterruptServiceRoutineRegisters *registers);
-    void static exc_device_not_avail(InterruptServiceRoutineRegisters *registers);
-    void static exc_double_fault(InterruptServiceRoutineRegisters *registers);
-    void static exc_invtss(InterruptServiceRoutineRegisters *registers);
-    void static exc_segment_not_present(InterruptServiceRoutineRegisters *registers);
-    void static exc_ssf(InterruptServiceRoutineRegisters *registers);
-    void static exc_gpf(InterruptServiceRoutineRegisters *registers);
-    void static exc_pf(InterruptServiceRoutineRegisters *registers);
-    void static exc_kernel_fpu(InterruptServiceRoutineRegisters *registers);
-    void static exc_align_check(InterruptServiceRoutineRegisters *registers);
-    void static exc_machine_check(InterruptServiceRoutineRegisters *registers);
-    void static exc_xm(InterruptServiceRoutineRegisters *registers);
-    void static exc_virtualization(InterruptServiceRoutineRegisters *registers);
+    void static exc_divide_by_zero(InterruptServiceRoutineRegisters &registers);
+    void static exc_debug(InterruptServiceRoutineRegisters &registers);
+    void static exc_nmi(InterruptServiceRoutineRegisters &registers);
+    void static exc_bp(InterruptServiceRoutineRegisters &registers);
+    void static exc_overflow(InterruptServiceRoutineRegisters &registers);
+    void static exc_bound_range(InterruptServiceRoutineRegisters &registers);
+    void static exc_invopcode(InterruptServiceRoutineRegisters &registers);
+    void static exc_device_not_avail(InterruptServiceRoutineRegisters &registers);
+    void static exc_double_fault(InterruptServiceRoutineRegisters &registers);
+    void static exc_invtss(InterruptServiceRoutineRegisters &registers);
+    void static exc_segment_not_present(InterruptServiceRoutineRegisters &registers);
+    void static exc_ssf(InterruptServiceRoutineRegisters &registers);
+    void static exc_gpf(InterruptServiceRoutineRegisters &registers);
+    void static exc_pf(InterruptServiceRoutineRegisters &registers);
+    void static exc_kernel_fpu(InterruptServiceRoutineRegisters &registers);
+    void static exc_align_check(InterruptServiceRoutineRegisters &registers);
+    void static exc_machine_check(InterruptServiceRoutineRegisters &registers);
+    void static exc_xm(InterruptServiceRoutineRegisters &registers);
+    void static exc_virtualization(InterruptServiceRoutineRegisters &registers);
 
     void register_interrupt_handler(InterruptVector interrupt_number, interrupt_service_routine_t handler_func);
     void register_all_interrupt_handlers();

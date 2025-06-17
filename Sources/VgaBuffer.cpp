@@ -1,26 +1,6 @@
 #include "VgaBuffer.hpp"
 #include "Utils/Functions/StringsUtils.hpp"
 
-typedef enum vga_color
-{
-	BLACK = 0,
-	BLUE,
-	GREEN,
-	CYAN,
-	RED,
-	MAGENTA,
-	BROWN,
-	LIGHT_GREY,
-	DARK_GREY,
-	LIGHT_BLUE,
-	LIGHT_GREEN,
-	LIGHT_CYAN,
-	LIGHT_RED,
-	LIGHT_MAGENTA,
-	LIGHT_BROWN,
-	WHITE,
-} vga_color;
-
 static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg)
 {
 	return fg | bg << 4;

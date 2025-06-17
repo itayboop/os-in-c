@@ -139,25 +139,25 @@ void InterruptHandlersGenerator::register_interrupt_handler(uint8_t interrupt_nu
 
 void InterruptHandlersGenerator::register_all_interrupt_handlers()
 {
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::DIVIDE_BY_ZERO), exc_divide_by_zero);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::DEBUG), exc_debug);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::NON_MASKABLE_INTERRUPT), exc_nmi);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::BREAKPOINT), exc_bp);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::OVERFLOW), exc_overflow);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::BOUND_RANGE_EXCEEDED), exc_bound_range);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::INVALID_OPCODE), exc_invopcode);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::DEVICE_NOT_AVAILABLE), exc_device_not_avail);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::DOUBLE_FAULT), exc_double_fault);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::INVALID_TSS), exc_invtss);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::SEGMENT_NOT_PRESENT), exc_segment_not_present);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::STACK_SEGMENT_FAULT), exc_ssf);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::GENERAL_PROTECTION_FAULT), exc_gpf);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::PAGE_FAULT), exc_pf);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::KERNEL_FPU_EXCEPTION), exc_kernel_fpu);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::ALIGNMENT_CHECK), exc_align_check);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::MACHINE_CHECK), exc_machine_check);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::SIMD_FP_EXCEPTION), exc_xm);
-    this->register_interrupt_handler(static_cast<uint8_t>(InterruptVector::VIRTUALIZATION_EXCEPTION), exc_virtualization);
+    this->register_interrupt_handler(InterruptVector::DIVIDE_BY_ZERO, exc_divide_by_zero);
+    this->register_interrupt_handler(InterruptVector::DEBUG, exc_debug);
+    this->register_interrupt_handler(InterruptVector::NON_MASKABLE_INTERRUPT, exc_nmi);
+    this->register_interrupt_handler(InterruptVector::BREAKPOINT, exc_bp);
+    this->register_interrupt_handler(InterruptVector::OVERFLOW, exc_overflow);
+    this->register_interrupt_handler(InterruptVector::BOUND_RANGE_EXCEEDED, exc_bound_range);
+    this->register_interrupt_handler(InterruptVector::INVALID_OPCODE, exc_invopcode);
+    this->register_interrupt_handler(InterruptVector::DEVICE_NOT_AVAILABLE, exc_device_not_avail);
+    this->register_interrupt_handler(InterruptVector::DOUBLE_FAULT, exc_double_fault);
+    this->register_interrupt_handler(InterruptVector::INVALID_TSS, exc_invtss);
+    this->register_interrupt_handler(InterruptVector::SEGMENT_NOT_PRESENT, exc_segment_not_present);
+    this->register_interrupt_handler(InterruptVector::STACK_SEGMENT_FAULT, exc_ssf);
+    this->register_interrupt_handler(InterruptVector::GENERAL_PROTECTION_FAULT, exc_gpf);
+    this->register_interrupt_handler(InterruptVector::PAGE_FAULT, exc_pf);
+    this->register_interrupt_handler(InterruptVector::KERNEL_FPU_EXCEPTION, exc_kernel_fpu);
+    this->register_interrupt_handler(InterruptVector::ALIGNMENT_CHECK, exc_align_check);
+    this->register_interrupt_handler(InterruptVector::MACHINE_CHECK, exc_machine_check);
+    this->register_interrupt_handler(InterruptVector::SIMD_FP_EXCEPTION, exc_xm);
+    this->register_interrupt_handler(InterruptVector::VIRTUALIZATION_EXCEPTION, exc_virtualization);
 }
 
 void InterruptHandlersGenerator::generate()

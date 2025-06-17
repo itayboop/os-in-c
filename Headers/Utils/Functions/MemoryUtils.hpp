@@ -4,5 +4,5 @@
 
 namespace MemoryUtils
 {
-    void* memset(void* ptr, int value, unsigned long num);
+    void * memset(void* ptr, int value, unsigned long num);
 };

@@ -2,5 +2,5 @@
 
 namespace PrintUtils
 {
-    void printk(const char* formatted_str, ...);
+    void printk(const char *formatted_str, ...);
 }

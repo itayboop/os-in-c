@@ -3,7 +3,7 @@
 #include "VgaBuffer.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
 
-void PrintUtils::printk(const char* formatted_str, ...)
+void PrintUtils::printk(const char *formatted_str, ...)
 {
 	va_list arg;
 	char formatted_str_char = 0;

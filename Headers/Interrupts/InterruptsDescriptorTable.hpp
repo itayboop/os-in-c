@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-typedef struct __attribute__((packed)) InterruptDescriptorTableEntry
+struct __attribute__((packed)) InterruptDescriptorTableEntry
 {
     uint16_t offset_low;    // offset bits 0..15
     uint16_t selector;    // a code segment selector in GDT
@@ -11,13 +11,13 @@ typedef struct __attribute__((packed)) InterruptDescriptorTableEntry
     uint16_t offset_mid;    // offset bits 16..31
     uint32_t offset_high;    // offset bits 32..63
     uint32_t reserved;
-} InterruptDescriptorTableEntry;
+};
 
-typedef struct __attribute__((packed)) InterruptDescriptorTablePtr
+struct __attribute__((packed)) InterruptDescriptorTablePtr
 {
     uint16_t size;
     uintptr_t base;
-} InterruptDescriptorTablePtr;
+};
 
 
 extern "C" void load_interrupt_descriptor_table(InterruptDescriptorTablePtr *ptr);

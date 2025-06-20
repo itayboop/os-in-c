@@ -51,7 +51,7 @@ extern "C" void isr45();
 extern "C" void isr46();
 extern "C" void isr47();
 
-typedef struct __attribute__((packed)) InterruptServiceRoutineRegisters
+struct __attribute__((packed)) InterruptServiceRoutineRegisters
 {
     uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
     uint64_t rbp, rdi, rsi, rdx, rcx, rbx, rax;
@@ -59,7 +59,7 @@ typedef struct __attribute__((packed)) InterruptServiceRoutineRegisters
     uint64_t interrupt_number, error_code;
 
     uint64_t rip, cs, rflags, rsp, ss;
-} InterruptServiceRoutineRegisters;
+};
 
 using interrupt_service_routine_t = void(*)(InterruptServiceRoutineRegisters &registers);
 

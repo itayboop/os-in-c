@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stdint.h>
-
 struct __attribute__((packed)) InterruptDescriptorTableEntry
 {
     uint16_t offset_low;    // offset bits 0..15

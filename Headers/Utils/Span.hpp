@@ -1,7 +1,7 @@
 #pragma once
 
 #include "OsDefenitions/TypeTraits.hpp"
-#include "OsDefenitions/stddef.h"
+#include <stddef.h>
 
 #include "Utils/Functions/PrintUtils.hpp"
 #include "KernelException.hpp"

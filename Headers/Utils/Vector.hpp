@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OsDefenitions/stddef.h"
+#include <stddef.h>
 
 #include "Span.hpp"
 #include "KernelException.hpp"

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 extern "C" void isr0();
 extern "C" void isr1();
 extern "C" void isr2();

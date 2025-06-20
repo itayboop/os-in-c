@@ -1,8 +1,8 @@
 #pragma once
 
-#include "OsDefenitions/TypeTraits.hpp"
 #include <stddef.h>
 
+#include "../Headers/OsDefinitions/TypeTraits.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
 #include "KernelException.hpp"
 

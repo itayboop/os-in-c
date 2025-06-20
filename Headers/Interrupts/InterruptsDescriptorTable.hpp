@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../Headers/Utils/Span.hpp"
+
 struct __attribute__((packed)) InterruptDescriptorTableEntry
 {
     uint16_t offset_low;    // offset bits 0..15
@@ -23,8 +25,10 @@ extern "C" void load_interrupt_descriptor_table(InterruptDescriptorTablePtr *ptr
 class InterruptDescriptorTable
 {
 private:
+    static constexpr size_t IDT_TABLE_SIZE = 256;
+
     InterruptDescriptorTablePtr ptr __attribute__((aligned(16)));
-    InterruptDescriptorTableEntry table[256] __attribute__((aligned(16)));
+    InterruptDescriptorTableEntry table[IDT_TABLE_SIZE] __attribute__((aligned(16)));
 
 private:
     void set_gate(uint8_t entry_number, uintptr_t funcall);

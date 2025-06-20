@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stddef.h>
+#include <stdint.h>
 
 #include "../Headers/OsDefinitions/TypeTraits.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
@@ -28,27 +29,27 @@ public:
 public:
 	constexpr uint32_t size()
 	{
-		return _count;
+		return this->_count;
 	}
 
 	constexpr T * begin()
 	{
-		return _ptr;
+		return this->_ptr;
 	}
 
 	constexpr std::add_const_t<T> * begin() const
 	{
-		return _ptr;
+		return this->_ptr;
 	}
 
 	constexpr T * end()
 	{
-		return _ptr + _count;
+		return this->_ptr + this->_count;
 	}
 
 	constexpr std::add_const_t<T> * end() const
 	{
-		return _ptr + _count;
+		return this->_ptr + this->_count;
 	}
 
 	constexpr Span<T> copy_from(const Span<T> &other, size_t size)
@@ -72,24 +73,24 @@ public:
 
 	constexpr T &operator[](uint32_t index)
 	{
-		if (index >= _count)
+		if (index >= this->_count)
 		{
 			PrintUtils::printk("Index out of bounds. ");
 			THROW_KERNEL_EXCEPTION();
 		}
 
-		return _ptr[index];
+		return this->_ptr[index];
 	}
 
 	constexpr std::add_const_t<T> &operator[](uint32_t index) const
 	{
-		if (index >= _count)
+		if (index >= this->_count)
 		{
 			PrintUtils::printk("Index out of bounds. ");
 			THROW_KERNEL_EXCEPTION();
 		}
 
-		return _ptr[index];
+		return this->_ptr[index];
 	}
 
 protected:

@@ -4,7 +4,7 @@
 #include "../../Headers/Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
 #include "../../Headers/Utils/Functions/MemoryUtils.hpp"
 
-void IDT::set_gate(uint8_t entry_number, uintptr_t funcall)
+void InterruptDescriptorTable::set_gate(uint8_t entry_number, uintptr_t funcall)
 {
     InterruptDescriptorTableEntry *entry = &this->table[entry_number];
 
@@ -16,7 +16,7 @@ void IDT::set_gate(uint8_t entry_number, uintptr_t funcall)
     entry->selector = 8; // CODE descriptor, see gdt64.code
 }
 
-void IDT::set_all_gates()
+void InterruptDescriptorTable::set_all_gates()
 {
     this->set_gate(0, (uintptr_t) isr0);
     this->set_gate(1, (uintptr_t) isr1);
@@ -68,7 +68,7 @@ void IDT::set_all_gates()
     this->set_gate(47, (uintptr_t) isr47);
 }
 
-void IDT::initialize()
+void InterruptDescriptorTable::initialize()
 {
     MemoryUtils::memset(this->table, 0, sizeof(this->table));
     this->ptr.size = (sizeof(this->table)) - 1;

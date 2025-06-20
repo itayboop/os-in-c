@@ -10,7 +10,7 @@ set(CMAKE_ASM_NASM_COMPILER nasm)
 set(CMAKE_ASM_NASM_FLAGS "${CMAKE_ASM_NASM_FLAGS} -f elf64")
 
 set(CMAKE_CXX_COMPILER x86_64-elf-g++)
-# TODO: add optimization flag in cpp flags because it creates UB with IDT
+# TODO: add optimization flag in cpp flags because it creates UB with the IDT
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffreestanding -g -Wall -Wextra -fno-exceptions -fno-rtti")
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ${CMAKE_SOURCE_DIR}/linker.ld -ffreestanding -n -nostdlib -lgcc -o ${PROJECT_NAME}.bin")

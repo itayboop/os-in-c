@@ -21,7 +21,7 @@ extern "C"
 
         InterruptHandlersGenerator interruptHandlersGenerator = InterruptHandlersGenerator();
         interruptHandlersGenerator.generate();
-        IDT idt = IDT();
+        InterruptDescriptorTable idt = InterruptDescriptorTable();
         idt.initialize();
 
         PrintUtils::printk("[*] Interrupt table initialized.\n");

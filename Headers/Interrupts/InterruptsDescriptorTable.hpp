@@ -22,7 +22,7 @@ struct __attribute__((packed)) InterruptDescriptorTablePtr
 
 extern "C" void load_interrupt_descriptor_table(InterruptDescriptorTablePtr *ptr);
 
-class IDT
+class InterruptDescriptorTable
 {
 private:
     InterruptDescriptorTablePtr ptr __attribute__((aligned(16)));

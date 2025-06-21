@@ -1,6 +1,5 @@
 #pragma once
-
-#include "../../Headers/Utils/Span.hpp"
+#include "Utils/Span.hpp"
 
 struct __attribute__((packed)) InterruptDescriptorTableEntry
 {
@@ -32,6 +31,7 @@ private:
 
 private:
     void set_gate(uint8_t entry_number, uintptr_t funcall);
+
     void set_all_gates();
 
 public:

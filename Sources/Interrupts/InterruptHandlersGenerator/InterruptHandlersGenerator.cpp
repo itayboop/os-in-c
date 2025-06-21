@@ -1,6 +1,6 @@
-#include "../../../Headers/Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
-#include "../../../Headers/Utils/Functions/PrintUtils.hpp"
-#include "../../../Headers/Utils/Functions/MemoryUtils.hpp"
+#include "Utils/Functions/PrintUtils.hpp"
+#include "Utils/Functions/MemoryUtils.hpp"
+#include "Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
 
 interrupt_service_routine_t interrupt_handlers[256] __attribute__((aligned(16)));
 

@@ -1,6 +1,6 @@
 #include "VgaBuffer.hpp"
+#include "Utils/Functions/HexUtils.hpp"
 #include "Utils/Functions/StringsUtils.hpp"
-#include "../Headers/Utils/Functions/HexUtils.hpp"
 
 Terminal & Terminal::get() {
     static Terminal instance;

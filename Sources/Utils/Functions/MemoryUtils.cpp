@@ -1,4 +1,4 @@
-#include "../../../Headers/Utils/Functions/MemoryUtils.hpp"
+#include "Utils/Functions/MemoryUtils.hpp"
 
 void * MemoryUtils::memset(void *ptr, int value, unsigned long num) {
     unsigned char *p = static_cast<unsigned char*>(ptr);

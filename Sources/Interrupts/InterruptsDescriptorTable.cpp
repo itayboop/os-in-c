@@ -1,8 +1,8 @@
 #include <stdint.h>
 
-#include "../../Headers/Interrupts/InterruptsDescriptorTable.hpp"
-#include "../../Headers/Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
-#include "../../Headers/Utils/Functions/MemoryUtils.hpp"
+#include "Utils/Functions/MemoryUtils.hpp"
+#include "Interrupts/InterruptsDescriptorTable.hpp"
+#include "Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
 
 void InterruptDescriptorTable::set_gate(uint8_t entry_number, uintptr_t funcall)
 {

@@ -1,9 +1,9 @@
 #pragma once
 
-#define MAX_DIGITS 62
-
 #include <stdarg.h>
 #include <stddef.h>
+
+#define MAX_DIGITS 62
 
 namespace StringsUtils
 {

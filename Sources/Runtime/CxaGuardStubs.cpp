@@ -1,5 +1,4 @@
 #pragma once
-
 #include <stdint.h>
 
 // to make static variables inside functions work, can work while we single-threaded

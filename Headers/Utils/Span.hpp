@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "../Headers/OsDefinitions/TypeTraits.hpp"
+#include "OsDefinitions/TypeTraits.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
 #include "KernelException.hpp"
 

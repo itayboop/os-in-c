@@ -70,8 +70,8 @@ void InterruptDescriptorTable::set_all_gates()
 
 void InterruptDescriptorTable::initialize()
 {
-    MemoryUtils::memset(this->table, 0, sizeof(this->table));
-    this->ptr.size = (sizeof(this->table)) - 1;
+    MemoryUtils::memset(this->table, 0, this->IDT_TABLE_SIZE);
+    this->ptr.size = this->IDT_TABLE_SIZE - 1;
     this->ptr.base = (uintptr_t) & this->table;
 
     this->set_all_gates();

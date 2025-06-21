@@ -25,7 +25,7 @@ extern "C" void load_interrupt_descriptor_table(InterruptDescriptorTablePtr *ptr
 class InterruptDescriptorTable
 {
 private:
-    static constexpr size_t IDT_TABLE_SIZE = 256;
+    static constexpr int IDT_TABLE_SIZE = 256;
 
     InterruptDescriptorTablePtr ptr __attribute__((aligned(16)));
     InterruptDescriptorTableEntry table[IDT_TABLE_SIZE] __attribute__((aligned(16)));

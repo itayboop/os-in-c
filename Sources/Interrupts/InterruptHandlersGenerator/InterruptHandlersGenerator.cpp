@@ -4,12 +4,12 @@
 
 interrupt_service_routine_t interrupt_handlers[256] __attribute__((aligned(16)));
 
-InterruptServiceRoutineRegisters * isr_handler_wrapper(InterruptServiceRoutineRegisters *registers)
+InterruptServiceRoutineRegisters* isr_handler_wrapper(InterruptServiceRoutineRegisters *registers)
 {
     return InterruptHandlersGenerator::isr_handler(registers);
 }
 
-InterruptServiceRoutineRegisters * InterruptHandlersGenerator::isr_handler(InterruptServiceRoutineRegisters *registers)
+InterruptServiceRoutineRegisters* InterruptHandlersGenerator::isr_handler(InterruptServiceRoutineRegisters *registers)
 {
     if (interrupt_handlers[registers->interrupt_number] == 0)
     {

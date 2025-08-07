@@ -74,7 +74,7 @@ void InterruptDescriptorTable::set_all_gates()
     this->set_gate(47, (uintptr_t) isr47);
 }
 
-void InterruptDescriptorTable::initialize() // Move this to the constructor
+void InterruptDescriptorTable::initialize()
 {
     MemoryUtils::memset(this->table, 0, this->IDT_TABLE_SIZE);
     this->ptr.size = sizeof(this->table) / sizeof(this->table[0]);

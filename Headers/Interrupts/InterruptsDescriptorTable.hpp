@@ -17,7 +17,7 @@ struct InterruptDescriptorTableEntry
 struct InterruptDescriptorTablePtr
 {
     uint16_t size;
-    InterruptDescriptorTableEntry *base; // TODO - change the type to a pointer type
+    InterruptDescriptorTableEntry *base;
 } PACKED;
 
 extern "C"
@@ -31,8 +31,8 @@ public:
 private:
     static constexpr int IDT_TABLE_SIZE = 256;
 
-    InterruptDescriptorTablePtr ptr __attribute__((aligned(16)));
-    InterruptDescriptorTableEntry table[IDT_TABLE_SIZE] __attribute__((aligned(16)));
+    InterruptDescriptorTablePtr ptr ALIGNED_16;
+    InterruptDescriptorTableEntry table[IDT_TABLE_SIZE] ALIGNED_16;
 
 private:
     void set_gate(uint8_t entry_number, uintptr_t funcall);

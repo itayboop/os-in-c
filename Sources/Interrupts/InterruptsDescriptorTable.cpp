@@ -4,6 +4,12 @@
 #include "Interrupts/InterruptsDescriptorTable.hpp"
 #include "Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
 
+
+InterruptDescriptorTable::InterruptDescriptorTable()
+{
+    this->initialize();
+}
+
 void InterruptDescriptorTable::set_gate(uint8_t entry_number, uintptr_t funcall)
 {
     InterruptDescriptorTableEntry *entry = &this->table[entry_number];
@@ -68,11 +74,11 @@ void InterruptDescriptorTable::set_all_gates()
     this->set_gate(47, (uintptr_t) isr47);
 }
 
-void InterruptDescriptorTable::initialize()
+void InterruptDescriptorTable::initialize() // Move this to the constructor
 {
     MemoryUtils::memset(this->table, 0, this->IDT_TABLE_SIZE);
-    this->ptr.size = this->IDT_TABLE_SIZE - 1;
-    this->ptr.base = (uintptr_t) & this->table;
+    this->ptr.size = this->IDT_TABLE_SIZE - 1; // TODO - sizeof the table
+    this->ptr.base = (uintptr_t) &this->table;
 
     this->set_all_gates();
 

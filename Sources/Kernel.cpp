@@ -19,10 +19,8 @@ extern "C"
 	{
         Terminal::get().initialize();
 
-        InterruptHandlersGenerator interruptHandlersGenerator = InterruptHandlersGenerator();
-        interruptHandlersGenerator.generate();
-        InterruptDescriptorTable idt = InterruptDescriptorTable();
-        idt.initialize();
+        InterruptHandlersGenerator interruptHandlersGenerator;
+        InterruptDescriptorTable idt;
 
         PrintUtils::printk("[*] Interrupt table initialized.\n");
 

@@ -15,14 +15,17 @@ struct __attribute__((packed)) InterruptDescriptorTableEntry
 struct __attribute__((packed)) InterruptDescriptorTablePtr
 {
     uint16_t size;
-    uintptr_t base;
+    uintptr_t base; // TODO - change the type to a pointer type
 };
 
-
-extern "C" void load_interrupt_descriptor_table(InterruptDescriptorTablePtr *ptr);
+extern "C"
+void load_interrupt_descriptor_table(InterruptDescriptorTablePtr *ptr);
 
 class InterruptDescriptorTable
 {
+public:
+    InterruptDescriptorTable();
+
 private:
     static constexpr int IDT_TABLE_SIZE = 256;
 
@@ -31,9 +34,6 @@ private:
 
 private:
     void set_gate(uint8_t entry_number, uintptr_t funcall);
-
     void set_all_gates();
-
-public:
     void initialize();
 };

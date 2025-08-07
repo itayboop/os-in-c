@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 
+// TODO - extern block
 extern "C" void isr0();
 extern "C" void isr1();
 extern "C" void isr2();
@@ -50,6 +51,7 @@ extern "C" void isr45();
 extern "C" void isr46();
 extern "C" void isr47();
 
+// TODO - you could create a macro for __attribute__((packed)) to avoid repeating it
 struct __attribute__((packed)) InterruptServiceRoutineRegisters
 {
     uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
@@ -89,6 +91,9 @@ enum class InterruptVector : uint8_t
 
 class InterruptHandlersGenerator
 {
+public:
+    InterruptHandlersGenerator();
+
 private:
     void static exc_divide_by_zero(InterruptServiceRoutineRegisters &registers);
     void static exc_debug(InterruptServiceRoutineRegisters &registers);
@@ -113,7 +118,8 @@ private:
     void register_interrupt_handler(InterruptVector interrupt_number, interrupt_service_routine_t handler_func);
     void register_all_interrupt_handlers();
 
+    void generate();
+
 public:
     static InterruptServiceRoutineRegisters * isr_handler(InterruptServiceRoutineRegisters *registers);
-    void generate();
 };

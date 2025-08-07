@@ -23,6 +23,11 @@ InterruptServiceRoutineRegisters * InterruptHandlersGenerator::isr_handler(Inter
     return registers;
 }
 
+InterruptHandlersGenerator::InterruptHandlersGenerator()
+{
+    this->generate();
+}
+
 void InterruptHandlersGenerator::exc_divide_by_zero(InterruptServiceRoutineRegisters &registers)
 {
     PrintUtils::printk("Divide by zero at %x\n", registers.rip);

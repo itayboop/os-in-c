@@ -1,55 +1,56 @@
 #pragma once
 #include <stdint.h>
 
-// TODO - extern block
-extern "C" void isr0();
-extern "C" void isr1();
-extern "C" void isr2();
-extern "C" void isr3();
-extern "C" void isr4();
-extern "C" void isr5();
-extern "C" void isr6();
-extern "C" void isr7();
-extern "C" void isr8();
-extern "C" void isr9();
-extern "C" void isr10();
-extern "C" void isr11();
-extern "C" void isr12();
-extern "C" void isr13();
-extern "C" void isr14();
-extern "C" void isr15();
-extern "C" void isr16();
-extern "C" void isr17();
-extern "C" void isr18();
-extern "C" void isr19();
-extern "C" void isr20();
-extern "C" void isr21();
-extern "C" void isr22();
-extern "C" void isr23();
-extern "C" void isr24();
-extern "C" void isr25();
-extern "C" void isr26();
-extern "C" void isr27();
-extern "C" void isr28();
-extern "C" void isr29();
-extern "C" void isr30();
-extern "C" void isr31();
-extern "C" void isr32();
-extern "C" void isr33();
-extern "C" void isr34();
-extern "C" void isr35();
-extern "C" void isr36();
-extern "C" void isr37();
-extern "C" void isr38();
-extern "C" void isr39();
-extern "C" void isr40();
-extern "C" void isr41();
-extern "C" void isr42();
-extern "C" void isr43();
-extern "C" void isr44();
-extern "C" void isr45();
-extern "C" void isr46();
-extern "C" void isr47();
+extern "C" {
+    void isr0();
+    void isr1();
+    void isr2();
+    void isr3();
+    void isr4();
+    void isr5();
+    void isr6();
+    void isr7();
+    void isr8();
+    void isr9();
+    void isr10();
+    void isr11();
+    void isr12();
+    void isr13();
+    void isr14();
+    void isr15();
+    void isr16();
+    void isr17();
+    void isr18();
+    void isr19();
+    void isr20();
+    void isr21();
+    void isr22();
+    void isr23();
+    void isr24();
+    void isr25();
+    void isr26();
+    void isr27();
+    void isr28();
+    void isr29();
+    void isr30();
+    void isr31();
+    void isr32();
+    void isr33();
+    void isr34();
+    void isr35();
+    void isr36();
+    void isr37();
+    void isr38();
+    void isr39();
+    void isr40();
+    void isr41();
+    void isr42();
+    void isr43();
+    void isr44();
+    void isr45();
+    void isr46();
+    void isr47();
+}
 
 // TODO - you could create a macro for __attribute__((packed)) to avoid repeating it
 struct __attribute__((packed)) InterruptServiceRoutineRegisters

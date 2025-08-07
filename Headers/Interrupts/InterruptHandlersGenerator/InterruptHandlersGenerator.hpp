@@ -1,5 +1,7 @@
 #pragma once
+
 #include <stdint.h>
+#include "macros.h"
 
 extern "C" {
     void isr0();
@@ -52,8 +54,7 @@ extern "C" {
     void isr47();
 }
 
-// TODO - you could create a macro for __attribute__((packed)) to avoid repeating it
-struct __attribute__((packed)) InterruptServiceRoutineRegisters
+struct InterruptServiceRoutineRegisters
 {
     uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
     uint64_t rbp, rdi, rsi, rdx, rcx, rbx, rax;
@@ -61,7 +62,7 @@ struct __attribute__((packed)) InterruptServiceRoutineRegisters
     uint64_t interrupt_number, error_code;
 
     uint64_t rip, cs, rflags, rsp, ss;
-};
+} PACKED;
 
 using interrupt_service_routine_t = void(*)(InterruptServiceRoutineRegisters &registers);
 

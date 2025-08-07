@@ -37,13 +37,13 @@ private:
     Terminal(const Terminal&) = delete;
     Terminal& operator=(const Terminal&) = delete;
 
-    static const size_t WIDTH = 80;
-    static const size_t HEIGHT = 25;
+    static constexpr size_t WIDTH = 80;
+    static constexpr size_t HEIGHT = 25;
 
     size_t row;
     size_t column;
     uint8_t color;
-    uint16_t* buffer;
+    volatile uint16_t* buffer;
 
     void put_entry_at(char c);
     void new_line();

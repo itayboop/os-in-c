@@ -17,7 +17,7 @@ struct InterruptDescriptorTableEntry
 struct InterruptDescriptorTablePtr
 {
     uint16_t size;
-    uintptr_t base; // TODO - change the type to a pointer type
+    InterruptDescriptorTableEntry *base; // TODO - change the type to a pointer type
 } PACKED;
 
 extern "C"

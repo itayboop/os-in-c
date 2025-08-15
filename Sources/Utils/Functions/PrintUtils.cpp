@@ -46,6 +46,14 @@ void PrintUtils::printk(const char *formatted_str, ...)
 					terminal.print_hex(hex_to_print);
 				}
 					break;
+                case 'p':
+                {
+                    void* ptr = va_arg(arg, void*);
+                    uintptr_t addr = reinterpret_cast<uintptr_t>(ptr);
+                    terminal.print("0x");
+                    terminal.print_hex(addr);
+                }
+                    break;
 				default:
 					break;
 			}

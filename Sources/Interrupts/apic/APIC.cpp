@@ -35,7 +35,6 @@ int APIC::initialize()
 {
     m_base = this->read_base() & LOCAL_APIC_BASE;
 
-
     return 0;
 }
 

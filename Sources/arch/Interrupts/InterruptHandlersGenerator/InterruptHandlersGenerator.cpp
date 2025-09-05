@@ -1,6 +1,6 @@
-#include "Utils/Functions/PrintUtils.hpp"
+#include "Headers/KernelException.hpp"
 #include "Utils/Functions/MemoryUtils.hpp"
-#include "Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
+#include "arch/Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
 
 interrupt_service_routine_t interrupt_handlers[256] __attribute__((aligned(16)));
 
@@ -14,7 +14,7 @@ InterruptServiceRoutineRegisters* InterruptHandlersGenerator::isr_handler(Interr
     if (interrupt_handlers[registers->interrupt_number] == 0)
     {
         PrintUtils::printk("no iv for interrupt\n");
-        while (1);
+        THROW_KERNEL_EXCEPTION();
     } else
     {
         interrupt_handlers[registers->interrupt_number](*registers);

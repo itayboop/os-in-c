@@ -28,6 +28,9 @@ class InterruptDescriptorTable
 public:
     InterruptDescriptorTable();
 
+public:
+    void set_gate(uint8_t entry_number, uintptr_t funcall);
+
 private:
     static constexpr int IDT_TABLE_SIZE = 256;
 
@@ -35,7 +38,5 @@ private:
     InterruptDescriptorTableEntry table[IDT_TABLE_SIZE] ALIGNED_16;
 
 private:
-    void set_gate(uint8_t entry_number, uintptr_t funcall);
-    void set_all_gates();
     void initialize();
 };

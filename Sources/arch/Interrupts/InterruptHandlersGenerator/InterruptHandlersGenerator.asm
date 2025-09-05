@@ -83,7 +83,7 @@ isr_common_stub:
     push r14
     push r15
 
-	mov rdi, rsp ; copies registers to rdi
+	mov rdi, rsp ; copies registers to rdi`
 	call isr_handler_wrapper
 	mov rsp, rax
 

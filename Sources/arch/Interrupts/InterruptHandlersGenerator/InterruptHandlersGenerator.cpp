@@ -1,4 +1,4 @@
-#include "Headers/KernelException.hpp"
+#include "KernelException.hpp"
 #include "Utils/Functions/MemoryUtils.hpp"
 #include "arch/Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
 

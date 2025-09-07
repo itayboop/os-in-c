@@ -12,10 +12,14 @@
 #include "OsDefinitions/MemoryOperators.hpp"
 #include "Terminal.hpp"
 #include "Boot/multiboot.hpp"
+
 #include "Utils/Functions/PrintUtils.hpp"
 #include "Utils/Functions/MemoryUtils.hpp"
-#include "Interrupts/InterruptsDescriptorTable.hpp"
-#include "Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
+
+#include "arch/Interrupts/CpuException.hpp"
+#include "arch/Interrupts/ApicInterrupts.hpp"
+#include "arch/Interrupts/InterruptsDescriptorTable.hpp"
+#include "arch/Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
 
 extern "C"
 {
@@ -30,8 +34,12 @@ void kernel_main(uint32_t magic, uintptr_t addr)
 
     InterruptHandlersGenerator interruptHandlersGenerator;
     InterruptDescriptorTable idt;
-
+    CpuExceptions cpuExceptions;
+    cpuExceptions.register_handlers(idt);
     PrintUtils::printk("[*] Interrupt table initialized.\n");
+
+//        ApicInterrupts apic;
+//        apic.register_handlers(idt);
 
     asm volatile("int $3");
     asm volatile (".word 0xFFFF");

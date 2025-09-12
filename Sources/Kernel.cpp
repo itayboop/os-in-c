@@ -8,6 +8,7 @@
 #error "This OS needs to be compiled with a x86_64-elf compiler"
 #endif
 
+#include "boot/multiboot.h"
 #include "VgaBuffer.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
 #include "Interrupts/InterruptsDescriptorTable.hpp"
@@ -15,9 +16,17 @@
 
 extern "C"
 {
-	void kernel_main()
+    void kernel_main(uint32_t magic, uint32_t addr)
 	{
         Terminal::get().initialize();
+
+        if (magic != MULTIBOOT2_BOOTLOADER_MAGIC)
+        {
+            PrintUtils::printk("Invalid magic number: %x\n", magic);
+            THROW_KERNEL_EXCEPTION();
+        }
+
+        PrintUtils::printk("magic: %x, addr: %x\n", magic, addr);
 
         InterruptHandlersGenerator interruptHandlersGenerator;
         InterruptDescriptorTable idt;

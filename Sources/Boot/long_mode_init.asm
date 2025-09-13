@@ -1,4 +1,6 @@
 extern kernel_main
+extern mb_magic
+extern mb_info
 
 section .text
 bits 64
@@ -14,11 +16,8 @@ long_mode_start:
 	mov fs, ax
 	mov gs, ax
 
-    pop rax
-    pop rbx
-    ; zero-extend 32-bit magic/info to 64-bit registers
-    mov rdi, rax      ; magic number -> first arg
-    mov rsi, rbx      ; multiboot2 info pointer -> second arg
+    mov rdi, [mb_magic]      ; magic number -> first arg
+    mov rsi, [mb_info]      ; multiboot2 info pointer -> second arg
 
 	call kernel_main
 

@@ -7,8 +7,8 @@ bits 32
 
 start:
 	mov esp, stack_top
-	push ebx       ; move Multiboot info pointer to edi
-	push eax       ; move Multiboot magic number to eax (0x36d76289)
+    mov dword [mb_magic], eax
+    mov dword [mb_info],  ebx
 
 	call check_long_mode
 	call set_up_page_tables
@@ -98,6 +98,13 @@ enable_paging:
 	mov cr0, eax
 
 	ret
+
+section .bootdata
+align 8
+global mb_magic
+global mb_info
+mb_magic: dq 0
+mb_info:  dq 0
 
 section .rodata
 gdt64:

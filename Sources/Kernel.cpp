@@ -16,7 +16,7 @@
 
 extern "C"
 {
-    void kernel_main(uint32_t magic, uint32_t addr)
+    void kernel_main(uint32_t magic, uintptr_t addr)
 	{
         Terminal::get().initialize();
 

@@ -9,15 +9,18 @@
 #endif
 
 #include "VgaBuffer.hpp"
+#include "Boot/multiboot.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
 #include "Interrupts/InterruptsDescriptorTable.hpp"
 #include "Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
 
 extern "C"
 {
-	void kernel_main()
+    void kernel_main(uint32_t magic, uintptr_t addr)
 	{
         Terminal::get().initialize();
+        Multiboot multiboot = Multiboot(magic, addr);
+        multiboot.parse_mb_info();
 
         InterruptHandlersGenerator interruptHandlersGenerator;
         InterruptDescriptorTable idt;
@@ -26,7 +29,7 @@ extern "C"
 
         asm volatile("int $3");
         asm volatile (".word 0xFFFF");
-        PrintUtils::printk("%d\n", 1/ 0);
+        PrintUtils::printk("%d\n", 1 / 0);
 		while (1);
 	}
 }

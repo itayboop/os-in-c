@@ -2,6 +2,8 @@
 #include "Utils/Functions/PrintUtils.hpp"
 #include "KernelException.hpp"
 
+#define NEXT_TAG(tag) (tag->size + 7) & ~7
+
 Multiboot::Multiboot(uint32_t magic, uintptr_t addr) : _magic(magic), _addr(addr)
 {}
 
@@ -40,8 +42,7 @@ void Multiboot::parse_mb_info() const
                 break;
         }
 
-        // advance to next tag (8-byte aligned)
-        ptr += (tag->size + 7) & ~7;
+        ptr += NEXT_TAG(tag);
     }
 }
 

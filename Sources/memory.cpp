@@ -1,4 +1,5 @@
 #include "memory.hpp"
+#include "Utils/Functions/PrintUtils.hpp"
 
 #include <stdint.h>
 
@@ -21,15 +22,18 @@ void *malloc(size_t size)
 {
     if (!heap_base)
     {
-        return nullptr; // heap not initialized
+        PrintUtils::printk("Heap not initialized!\n");
+        return nullptr;
     }
 
     // Align to 16 bytes (good practice for most CPUs)
     size = (size + 15) & ~((size_t) 15);
 
-    if (heap_current + size > heap_base + heap_size)
+    bool out_of_memory = heap_current + size > heap_base + heap_size;
+    if (out_of_memory)
     {
-        return nullptr; // out of memory
+        PrintUtils::printk("Out of memory!\n");
+        return nullptr;
     }
 
     void *ptr = heap_current;

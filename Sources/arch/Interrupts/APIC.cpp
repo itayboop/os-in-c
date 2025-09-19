@@ -1,4 +1,4 @@
-#include "APIC.hpp"
+#include "../../../Headers/arch/Interrupts/APIC.hpp"
 
 #define APIC_READ(off) *((volatile uint32_t*)(m_base + off))
 #define APIC_WRITE(off, val) (*((volatile uint32_t*)(m_base + off)) = val)

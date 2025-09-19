@@ -17,7 +17,7 @@
 #include "Utils/Functions/MemoryUtils.hpp"
 
 #include "arch/Interrupts/CpuException.hpp"
-#include "arch/Interrupts/ApicInterrupts.hpp"
+#include "arch/Interrupts/APIC.hpp"
 #include "arch/Interrupts/InterruptsDescriptorTable.hpp"
 #include "arch/Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
 

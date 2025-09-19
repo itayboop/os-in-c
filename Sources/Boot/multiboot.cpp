@@ -9,22 +9,68 @@
 Multiboot::Multiboot(uint32_t magic, uintptr_t addr) : _magic(magic), _addr(addr)
 {}
 
+MemoryRegion Multiboot::allocate_after_kernel(MemoryRegion candidate_region) const
+{
+    const uintptr_t candidate_region_end = candidate_region.base + candidate_region.length;
+    bool is_kernel_inside_entry = KERNEL_END >= candidate_region.base && KERNEL_END < candidate_region_end;
+
+    if (is_kernel_inside_entry)
+    {
+        uintptr_t heap_base = (KERNEL_END + (_PAGE_SIZE - 1)) & ~(_PAGE_SIZE - 1);
+        size_t heap_size = candidate_region_end - heap_base;
+        if (heap_size > 0)
+        {
+            // this is the best case, so we stop
+            return MemoryRegion{heap_base, heap_size};
+        }
+    }
+
+    return MemoryRegion{0, 0};
+}
+
+MemoryRegion Multiboot::pick_largest_region(MemoryRegion candidate_region, size_t current_best_size) const
+{
+    if (candidate_region.length > current_best_size) {
+        return MemoryRegion{candidate_region.base, candidate_region.length};
+    }
+
+    return MemoryRegion{0, 0};
+}
+
+MemoryRegion Multiboot::align_region_away_from_kernel(MemoryRegion region) const
+{
+    if (region.length == 0)
+    {
+        return region;
+    }
+
+    if (region.base < KERNEL_END) {
+        uintptr_t new_base = (KERNEL_END + (_PAGE_SIZE - 1)) & ~(_PAGE_SIZE - 1);
+
+        if (new_base >= region.base + region.length) {
+            return MemoryRegion{0, 0};
+        }
+
+        region.length -= (new_base - region.base);
+        region.base = new_base;
+    }
+
+    return region;
+}
+
 MemoryRegion Multiboot::find_usable_region() const
 {
     this->validate_multiboot_magic();
 
-    uintptr_t kernel_end = reinterpret_cast<uintptr_t>(&__end);
-    const uintptr_t page = 0x1000;
-
-    uintptr_t chosen_base = 0;
-    size_t chosen_size = 0;
+    MemoryRegion best_region{0, 0};
 
     multiboot_info_t *mb_info = (multiboot_info_t *) _addr;
-    uint8_t *tag_ptr = (uint8_t * ) & mb_info->tags[0];
-    struct multiboot_tag* tag = nullptr;
-    for (tag = reinterpret_cast<multiboot_tag *>(tag_ptr);
+    uint8_t *tag_ptr = (uint8_t *) &mb_info->tags[0];
+
+    for (struct multiboot_tag *tag = reinterpret_cast<multiboot_tag *>(tag_ptr);
          tag->type != MULTIBOOT_TAG_TYPE_END;
-         tag = reinterpret_cast<multiboot_tag *>(reinterpret_cast<uint8_t *>(tag) + (NEXT_TAG(tag))))
+         tag = reinterpret_cast<multiboot_tag *>(
+                 reinterpret_cast<uint8_t *>(tag) + (NEXT_TAG(tag))))
     {
         if (tag->type == MULTIBOOT_TAG_TYPE_MMAP)
         {
@@ -36,59 +82,28 @@ MemoryRegion Multiboot::find_usable_region() const
                    entry = reinterpret_cast<multiboot_mmap_entry *>(
                            reinterpret_cast<uint8_t *>(entry) + mmap_tag->entry_size))
             {
-                if (entry->type != MULTIBOOT_MEMORY_AVAILABLE) continue; // not usable
+                if (entry->type != MULTIBOOT_MEMORY_AVAILABLE) continue;
 
-                uintptr_t found_entry_base = (uintptr_t) entry->addr;
+                uintptr_t found_entry_start = (uintptr_t) entry->addr;
                 size_t found_entry_length = (size_t) entry->len;
-                const uintptr_t &found_entry_end = found_entry_base + found_entry_length;
+                MemoryRegion candidate_region{(uintptr_t) entry->addr, (size_t) entry->len};
 
-                bool is_kernel_inside_entry = kernel_end >= found_entry_base && kernel_end < found_entry_end;
-
-                // Option A: pick space after kernel
-                if (is_kernel_inside_entry)
+                MemoryRegion after_kernel = this->allocate_after_kernel(candidate_region); // best case, so we stop here
+                if (after_kernel.length > 0)
                 {
-                    uintptr_t heap_base = (kernel_end + (page - 1)) & ~(page - 1); // page align up
-                    size_t heap_size = found_entry_end - heap_base;
-                    if (heap_size > 0)
-                    {
-                        chosen_base = heap_base;
-                        chosen_size = heap_size;
-                        goto got_region; // best case, stop
-                    }
+                    return after_kernel;
                 }
 
-                // Option B: otherwise consider this entry as a candidate (largest)
-                if (found_entry_length > chosen_size)
-                {
-                    chosen_base = found_entry_base;
-                    chosen_size = found_entry_length;
+                MemoryRegion candidate = pick_largest_region(candidate_region, best_region.length);
+                if (candidate.length > 0) {
+                    best_region = candidate;
                 }
             }
         }
     }
 
-    got_region:
-    if (chosen_size == 0)
-    {
-        return MemoryRegion{0, 0};
-    }
-
-    // If chosen_base is below kernel_end, bump it to after kernel
-    if (chosen_base < kernel_end)
-    {
-        uintptr_t new_base = (kernel_end + (page - 1)) & ~(page - 1);
-        if (new_base >= chosen_base + chosen_size)
-        {
-            // no room after kernel in this region
-            return MemoryRegion{0, 0};
-        }
-        chosen_size -= (new_base - chosen_base);
-        chosen_base = new_base;
-    }
-
-    return MemoryRegion{chosen_base, chosen_size};
+    return this->align_region_away_from_kernel(best_region);
 }
-
 
 void Multiboot::validate_multiboot_magic() const
 {
@@ -98,3 +113,4 @@ void Multiboot::validate_multiboot_magic() const
         THROW_KERNEL_EXCEPTION();
     }
 }
+

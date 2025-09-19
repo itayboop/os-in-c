@@ -7,6 +7,7 @@
 class KernelException final
 {
 public:
+    // TODO: make this get string
 	void raise() const
 	{
 		PrintUtils::printk("KERNEL EXCEPTION!\n");

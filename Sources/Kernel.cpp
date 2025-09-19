@@ -8,7 +8,7 @@
 #error "This OS needs to be compiled with a x86_64-elf compiler"
 #endif
 
-#include "VgaBuffer.hpp"
+#include "Terminal.hpp"
 #include "Boot/multiboot.hpp"
 #include "memory.hpp"
 #include "Utils/Functions/PrintUtils.hpp"

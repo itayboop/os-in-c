@@ -9,7 +9,7 @@ This is my own OS im currently writing!
 - [X] Basic Paging
 - [x] Converting To C++
 - [X] CPU Interrupts
+- [X] Memory Management & Heap Allocation
 - [ ] Hardware Interrupts
-- [ ] Memory Management & Heap Allocation
 - [ ] Syscalls
 - [ ] Shell

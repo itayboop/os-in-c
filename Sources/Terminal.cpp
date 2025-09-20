@@ -1,4 +1,4 @@
-#include "VgaBuffer.hpp"
+#include "Terminal.hpp"
 #include "Utils/Functions/HexUtils.hpp"
 #include "Utils/Functions/StringsUtils.hpp"
 

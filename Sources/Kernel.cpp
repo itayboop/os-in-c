@@ -8,9 +8,10 @@
 #error "This OS needs to be compiled with a x86_64-elf compiler"
 #endif
 
-#include "VgaBuffer.hpp"
+#include "MemoryAllocator.hpp"
+#include "OsDefinitions/MemoryOperators.hpp"
+#include "Terminal.hpp"
 #include "Boot/multiboot.hpp"
-#include "memory.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
 #include "Utils/Functions/MemoryUtils.hpp"
 #include "Interrupts/InterruptsDescriptorTable.hpp"
@@ -18,29 +19,23 @@
 
 extern "C"
 {
-    void kernel_main(uint32_t magic, uintptr_t addr)
-	{
-        Terminal::get().initialize();
+void kernel_main(uint32_t magic, uintptr_t addr)
+{
+    Terminal::get().initialize();
 
-        Multiboot multiboot = Multiboot(magic, addr);
-        MemoryRegion usable_memory_region = multiboot.find_usable_region();
-        PrintUtils::printk("[*] Usable memory region found at %p, size: %d bytes\n", (void*)usable_memory_region.base, usable_memory_region.length);
+    Multiboot multiboot = Multiboot(magic, addr);
+    MemoryRegion heap = multiboot.find_usable_region();
 
-        init_heap((void*)usable_memory_region.base, usable_memory_region.length);
+    MemoryAllocator::get().init(reinterpret_cast<void *>(heap.base), heap.length);
 
-        char *b = (char *)malloc(128);
-        MemoryUtils::memset(b, 51, 63);
-        b[63] = '\0';
-        PrintUtils::printk("Allocated string at %p: %s\n", b, b);
+    InterruptHandlersGenerator interruptHandlersGenerator;
+    InterruptDescriptorTable idt;
 
-        InterruptHandlersGenerator interruptHandlersGenerator;
-        InterruptDescriptorTable idt;
+    PrintUtils::printk("[*] Interrupt table initialized.\n");
 
-        PrintUtils::printk("[*] Interrupt table initialized.\n");
-
-        asm volatile("int $3");
-        asm volatile (".word 0xFFFF");
-        PrintUtils::printk("%d\n", 1 / 0);
-		while (1);
-	}
+    asm volatile("int $3");
+    asm volatile (".word 0xFFFF");
+    PrintUtils::printk("%d\n", 1 / 0);
+    while (1);
+}
 }

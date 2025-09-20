@@ -22,7 +22,7 @@ enum VgaColor {
     WHITE = 15
 };
 
-class Terminal {
+class Terminal final {
 public:
     static Terminal & get();
 

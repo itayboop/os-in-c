@@ -1,6 +1,6 @@
 #include <stdarg.h>
 
-#include "VgaBuffer.hpp"
+#include "Terminal.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
 
 void PrintUtils::printk(const char *formatted_str, ...)

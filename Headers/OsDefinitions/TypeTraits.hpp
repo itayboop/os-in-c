@@ -1,4 +1,5 @@
 #pragma once
+#include <stddef.h>
 
 namespace std
 {
@@ -9,4 +10,9 @@ struct add_const {
 
 template<typename T>
 using add_const_t = typename add_const<T>::type;
+
+using size_t = size_t;
+
+struct nothrow_t {};
+constexpr nothrow_t nothrow{};
 }

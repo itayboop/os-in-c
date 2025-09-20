@@ -20,9 +20,10 @@ public:
 
 public:
     MemoryRegion find_usable_region() const;
-    void validate_multiboot_magic() const;
 
 private:
+    void validate_multiboot_magic() const;
+
     MemoryRegion allocate_after_kernel(MemoryRegion candidate_region) const;
     MemoryRegion pick_largest_region(MemoryRegion candidate_region, size_t current_best_size) const;
     MemoryRegion align_region_away_from_kernel(MemoryRegion region) const;

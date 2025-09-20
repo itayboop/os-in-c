@@ -7,7 +7,9 @@
 #define NEXT_TAG(tag) (tag->size + 7) & ~7
 
 Multiboot::Multiboot(uint32_t magic, uintptr_t addr) : _magic(magic), _addr(addr)
-{}
+{
+    this->validate_multiboot_magic();
+}
 
 MemoryRegion Multiboot::allocate_after_kernel(MemoryRegion candidate_region) const
 {
@@ -60,8 +62,6 @@ MemoryRegion Multiboot::align_region_away_from_kernel(MemoryRegion region) const
 
 MemoryRegion Multiboot::find_usable_region() const
 {
-    this->validate_multiboot_magic();
-
     MemoryRegion best_region{0, 0};
 
     multiboot_info_t *mb_info = (multiboot_info_t *) _addr;

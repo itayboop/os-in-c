@@ -5,7 +5,7 @@
 
 #include "Utils/Functions/PrintUtils.hpp"
 
-class MemoryAllocator
+class MemoryAllocator final
 {
 public:
     static MemoryAllocator &get()

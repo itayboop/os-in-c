@@ -28,7 +28,6 @@ void operator delete(void *ptr, const std::nothrow_t&) noexcept {
     if (ptr) MemoryAllocator::get().free(ptr);
 }
 
-// Optional: array versions
 void* operator new[](std::size_t count) {
     void *ptr = MemoryAllocator::get().malloc(count);
     if (!ptr) {

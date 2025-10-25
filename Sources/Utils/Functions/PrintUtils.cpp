@@ -5,7 +5,7 @@
 
 void PrintUtils::printk(const char *formatted_str, ...)
 {
-    Terminal &terminal = Terminal::get();
+  Terminal &terminal = Terminal::get();
 	va_list arg;
 	char formatted_str_char = 0;
 

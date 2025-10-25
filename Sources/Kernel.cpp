@@ -8,25 +8,34 @@
 #error "This OS needs to be compiled with a x86_64-elf compiler"
 #endif
 
-#include "VgaBuffer.hpp"
+#include "MemoryAllocator.hpp"
+#include "OsDefinitions/MemoryOperators.hpp"
+#include "Terminal.hpp"
+#include "Boot/multiboot.hpp"
 #include "Utils/Functions/PrintUtils.hpp"
+#include "Utils/Functions/MemoryUtils.hpp"
 #include "Interrupts/InterruptsDescriptorTable.hpp"
 #include "Interrupts/InterruptHandlersGenerator/InterruptHandlersGenerator.hpp"
 
 extern "C"
 {
-	void kernel_main()
-	{
-        Terminal::get().initialize();
+void kernel_main(uint32_t magic, uintptr_t addr)
+{
+    Terminal::get().initialize();
 
-        InterruptHandlersGenerator interruptHandlersGenerator;
-        InterruptDescriptorTable idt;
+    Multiboot multiboot = Multiboot(magic, addr);
+    MemoryRegion heap = multiboot.find_usable_region();
 
-        PrintUtils::printk("[*] Interrupt table initialized.\n");
+    MemoryAllocator::get().init(reinterpret_cast<void *>(heap.base), heap.length);
 
-        asm volatile("int $3");
-        asm volatile (".word 0xFFFF");
-        PrintUtils::printk("%d\n", 1/ 0);
-		while (1);
-	}
+    InterruptHandlersGenerator interruptHandlersGenerator;
+    InterruptDescriptorTable idt;
+
+    PrintUtils::printk("[*] Interrupt table initialized.\n");
+
+    asm volatile("int $3");
+    asm volatile (".word 0xFFFF");
+    PrintUtils::printk("%d\n", 1 / 0);
+    while (1);
+}
 }

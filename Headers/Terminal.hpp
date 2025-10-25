@@ -22,7 +22,7 @@ enum VgaColor {
     WHITE = 15
 };
 
-class Terminal {
+class Terminal final {
 public:
     static Terminal & get();
 
@@ -39,11 +39,12 @@ private:
 
     static constexpr size_t WIDTH = 80;
     static constexpr size_t HEIGHT = 25;
+    static constexpr uintptr_t VGA_MEMORY_ADDRESS = 0xB8000;
 
     size_t row;
     size_t column;
     uint8_t color;
-    volatile uint16_t* buffer;
+    uint16_t* buffer;
 
     void put_entry_at(char c);
     void new_line();

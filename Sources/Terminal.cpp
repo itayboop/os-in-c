@@ -1,4 +1,4 @@
-#include "VgaBuffer.hpp"
+#include "Terminal.hpp"
 #include "Utils/Functions/HexUtils.hpp"
 #include "Utils/Functions/StringsUtils.hpp"
 
@@ -8,7 +8,7 @@ Terminal & Terminal::get() {
 }
 
 Terminal::Terminal() {
-    buffer = reinterpret_cast<uint16_t*>(0xB8000);
+    buffer = reinterpret_cast<uint16_t*>(this->VGA_MEMORY_ADDRESS);
     row = 0;
     column = 0;
     color = entry_color(LIGHT_GREY, BLACK);

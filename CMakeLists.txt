@@ -26,5 +26,5 @@ add_custom_command(
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> ${ISO_DIR}/boot/${OS_BIN}
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/grub.cfg ${ISO_DIR}/boot/grub
         COMMAND grub-mkrescue -o ${OUTPUT_DIR}/${PROJECT_NAME}.iso ${ISO_DIR}
-        COMMAND qemu-system-x86_64 -display sdl -cdrom ${OUTPUT_DIR}/${PROJECT_NAME}.iso
+        COMMAND qemu-system-x86_64 -cdrom ${OUTPUT_DIR}/${PROJECT_NAME}.iso
 )
